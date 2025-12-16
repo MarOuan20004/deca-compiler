@@ -10,7 +10,40 @@ options {
 
 @members {
 }
-
+/* 
 // Deca lexer rules.
 DUMMY_TOKEN: .; // A FAIRE : Règle bidon qui reconnait tous les caractères.
                 // A FAIRE : Il faut la supprimer et la remplacer par les vraies règles.
+ */
+
+fragment LETTER : 'a'..'z' | 'A'..'Z';
+
+// Ignore spaces, tabs, newlines and whitespaces
+WS  :   ( ' '
+        | '\t'
+        | '\r'
+        | '\n'
+        ) {
+              skip(); // avoid producing a token
+          }
+    ;
+
+COMMENT : '/*' .*? '*/' { skip(); } ;
+LINE_COMMENT : '//' ~[\r\n]* { skip()};
+
+
+STRING : '"' (LETTER | '\\"' | '\\\\')* '"';
+OBRACE :'{' ;
+PRINTLN : 'println';
+OPARENT: '(';
+CPARENT: ')';
+SEMI : ';';
+CBRACE :'}';
+
+
+
+/* println("hello world") */
+
+
+
+
