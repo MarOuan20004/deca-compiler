@@ -17,7 +17,14 @@ DUMMY_TOKEN: .; // A FAIRE : Règle bidon qui reconnait tous les caractères.
  */
 
 fragment LETTER : 'a'..'z' | 'A'..'Z';
+fragment DIGIT :'0' .. '9';
+IDENT : (LETTER + '$' + '_')(LETTER + DIGIT + '$' + '_')*;
 
+PLUS : '+' ;
+MINUS : '-' ;
+TIMES : '*' ;
+
+INT : DIGIT+;
 // Ignore spaces, tabs, newlines and whitespaces
 WS  :   ( ' '
         | '\t'
@@ -29,10 +36,10 @@ WS  :   ( ' '
     ;
 
 COMMENT : '/*' .*? '*/' { skip(); } ;
-LINE_COMMENT : '//' ~[\r\n]* { skip()};
+LINE_COMMENT : '//' ~[\r\n]* { skip(); };
 
 
-STRING : '"' (LETTER | '\\"' | '\\\\')* '"';
+STRING : '"' (LETTER | '\\"' | '\\\\' | WS |INT )* '"';
 OBRACE :'{' ;
 PRINTLN : 'println';
 OPARENT: '(';
