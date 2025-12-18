@@ -23,8 +23,6 @@
             ]        
         }        
     },    
-    "workspaceMount": [
-	"source=${localWorkspaceFolder}/..,target=/home/gl/projet_gl,type=bind,consistency=cached"
-    ],
+    "workspaceMount": "source=c:/Users/amine/Documents/gl10,target=/home/gl/projet_gl,type=bind,consistency=cached",
     "workspaceFolder" : "/home/gl/projet_gl"
 }
