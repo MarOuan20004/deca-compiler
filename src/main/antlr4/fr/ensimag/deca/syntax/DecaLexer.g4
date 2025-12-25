@@ -39,7 +39,7 @@ COMMENT : '/*' .*? '*/' { skip(); } ;
 LINE_COMMENT : '//' ~[\r\n]* { skip(); };
 
 
-STRING : '"' (LETTER | '\\"' | '\\\\' | WS |INT )* '"';
+STRING : '"' ( '\\' . | ~('\\'|'"') )* '"';
 OBRACE :'{' ;
 PRINTLN : 'println';
 OPARENT: '(';
@@ -50,7 +50,3 @@ CBRACE :'}';
 
 
 /* println("hello world") */
-
-
-
-

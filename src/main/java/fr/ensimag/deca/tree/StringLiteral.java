@@ -34,7 +34,8 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        setType(compiler.environmentType.STRING);
+        return compiler.environmentType.STRING;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print("\"" + value + "\"");
     }
 
     @Override

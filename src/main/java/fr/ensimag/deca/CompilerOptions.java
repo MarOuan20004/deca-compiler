@@ -43,11 +43,24 @@ public class CompilerOptions {
 
     
     public void parseArgs(String[] args) throws CLIException {
-        // A FAIRE : parcourir args pour positionner les options correctement.
+        for (String arg : args) {
+            if ("-v".equals(arg)) {
+                debug = Math.max(debug, INFO);
+            } else if ("-d".equals(arg)) {
+                debug++;
+            } else if ("-P".equals(arg)) {
+                parallel = true;
+            } else if ("-b".equals(arg)) {
+                printBanner = true;
+            } else if (arg.startsWith("-")) {
+                throw new CLIException("Option non reconnue : " + arg);
+            } else {
+                sourceFiles.add(new File(arg));
+            }
+        }
         Logger logger = Logger.getRootLogger();
-        // map command-line debug option to log4j's level.
         switch (getDebug()) {
-        case QUIET: break; // keep default
+        case QUIET: break;
         case INFO:
             logger.setLevel(Level.INFO); break;
         case DEBUG:
@@ -58,19 +71,17 @@ public class CompilerOptions {
             logger.setLevel(Level.ALL); break;
         }
         logger.info("Application-wide trace level set to " + logger.getLevel());
-
         boolean assertsEnabled = false;
-        assert assertsEnabled = true; // Intentional side effect!!!
+        assert assertsEnabled = true;
         if (assertsEnabled) {
             logger.info("Java assertions enabled");
         } else {
             logger.info("Java assertions disabled");
         }
-
-        throw new UnsupportedOperationException("not yet implemented");
     }
 
     protected void displayUsage() {
-        throw new UnsupportedOperationException("not yet implemented");
+        PrintStream err = System.err;
+        err.println("usage: decac [-b] [-v] [-d]* [-P] <source files>");
     }
 }

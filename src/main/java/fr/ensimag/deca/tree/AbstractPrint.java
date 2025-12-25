@@ -37,10 +37,16 @@ public abstract class AbstractPrint extends AbstractInst {
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
-            throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+            ClassDefinition currentClass, Type returnType) throws ContextualError {
+        for (AbstractExpr a : getArguments().getList()) {
+            Type t = a.verifyExpr(compiler, localEnv, currentClass);
+            if (!(t.isInt() || t.isFloat() || t.isBoolean() || t.isString())) {
+                throw new ContextualError("Incompatible type for print argument", a.getLocation());
+            }
+            a.setType(t);
+        }
     }
+
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
@@ -50,6 +56,10 @@ public abstract class AbstractPrint extends AbstractInst {
     }
 
     private boolean getPrintHex() {
+        return printHex;
+    }
+
+    public boolean isPrintHex() {
         return printHex;
     }
 

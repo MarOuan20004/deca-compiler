@@ -125,6 +125,7 @@ inst returns[AbstractInst tree]
             assert($list_expr.tree != null);
             System.out.println("Debug: println encountered");
             $tree=new Println(false,$list_expr.tree);
+            setLocation($tree, $PRINTLN);
         }
     | PRINTX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
@@ -386,6 +387,7 @@ literal returns[AbstractExpr tree]
         String str=$STRING.getText();
         str= str.substring(1, str.length()-1);
         $tree=new StringLiteral(str);
+        setLocation($tree, $STRING);
         }
     | TRUE {
         }

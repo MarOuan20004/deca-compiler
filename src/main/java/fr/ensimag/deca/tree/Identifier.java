@@ -11,6 +11,7 @@ import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
@@ -167,7 +168,14 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        ExpDefinition def = localEnv.get(name);
+        if (def == null) {
+            throw new ContextualError("Undefined identifier", getLocation());
+        }
+        setDefinition(def);
+        Type t = def.getType();
+        setType(t);
+        return t;
     }
 
     /**
@@ -176,7 +184,12 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        TypeDefinition def = compiler.environmentType.defOfType(name);
+        if (def == null) {
+            throw new ContextualError("Unknown type", getLocation());
+        }
+        setDefinition(def);
+        return def.getType();
     }
     
     

@@ -82,7 +82,14 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass, 
             Type expectedType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type actualType = verifyExpr(compiler, localEnv, currentClass);
+        if (expectedType.isFloat() && actualType.isInt()) {
+            return new ConvFloat(this);
+        }
+        if (!expectedType.sameType(actualType)) {
+            throw new ContextualError("Incompatible right value", getLocation());
+        }
+        return this;
     }
     
     
@@ -90,7 +97,7 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        verifyExpr(compiler, localEnv, currentClass);
     }
 
     /**
@@ -105,7 +112,10 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type t = verifyExpr(compiler, localEnv, currentClass);
+        if (!t.isBoolean()) {
+            throw new ContextualError("Condition must be boolean", getLocation());
+        }
     }
 
     /**
