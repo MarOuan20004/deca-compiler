@@ -20,18 +20,22 @@ DUMMY_TOKEN: .; // A FAIRE : Règle bidon qui reconnait tous les caractères.
 //Mots-clés :
 TRUE : 'true';
 FALSE : 'false';
+INT : 'int';
+FLOAT :'float';
 IF : 'if';
 ELSE :'else';
 WHILE : 'while';
 READINT : 'readInt';
 READFLOAT : 'readFloat';
-BOOLEAN : 'boolean';
+BOOLEAN : 'boolean' | TRUE |FALSE;
 PRINTLN : 'println';
 PRINT : 'print';
+PRINTX : 'printx';
+PRINTLNX :'printlnx';
 
  
 //Opérateurs  :
-EQ: '==' ; 
+EQEQ: '==' ; 
 NEQ : '!=' ;
 AND : '&&';
 GE : '>=';
@@ -51,9 +55,9 @@ DOT : '.';
 
 //Les litteraux : 
 fragment POSITIVE_DIGIT : '1' .. '9' ;
-INT : '0' | POSITIVE_DIGIT DIGIT* | 'int' ;
+INT_LITERAL : '0' | POSITIVE_DIGIT DIGIT*  ;
 fragment NUM : DIGIT+;
-FLOAT : NUM '.' NUM | 'float';
+FLOAT_LITERAL : NUM '.' NUM  ;
 STRING : '"' ( '\\' . | ~('\\'|'"') )* '"';
 
 
