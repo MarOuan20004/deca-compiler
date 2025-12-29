@@ -1,0 +1,6 @@
+{
+  int x;
+  x = readInt();
+  println(x);
+  int y = 3 ;
+}
