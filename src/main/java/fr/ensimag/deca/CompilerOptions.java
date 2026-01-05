@@ -43,7 +43,8 @@ public class CompilerOptions {
 
     
     public void parseArgs(String[] args) throws CLIException {
-        for (String arg : args) {
+        for (int i=0; i < args.length; i++) {
+            String arg = args[i];
             if ("-v".equals(arg)) {
                 debug = Math.max(debug, INFO);
             } else if ("-d".equals(arg)) {
@@ -52,6 +53,22 @@ public class CompilerOptions {
                 parallel = true;
             } else if ("-b".equals(arg)) {
                 printBanner = true;
+            } else if ("-r".equals(arg)) {
+                if (i + 1 >= args.length) {
+                    throw new CLIException("Option -r nécessite un argument");
+                }
+                i++;
+                try {
+                    int n = Integer.parseInt(args[i]);
+                    if (n < 4 || n > 16) {
+                        throw new CLIException("Le nombre de registres doit être entre 4 et 16");
+                    }
+                    // Configurer le gestionnaire de registres avec n registres
+                    RegisterManager registerManager = new RegisterManager();
+                    registerManager.setNbrRegistresMax(n);
+                } catch (NumberFormatException e) {
+                    throw new CLIException("Argument invalide pour l'option -r : " + args[i]);
+                }
             } else if (arg.startsWith("-")) {
                 throw new CLIException("Option non reconnue : " + arg);
             } else {

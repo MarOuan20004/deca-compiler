@@ -46,10 +46,10 @@ public class ListInst extends TreeList<AbstractInst> {
         }
     }
     public int maxTemp() {
-    int max = 0;
-    for (AbstractInst inst : getList()) {
-        max = Math.max(max, inst.maxTemp());
+        int max = 0;
+        for (AbstractInst inst : getList()) {
+            max = Math.max(max, inst.maxTemp());
+        }
+        return max;
     }
-    return max;
-}
 }

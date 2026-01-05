@@ -244,4 +244,11 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
 
+    private RegisterManager registerManager = new RegisterManager();
+
+    public RegisterManager getRegisterManager() {
+        return registerManager;
+    }
+
+
 }
