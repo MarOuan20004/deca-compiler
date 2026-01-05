@@ -34,4 +34,15 @@ public class ConvFloat extends AbstractUnaryExpr {
         return "/* conv float */";
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        // Générer le code de l'opérande dans un registre temporaire
+        fr.ensimag.ima.pseudocode.GPRegister tempReg = compiler.getRegisterManager().allocateRegister();
+        getOperand().codeGenExpr(compiler, tempReg);
+        // Ajouter l'instruction de conversion
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.FLOAT(tempReg, r));
+        // Libérer le registre temporaire
+        compiler.getRegisterManager().freeRegister(tempReg);
+    }
+
 }

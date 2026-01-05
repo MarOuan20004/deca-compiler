@@ -51,7 +51,7 @@ public class Main extends AbstractMain {
         
         compiler.addComment("Beginning of main instructions:");
         // Gestion des variables locales avec offset
-        int offset = 0; // début du GB pour ce bloc
+        int offset = 1; // début du GB pour ce bloc
         for (AbstractDeclVar decl : declVariables.getList()) {
             offset = ((DeclVar) decl).codeGenDeclVar(compiler, offset);
         }

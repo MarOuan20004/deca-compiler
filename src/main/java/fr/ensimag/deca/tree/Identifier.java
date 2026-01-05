@@ -15,6 +15,10 @@ import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -225,6 +229,14 @@ public class Identifier extends AbstractIdentifier {
             s.print(d);
             s.println();
         }
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        // Récupérer la définition de la variable
+        VariableDefinition def = getVariableDefinition();
+        // Charger la valeur depuis l'opérande (GB) vers le registre r
+        compiler.addInstruction(new LOAD(def.getOperand(), r));
     }
 
 }

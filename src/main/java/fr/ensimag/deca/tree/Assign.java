@@ -42,4 +42,10 @@ public class Assign extends AbstractBinaryExpr {
         return "=";
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        // Générer le code de l'expression de droite dans le registre r
+
+    }
+
 }

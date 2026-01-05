@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
 
 /**
  *
@@ -10,6 +11,11 @@ public abstract class AbstractOpExactCmp extends AbstractOpCmp {
 
     public AbstractOpExactCmp(AbstractExpr leftOperand, AbstractExpr rightOperand) {
         super(leftOperand, rightOperand);
+    }
+
+    @Override
+    public void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
 

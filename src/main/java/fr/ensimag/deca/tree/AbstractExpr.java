@@ -7,9 +7,13 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
+
 
 /**
  * Expression, i.e. anything that has a value.
@@ -124,7 +128,14 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        GPRegister r = Register.R1; // On utilise R1 par convention pour l'affichage
+        this.codeGenExpr(compiler, r);
+        if (this.getType().isInt()) {
+            compiler.addInstruction(new WINT());
+        } else {
+            compiler.addInstruction(new WFLOAT());
+        }
+
     }
 
     @Override
@@ -149,6 +160,10 @@ public abstract class AbstractExpr extends AbstractInst {
             s.println();
         }
     }
-    protected abstract void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister target);
 
+    protected abstract void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r);
 }
+
+
+
+

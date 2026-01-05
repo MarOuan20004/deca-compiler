@@ -39,4 +39,10 @@ public class ReadFloat extends AbstractReadExpr {
         // leaf node => nothing to do
     }
 
+    @Override
+    public void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.RFLOAT());
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(fr.ensimag.ima.pseudocode.Register.R1, r));
+    }
+
 }

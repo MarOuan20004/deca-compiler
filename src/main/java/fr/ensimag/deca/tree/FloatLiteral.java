@@ -59,4 +59,9 @@ public class FloatLiteral extends AbstractExpr {
         // leaf node => nothing to do
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(new fr.ensimag.ima.pseudocode.ImmediateFloat(value), r));
+    }
+
 }

@@ -30,4 +30,9 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
         throw new ContextualError("Operations non compatibles pour les booléens", getLocation());
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
 }

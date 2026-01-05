@@ -59,6 +59,10 @@ public class TestPlusWithoutMock {
         public void checkProperUse() {
             assertTrue(hasBeenVerified, "verifyExpr has not been called");
         }
+        @Override
+        protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+            throw new UnsupportedOperationException("Not yet implemented");
+        }
     }
 
     @Test

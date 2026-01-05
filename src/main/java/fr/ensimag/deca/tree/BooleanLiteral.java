@@ -53,4 +53,13 @@ public class BooleanLiteral extends AbstractExpr {
         return "BooleanLiteral (" + value + ")";
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        if (value) {
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(1, r));
+        } else {
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(0, r));
+        }
+    }
+
 }

@@ -36,4 +36,9 @@ public class Modulo extends AbstractOpArith {
         return "%";
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
 }

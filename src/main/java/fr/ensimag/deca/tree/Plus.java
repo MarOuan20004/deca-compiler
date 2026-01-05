@@ -21,25 +21,33 @@ public class Plus extends AbstractOpArith {
     protected String getOperatorName() {
         return "+";
     }
+    
     @Override
-    protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
-        // évaluer l'opérande gauche
-        getLeftOperand().codeGenExpr(compiler, GPRegister.R0);
-        compiler.addInstruction(new PUSH(GPRegister.R0)); // sauvegarder temporaire
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {
+        // 1. Charger x dans le registre cible r (ex: R2)
+        getLeftOperand().codeGenExpr(compiler, r); 
 
-        // évaluer l'opérande droit
-        getRightOperand().codeGenExpr(compiler, GPRegister.R0);
-
-        // récupérer opérande gauche
-        compiler.addInstruction(new POP(GPRegister.R1));
-
-        // appliquer l'opération
-        compiler.addInstruction(new ADD(GPRegister.R1, GPRegister.R0)); 
-        // Copier le résultat dans target si besoin
-        if (target != GPRegister.R0) {
-            compiler.addInstruction(new LOAD(GPRegister.R0, target));
+        // 2. Utiliser un registre si disponible, sinon empiler
+        GPRegister r2=compiler.getRegisterManager().allocateRegister();
+        if(r2!=null) {
+            getRightOperand().codeGenExpr(compiler, r2);
+            compiler.addInstruction(new ADD(r2, r));
+            compiler.getRegisterManager().freeRegister(r2);
+        } else {
+            // Empiler le registre r
+            compiler.addInstruction(new PUSH(r));
+            getRightOperand().codeGenExpr(compiler, r); 
+            // Dépiler dans un registre temporaire R0
+            GPRegister r0 = GPRegister.R0;
+            compiler.addInstruction(new LOAD(r,r0));
+            compiler.addInstruction(new POP(r));
+            compiler.addInstruction(new ADD(r0, r));
+            compiler.getRegisterManager().freeRegister(r);
+            return;
+            
         }
-
     }
 
 }
+
+

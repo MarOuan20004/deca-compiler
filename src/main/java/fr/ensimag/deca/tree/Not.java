@@ -33,4 +33,8 @@ public class Not extends AbstractUnaryExpr {
     protected String getOperatorName() {
         return "!";
     }
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

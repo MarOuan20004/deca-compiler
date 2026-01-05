@@ -10,7 +10,7 @@ public class RegisterManager {
     private Stack<Integer> libres = new Stack<>();
 
     public RegisterManager() {
-        for (int i = 2; i < nbrRegistresMax; i++) {
+        for (int i = nbrRegistresMax - 1; i >= 2; i--) {
             libres.push(i);
         }
     }
