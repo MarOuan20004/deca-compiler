@@ -7,6 +7,10 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -78,4 +82,17 @@ public class DeclVar extends AbstractDeclVar {
         varName.prettyPrint(s, prefix, false);
         initialization.prettyPrint(s, prefix, true);
     }
+    protected int codeGenDeclVar(DecacCompiler compiler, int currentOffset) {
+    VariableDefinition def = (VariableDefinition) varName.getDefinition();
+    // Chaque variable a son offset dans le GB
+    def.setOperand(new RegisterOffset(currentOffset, Register.GB));
+
+    // Calculer la valeur dans R0
+    initialization.codeGenInitialization(compiler, Register.R0);
+
+    // Stocker la valeur dans l'adresse mémoire de la variable
+    compiler.addInstruction(new STORE(Register.R0, def.getOperand()));
+
+    return currentOffset + 1; // prochain offset libre
+}
 }

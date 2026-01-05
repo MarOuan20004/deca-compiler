@@ -149,4 +149,6 @@ public abstract class AbstractExpr extends AbstractInst {
             s.println();
         }
     }
+    protected abstract void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister target);
+
 }

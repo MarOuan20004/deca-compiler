@@ -65,5 +65,10 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         leftOperand.prettyPrint(s, prefix, false);
         rightOperand.prettyPrint(s, prefix, true);
     }
+    @Override
+    public int maxTemp() {
+        return Math.max(getLeftOperand().maxTemp(), getRightOperand().maxTemp()) + 1;
+    }
+
 
 }

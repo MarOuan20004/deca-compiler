@@ -44,4 +44,8 @@ public abstract class AbstractInst extends Tree {
     protected void decompileInst(IndentPrintStream s) {
         decompile(s);
     }
+    public int maxTemp() {
+    // Par défaut, une instruction simple n’a pas besoin de registre temporaire
+    return 0;
+}
 }
