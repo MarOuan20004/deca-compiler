@@ -13,8 +13,10 @@ public abstract class AbstractOpExactCmp extends AbstractOpCmp {
         super(leftOperand, rightOperand);
     }
 
-    @Override
-    public void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+    
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r,
+        fr.ensimag.ima.pseudocode.Label labelTrue, fr.ensimag.ima.pseudocode.Label labelFalse
+    ) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 

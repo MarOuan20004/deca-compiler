@@ -42,7 +42,6 @@ public class Plus extends AbstractOpArith {
             compiler.addInstruction(new LOAD(r,r0));
             compiler.addInstruction(new POP(r));
             compiler.addInstruction(new ADD(r0, r));
-            compiler.getRegisterManager().freeRegister(r);
             return;
             
         }

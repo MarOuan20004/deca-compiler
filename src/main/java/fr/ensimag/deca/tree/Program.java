@@ -57,7 +57,6 @@ public class Program extends AbstractProgram {
         compiler.addInstruction(new WNL());
         compiler.addInstruction(new ERROR());
 
-        // Ajoute aussi l'erreur de division par zéro si tu as commencé les expressions
         compiler.addLabel(new Label("division_by_zero"));
         compiler.addInstruction(new WSTR("Error: Division by zero"));
         compiler.addInstruction(new WNL());

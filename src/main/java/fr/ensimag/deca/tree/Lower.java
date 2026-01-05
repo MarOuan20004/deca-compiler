@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
 
 /**
  *
@@ -16,6 +17,15 @@ public class Lower extends AbstractOpIneq {
     @Override
     protected String getOperatorName() {
         return "<";
+    }
+
+    @Override
+    protected void branchingInstructions(DecacCompiler compiler, fr.ensimag.ima.pseudocode.Label labelTrue,
+         fr.ensimag.ima.pseudocode.Label labelFalse) {
+        // Si leftOperand < rightOperand, on saute à labelTrue
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BLT(labelTrue));
+        // Sinon, on saute à labelFalse
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BGE(labelFalse));
     }
 
 }

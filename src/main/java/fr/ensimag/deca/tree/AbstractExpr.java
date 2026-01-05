@@ -140,7 +140,7 @@ public abstract class AbstractExpr extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        codeGenExpr(compiler, Register.R0);
     }
     
 
@@ -161,7 +161,16 @@ public abstract class AbstractExpr extends AbstractInst {
         }
     }
 
-    protected abstract void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r);
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r){
+        // laisser vide, sera redéfini dans les classes filles qui en ont besoin
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    protected void codeGenBool(DecacCompiler compiler, Label labelTrue, Label labelFalse) {
+        // laisser vide, sera redéfini dans les classes filles qui en ont besoin
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
 }
 
 
