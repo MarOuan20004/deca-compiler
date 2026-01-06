@@ -26,8 +26,8 @@ public class Modulo extends AbstractOpArith {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         // applicable only to int types
-        Type leftType = getLeftOperand().getType();
-        Type rightType = getRightOperand().getType();
+        Type leftType = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type rightType = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
         if (leftType != compiler.environmentType.INT || rightType != compiler.environmentType.INT) {
             throw new ContextualError("Modulo operator can only be applied to int types", this.getLocation());
         }
