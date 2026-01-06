@@ -437,6 +437,16 @@ type returns[AbstractIdentifier tree]
         $tree = new Identifier(getDecacCompiler().createSymbol("int"));
         setLocation($tree, $INT);
       }
+    | FLOAT {
+        $tree = new Identifier(getDecacCompiler().createSymbol("float"));
+        setLocation($tree, $FLOAT);
+      }
+
+    | BOOLEAN {
+        $tree = new Identifier(getDecacCompiler().createSymbol("boolean"));
+        setLocation($tree, $BOOLEAN);
+      }
+    
     | ident {
             assert($ident.tree != null);
         }
@@ -535,6 +545,7 @@ decl_field
     : i=ident {
         }
       (ASSIGN e=expr {
+            
         }
       )? {
         }
