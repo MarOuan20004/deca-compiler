@@ -1,0 +1,20 @@
+// Description:
+//    Blocs imbriques avec declarations.
+//
+// Resultats:
+//    test_synt accepte sans erreur.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int a;
+    a = 1;
+    {
+        int b;
+        b = a + 2;
+        println(b);
+    }
+    println(a);
+}
+

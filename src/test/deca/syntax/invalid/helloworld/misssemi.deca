@@ -1,0 +1,13 @@
+// Description:
+//    println sans point-virgule.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    println("manque")
+}
+

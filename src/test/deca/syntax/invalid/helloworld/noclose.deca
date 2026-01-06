@@ -1,0 +1,13 @@
+// Description:
+//    println sans parenthese fermante.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    println("oops";
+}
+

@@ -1,0 +1,24 @@
+// Description:
+//    Somme 1..5 pour tester boucle et registres.
+//
+// Resultats:
+//    Affiche 15.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int i;
+    int acc;
+
+    i = 1;
+    acc = 0;
+
+    while (i <= 5) {
+        acc = acc + i;
+        i = i + 1;
+    }
+
+    println(acc);
+}
+

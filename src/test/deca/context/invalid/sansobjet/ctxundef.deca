@@ -1,0 +1,15 @@
+// Description:
+//    Utilisation d'une variable non declaree.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int x;
+    x = 1;
+    y = x + 2;
+}
+

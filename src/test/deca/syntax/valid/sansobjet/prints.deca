@@ -1,0 +1,17 @@
+// Description:
+//    Suite de print et println melanges.
+//
+// Resultats:
+//    test_synt accepte; sortie non verifiee ici.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    print("A");
+    println();
+    println("B");
+    print("C");
+    print("D");
+}
+

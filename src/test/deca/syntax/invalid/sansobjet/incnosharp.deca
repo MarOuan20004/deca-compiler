@@ -1,0 +1,11 @@
+// Description:
+//    Include ecrit sans # initial.
+//
+// Resultats:
+//    test_lex OK, erreur syntaxique attendue ligne 10.
+//
+// Historique:
+//    cree le 06/01/2026
+
+include "fichier_ok.deca"
+

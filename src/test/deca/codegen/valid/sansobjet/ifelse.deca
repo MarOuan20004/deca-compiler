@@ -1,0 +1,19 @@
+// Description:
+//    If/else avec impressions distinctes.
+//
+// Resultats:
+//    Affiche OK.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int n;
+    n = 2;
+    if (n == 2) {
+        println("OK");
+    } else {
+        println("KO");
+    }
+}
+

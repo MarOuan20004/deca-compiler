@@ -1,0 +1,23 @@
+// Description:
+//    Conversions int -> float et comparaisons coherentes.
+//
+// Resultats:
+//    Aucune erreur contextuelle.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int i;
+    float f;
+    boolean ok;
+
+    i = 2;
+    f = i + 1.5;
+    ok = (f >= 3.0) && (i < 5);
+
+    if (ok) {
+        println(f);
+    }
+}
+

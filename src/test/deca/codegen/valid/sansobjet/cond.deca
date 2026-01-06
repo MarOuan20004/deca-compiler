@@ -1,0 +1,19 @@
+// Description:
+//    Condition simple pour gencode.
+//
+// Resultats:
+//    Affiche 1.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int a;
+    a = 3;
+    if (a > 1) {
+        println(1);
+    } else {
+        println(0);
+    }
+}
+

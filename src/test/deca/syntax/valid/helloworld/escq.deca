@@ -1,0 +1,13 @@
+// Description:
+//    println avec guillemets echappes.
+//
+// Resultats:
+//    test_synt accepte; affiche: He said "ok".
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    println("He said \"ok\"");
+}
+

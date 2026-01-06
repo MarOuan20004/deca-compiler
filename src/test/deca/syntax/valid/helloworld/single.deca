@@ -1,0 +1,13 @@
+// Description:
+//    Bloc avec une seule instruction.
+//
+// Resultats:
+//    test_synt OK, affiche une ligne.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    println("unique");
+}
+

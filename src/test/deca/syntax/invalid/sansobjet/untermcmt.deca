@@ -1,0 +1,14 @@
+// Description:
+//    Commentaire bloc non termine.
+//
+// Resultats:
+//    Erreur lexicale attendue.
+//
+// Historique:
+//    cree le 06/01/2026
+
+/* debut sans fin
+{
+    println(1);
+}
+

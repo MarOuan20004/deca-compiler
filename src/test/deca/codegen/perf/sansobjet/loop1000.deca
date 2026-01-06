@@ -1,0 +1,22 @@
+// Description:
+//    Boucle longue pour -s.
+//
+// Resultats:
+//    Affiche 499500.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int i;
+    int acc;
+
+    i = 0;
+    acc = 0;
+    while (i < 1000) {
+        acc = acc + i;
+        i = i + 1;
+    }
+    println(acc);
+}
+

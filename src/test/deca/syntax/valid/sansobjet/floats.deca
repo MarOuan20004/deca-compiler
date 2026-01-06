@@ -1,0 +1,17 @@
+// Description:
+//    Declarations et affectations flottantes.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    float x;
+    float y;
+    x = 1.5;
+    y = x + 2.25;
+    println(y);
+}
+

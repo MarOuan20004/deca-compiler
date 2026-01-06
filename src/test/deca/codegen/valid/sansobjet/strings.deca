@@ -1,0 +1,18 @@
+// Description:
+//    Melange print/println avec chaine et entier.
+//
+// Resultats:
+//    Affiche 'Val=' puis 'Val=7'.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int v;
+    v = 7;
+    print("Val=");
+    println();
+    print("Val=");
+    println(v);
+}
+

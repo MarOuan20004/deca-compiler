@@ -1,0 +1,15 @@
+// Description:
+//    Expressions arithmetiques avec priorites.
+//
+// Resultats:
+//    test_synt accepte; aucun objet.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int x;
+    x = 2 + 3 * 4 - 5;
+    println(x);
+}
+

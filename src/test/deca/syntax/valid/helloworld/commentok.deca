@@ -1,0 +1,12 @@
+// Description:
+//    Commentaire imbrique correctement ferme.
+//
+// Resultats:
+//    Aucun noeud, pas d'erreur lexicale.
+//
+// Historique:
+//    cree le 06/01/2026
+
+/* bloc /* sous bloc */
+fin */
+

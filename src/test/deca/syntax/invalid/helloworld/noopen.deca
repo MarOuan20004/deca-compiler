@@ -1,0 +1,13 @@
+// Description:
+//    println sans parenthese ouvrante.
+//
+// Resultats:
+//    Erreur syntaxique attendue sur l'appel.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    println"oops");
+}
+

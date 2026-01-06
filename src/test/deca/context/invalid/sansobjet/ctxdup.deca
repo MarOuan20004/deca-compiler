@@ -1,0 +1,15 @@
+// Description:
+//    Declaration en double du meme identificateur.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int x;
+    int x;
+    println(0);
+}
+

@@ -1,0 +1,23 @@
+// Description:
+//    Expression longue pour solliciter plusieurs registres.
+//
+// Resultats:
+//    Affiche 23.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int a;
+    int b;
+    int c;
+    int d;
+
+    a = 1;
+    b = 2;
+    c = 3;
+    d = 4;
+
+    println((a + b) * (c + d) + (a * c) + (b * d));
+}
+

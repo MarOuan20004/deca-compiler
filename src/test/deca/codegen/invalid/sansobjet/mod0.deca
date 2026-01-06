@@ -1,0 +1,17 @@
+// Description:
+//    Modulo par zero.
+//
+// Resultats:
+//    Erreur d'execution attendue.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int a;
+    int b;
+    a = 5;
+    b = 0;
+    println(a % b);
+}
+

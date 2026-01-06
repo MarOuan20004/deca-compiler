@@ -1,0 +1,17 @@
+// Description:
+//    Condition if avec un int au lieu d'un boolean.
+//
+// Resultats:
+//    Erreur contextuelle attendue sur la condition.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int a;
+    a = 1;
+    if (a) {
+        println(1);
+    }
+}
+

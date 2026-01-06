@@ -1,0 +1,12 @@
+// Description:
+//    Accolade fermante manquante.
+//
+// Resultats:
+//    Erreur syntaxique en fin de fichier.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    println("bloc");
+

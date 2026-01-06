@@ -1,0 +1,17 @@
+// Description:
+//    Affectation d'un float dans un int sans conversion.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int x;
+    float y;
+
+    y = 3.5;
+    x = y;
+}
+

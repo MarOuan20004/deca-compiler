@@ -1,0 +1,20 @@
+// Description:
+//    Calcul arithmetique chaine.
+//
+// Resultats:
+//    Affiche 38.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int a;
+    int b;
+    int c;
+
+    a = 2;
+    b = 4;
+    c = (a + b) * (b + 3);
+    println(c + a);
+}
+

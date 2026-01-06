@@ -1,0 +1,19 @@
+// Description:
+//    If / else simple sur des entiers.
+//
+// Resultats:
+//    test_synt accepte la structure conditionnelle.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int n;
+    n = 3;
+    if (n > 0) {
+        println(1);
+    } else {
+        println(0);
+    }
+}
+

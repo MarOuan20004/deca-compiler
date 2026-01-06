@@ -1,0 +1,23 @@
+// Description:
+//    Expressions booleennes et comparaisons valides.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int a;
+    int b;
+    boolean same;
+
+    a = 3;
+    b = 3;
+    same = (a == b) || false;
+
+    if (same && (a <= b)) {
+        println(1);
+    }
+}
+

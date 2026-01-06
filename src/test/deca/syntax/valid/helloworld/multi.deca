@@ -1,0 +1,17 @@
+// Description:
+//    Plusieurs instructions println.
+//
+// Resultats:
+//    Affiche cinq lignes numerotees.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    println("1st");
+    println("2nd");
+    println("3rd");
+    println("4th");
+    println("5th");
+}
+

@@ -1,0 +1,17 @@
+// Description:
+//    Addition int + boolean interdite.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    boolean b;
+    int x;
+
+    b = true;
+    x = b + 1;
+}
+

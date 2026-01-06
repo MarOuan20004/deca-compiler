@@ -1,0 +1,22 @@
+// Description:
+//    Imbrication de if et while sans objets.
+//
+// Resultats:
+//    test_synt accepte la structure.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int i;
+    i = 0;
+    while (i < 2) {
+        if (i == 0) {
+            println("zero");
+        } else {
+            println("autre");
+        }
+        i = i + 1;
+    }
+}
+

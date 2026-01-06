@@ -1,0 +1,17 @@
+// Description:
+//    Operation modulo et affichage.
+//
+// Resultats:
+//    Affiche 1.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int a;
+    int b;
+    a = 7;
+    b = 3;
+    println(a % b);
+}
+

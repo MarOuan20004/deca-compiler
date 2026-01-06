@@ -1,0 +1,17 @@
+// Description:
+//    Expressions logiques et comparaisons.
+//
+// Resultats:
+//    test_synt accepte; sans objet.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    boolean b;
+    b = (1 < 2) && (3 >= 3) || false;
+    if (b) {
+        println(1);
+    }
+}
+

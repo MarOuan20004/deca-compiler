@@ -1,0 +1,13 @@
+// Description:
+//    Exemple valide pour l'etape B (sans objet).
+//
+// Resultats:
+//    Aucun message d'erreur contextuelle.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    println("Bonjour !");
+}
+

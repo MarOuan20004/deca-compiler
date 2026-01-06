@@ -1,0 +1,17 @@
+// Description:
+//    Division par zero a l'execution.
+//
+// Resultats:
+//    Erreur d'execution attendue sur la division.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int x;
+    int y;
+    x = 12;
+    y = 0;
+    println(x / y);
+}
+
