@@ -18,7 +18,9 @@ public class ReadFloat extends AbstractReadExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type type = compiler.environmentType.FLOAT;
+        this.setType(type);
+        return type;
     }
 
 
@@ -35,6 +37,12 @@ public class ReadFloat extends AbstractReadExpr {
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do
+    }
+
+    @Override
+    public void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.RFLOAT());
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(fr.ensimag.ima.pseudocode.Register.R1, r));
     }
 
 }

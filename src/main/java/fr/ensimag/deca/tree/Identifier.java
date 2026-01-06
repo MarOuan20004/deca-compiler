@@ -11,9 +11,14 @@ import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -167,7 +172,14 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        ExpDefinition def = localEnv.get(name);
+        if (def == null) {
+            throw new ContextualError("Undefined identifier", getLocation());
+        }
+        setDefinition(def);
+        Type t = def.getType();
+        setType(t);
+        return t;
     }
 
     /**
@@ -176,7 +188,12 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        TypeDefinition def = compiler.environmentType.defOfType(name);
+        if (def == null) {
+            throw new ContextualError("Unknown type", getLocation());
+        }
+        setDefinition(def);
+        return def.getType();
     }
     
     
@@ -214,4 +231,28 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        // Récupérer la définition de la variable
+        VariableDefinition def = getVariableDefinition();
+        // Charger la valeur depuis l'opérande (GB) vers le registre r
+        compiler.addInstruction(new LOAD(def.getOperand(), r));
+    }
+
+    @Override
+    protected void codeGenBool(DecacCompiler compiler,
+         fr.ensimag.ima.pseudocode.GPRegister r,
+         fr.ensimag.ima.pseudocode.Label labelTrue, 
+         fr.ensimag.ima.pseudocode.Label labelFalse
+    ) {
+        // Générer le code pour évaluer l'expression
+        this.codeGenExpr(compiler, r);
+        // Comparer la valeur dans le registre r avec 0
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.CMP(new fr.ensimag.ima.pseudocode.ImmediateInteger(0), r));
+        // Sauter au label approprié en fonction du résultat de la comparaison
+        if (labelTrue != null)
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BNE(labelTrue));
+        if (labelFalse != null)
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BEQ(labelFalse));
+    }
 }

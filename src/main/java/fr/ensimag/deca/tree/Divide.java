@@ -1,5 +1,19 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.instructions.ADD;
+import fr.ensimag.ima.pseudocode.instructions.DIV;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.MUL;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.QUO;
+import fr.ensimag.ima.pseudocode.instructions.SUB;
 
 /**
  *
@@ -17,4 +31,69 @@ public class Divide extends AbstractOpArith {
         return "/";
     }
 
+    @Override
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
+            ClassDefinition currentClass) throws ContextualError {
+
+        Type left = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type right = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        if (left.isInt() && right.isInt()) {
+            ConvFloat convL = new ConvFloat(this.getLeftOperand());
+            this.setLeftOperand(convL);
+            convL.verifyExpr(compiler, localEnv, currentClass);
+
+            ConvFloat convR = new ConvFloat(this.getRightOperand());
+            this.setRightOperand(convR);
+            convR.verifyExpr(compiler, localEnv, currentClass);
+
+            this.setType(compiler.environmentType.FLOAT);
+        } 
+        else if (left.isFloat() || right.isFloat()) {
+            // On convertit int en float
+            if (left.isInt()) {
+                ConvFloat convL = new ConvFloat(this.getLeftOperand());
+                this.setLeftOperand(convL);
+                convL.verifyExpr(compiler, localEnv, currentClass);
+            } else if (right.isInt()) {
+                ConvFloat convR = new ConvFloat(this.getRightOperand());
+                this.setRightOperand(convR);
+                convR.verifyExpr(compiler, localEnv, currentClass);
+            }
+            this.setType(compiler.environmentType.FLOAT);
+        } 
+        else {
+            throw new ContextualError("Division impossible entre types " + left + " et " + right, 
+                                    this.getLocation());
+        }
+
+        return this.getType();
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {
+        // Calcul de l’opérande gauche dans r
+        getLeftOperand().codeGenExpr(compiler, r);
+
+        GPRegister r2 = compiler.getRegisterManager().allocateRegister();
+
+        if (r2 != null) {
+            // Cas registre
+            getRightOperand().codeGenExpr(compiler, r2);
+            compiler.addInstruction(new DIV(r2, r)); // r = gauche / droite
+            compiler.getRegisterManager().freeRegister(r2);
+        } else {
+            // Cas pile
+            compiler.addInstruction(new PUSH(r));          // sauver gauche
+            getRightOperand().codeGenExpr(compiler, r);    // r = droite
+            compiler.addInstruction(new POP(GPRegister.R0)); // R0 = gauche
+            if(getType().isInt()) {
+                compiler.addInstruction(new QUO(GPRegister.R0, r));
+            }
+            else {
+                compiler.addInstruction(new DIV(r, GPRegister.R0)); // R0 = gauche / droite
+            }
+                compiler.addInstruction(new LOAD(GPRegister.R0, r)); // r = résultat
+        }
+    }
 }

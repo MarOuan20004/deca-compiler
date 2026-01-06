@@ -2,7 +2,13 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.TSTO;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -27,16 +33,32 @@ public class Main extends AbstractMain {
     @Override
     protected void verifyMain(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify Main: start");
-        // A FAIRE: Appeler méthodes "verify*" de ListDeclVarSet et ListInst.
-        // Vous avez le droit de changer le profil fourni pour ces méthodes
-        // (mais ce n'est à priori pas nécessaire).
+        EnvironmentExp localEnv = new EnvironmentExp(null);
+        declVariables.verifyListDeclVariable(compiler, localEnv, null);
+        insts.verifyListInst(compiler, localEnv, null, compiler.environmentType.VOID);
         LOG.debug("verify Main: end");
-        throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
-        // A FAIRE: traiter les déclarations de variables.
+        // traiter les déclarations de variables.
+        //  calculer le nombre de variables
+        int nbVar = declVariables.getList().size();
+
+        // calculer le nombre maximal de temporaires
+        int maxTemps = insts.maxTemp(); // implémenter maxTemp() dans ListInst
+
+        int d = nbVar + maxTemps;
+
+        compiler.addInstruction(new TSTO(d));
+        compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
+        compiler.addInstruction(new ADDSP(nbVar));
+        compiler.addComment("Variables Declarations ");
+        // Gestion des variables locales avec offset
+        int offset = 1; // début du GB pour ce bloc
+        for (AbstractDeclVar decl : declVariables.getList()) {
+            offset = ((DeclVar) decl).codeGenDeclVar(compiler, offset);
+        }
         compiler.addComment("Beginning of main instructions:");
         insts.codeGenListInst(compiler);
     }

@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 
 /**
@@ -18,14 +19,30 @@ public class ConvFloat extends AbstractUnaryExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) {
-        throw new UnsupportedOperationException("not yet implemented");
+            ClassDefinition currentClass) throws ContextualError {
+        Type t = getOperand().verifyExpr(compiler, localEnv, currentClass);
+        if (!t.isInt()) {
+            throw new ContextualError("Conversion requires int", getLocation());
+        }
+        setType(compiler.environmentType.FLOAT);
+        return compiler.environmentType.FLOAT;
     }
 
 
     @Override
     protected String getOperatorName() {
         return "/* conv float */";
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        // Générer le code de l'opérande dans un registre temporaire
+        fr.ensimag.ima.pseudocode.GPRegister tempReg = compiler.getRegisterManager().allocateRegister();
+        getOperand().codeGenExpr(compiler, tempReg);
+        // Ajouter l'instruction de conversion
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.FLOAT(tempReg, r));
+        // Libérer le registre temporaire
+        compiler.getRegisterManager().freeRegister(tempReg);
     }
 
 }

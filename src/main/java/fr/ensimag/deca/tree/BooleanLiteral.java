@@ -28,7 +28,8 @@ public class BooleanLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        setType(compiler.environmentType.BOOLEAN);
+        return compiler.environmentType.BOOLEAN;
     }
 
 
@@ -50,6 +51,15 @@ public class BooleanLiteral extends AbstractExpr {
     @Override
     String prettyPrintNode() {
         return "BooleanLiteral (" + value + ")";
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        if (value) {
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(1, r));
+        } else {
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(0, r));
+        }
     }
 
 }

@@ -7,9 +7,13 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
+
 
 /**
  * Expression, i.e. anything that has a value.
@@ -82,7 +86,14 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass, 
             Type expectedType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type actualType = verifyExpr(compiler, localEnv, currentClass);
+        if (expectedType.isFloat() && actualType.isInt()) {
+            return new ConvFloat(this);
+        }
+        if (!expectedType.sameType(actualType)) {
+            throw new ContextualError("Incompatible right value", getLocation());
+        }
+        return this;
     }
     
     
@@ -90,7 +101,7 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        verifyExpr(compiler, localEnv, currentClass);
     }
 
     /**
@@ -105,7 +116,10 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type t = verifyExpr(compiler, localEnv, currentClass);
+        if (!t.isBoolean()) {
+            throw new ContextualError("Condition must be boolean", getLocation());
+        }
     }
 
     /**
@@ -114,12 +128,19 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        GPRegister r = Register.R1; // On utilise R1 par convention pour l'affichage
+        this.codeGenExpr(compiler, r);
+        if (this.getType().isInt()) {
+            compiler.addInstruction(new WINT());
+        } else {
+            compiler.addInstruction(new WFLOAT());
+        }
+
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        codeGenExpr(compiler, Register.R0);
     }
     
 
@@ -139,4 +160,23 @@ public abstract class AbstractExpr extends AbstractInst {
             s.println();
         }
     }
+
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r){
+        // laisser vide, sera redéfini dans les classes filles qui en ont besoin
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    protected void codeGenBool(DecacCompiler compiler,
+         fr.ensimag.ima.pseudocode.GPRegister r,
+         fr.ensimag.ima.pseudocode.Label labelTrue, 
+         fr.ensimag.ima.pseudocode.Label labelFalse
+    ) {
+        // laisser vide, sera redéfini dans les classes filles qui en ont besoin
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
 }
+
+
+
+
