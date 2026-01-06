@@ -2,7 +2,9 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.instructions.ADD;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.MUL;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.SUB;
@@ -21,25 +23,26 @@ public class Minus extends AbstractOpArith {
     protected String getOperatorName() {
         return "-";
     }
-    @Override
-    protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
-        // évaluer l'opérande gauche
-        getLeftOperand().codeGenExpr(compiler, GPRegister.R0);
-        compiler.addInstruction(new PUSH(GPRegister.R0)); // sauvegarder temporaire
+   @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {
+        // Calcul de l’opérande gauche dans r
+        getLeftOperand().codeGenExpr(compiler, r);
 
-        // évaluer l'opérande droit
-        getRightOperand().codeGenExpr(compiler, GPRegister.R0);
+        GPRegister r2 = compiler.getRegisterManager().allocateRegister();
 
-        // récupérer opérande gauche
-        compiler.addInstruction(new POP(GPRegister.R1));
-
-        // appliquer l'opération
-        compiler.addInstruction(new SUB(GPRegister.R1, GPRegister.R0)); 
-        // Copier le résultat dans target si besoin
-        if (target != GPRegister.R0) {
-            compiler.addInstruction(new LOAD(GPRegister.R0, target));
+        if (r2 != null) {
+            // Cas registre
+            getRightOperand().codeGenExpr(compiler, r2);
+            compiler.addInstruction(new SUB(r2, r)); // r = gauche - droite
+            compiler.getRegisterManager().freeRegister(r2);
+        } else {
+            // Cas pile
+            compiler.addInstruction(new PUSH(r));          // sauver gauche
+            getRightOperand().codeGenExpr(compiler, r);    // r = droite
+            compiler.addInstruction(new POP(GPRegister.R0)); // R0 = gauche
+            compiler.addInstruction(new SUB(r, GPRegister.R0)); // R0 = gauche - droite
+            compiler.addInstruction(new LOAD(GPRegister.R0, r)); // r = résultat
         }
-
     }
-    
+
 }
