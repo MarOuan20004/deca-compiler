@@ -36,7 +36,22 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        Label labelLoop = new Label("while_" + hashCode());
+        Label labelEnd = new Label("while_end_" + hashCode());
+        
+        compiler.addLabel(labelLoop);
+        
+        fr.ensimag.ima.pseudocode.GPRegister reg = compiler.getRegisterManager().allocateRegister();
+        condition.codeGenExpr(compiler, reg);
+        compiler.getRegisterManager().freeRegister(reg);
+        
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BEQ(labelEnd));
+        
+        body.codeGenListInst(compiler);
+        
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BRA(labelLoop));
+        
+        compiler.addLabel(labelEnd);
     }
 
     @Override

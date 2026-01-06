@@ -1,0 +1,43 @@
+; start main program
+; Main program
+	TSTO #1
+	BOV stack_overflow_error
+	ADDSP #1
+; Variables Declarations 
+	LOAD #5, R0
+	STORE R0, 1(GB)
+; Beginning of main instructions:
+	LOAD 1(GB), R2
+	LOAD #3, R3
+	CMP R3, R2
+	BGT E_True0
+	LOAD #0, R2
+	BRA E_End1
+E_True0:
+	LOAD #1, R2
+E_End1:
+	BEQ else_1752203484
+	LOAD #100, R1
+	WINT
+	WNL
+	BRA end_if_1752203484
+else_1752203484:
+	LOAD #200, R1
+	WINT
+	WNL
+end_if_1752203484:
+	HALT
+; Gestion des erreurs
+stack_overflow_error:
+	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+division_by_zero:
+	WSTR "Error: Division by zero"
+	WNL
+	ERROR
+; end main program
