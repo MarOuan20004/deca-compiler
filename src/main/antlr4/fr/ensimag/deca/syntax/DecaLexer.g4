@@ -52,6 +52,7 @@ OR: '||';
 NOT : '!';
 COMMA : ',';
 DOT : '.';
+MOD : '%';
 
 //Les litteraux : 
 fragment POSITIVE_DIGIT : '1' .. '9' ;

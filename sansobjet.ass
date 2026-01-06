@@ -9,7 +9,7 @@
 ; Beginning of main instructions:
 	LOAD 1(GB), R1
 	LOAD #3, R2
-	ADD R2, R1
+	DIV R2, R1
 	WINT
 	WNL
 	HALT

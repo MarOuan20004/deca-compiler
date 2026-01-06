@@ -316,13 +316,15 @@ mult_expr returns[AbstractExpr tree]
             assert($e2.tree != null);
             $tree = new Multiply($e1.tree, $e2.tree);
         }
-    | e1=mult_expr SLASH e2=unary_expr {
+    | e1=mult_expr DIV e2=unary_expr {
             assert($e1.tree != null);                                         
             assert($e2.tree != null);
+            $tree= new Divide($e1.tree, $e2.tree);
         }
-    | e1=mult_expr PERCENT e2=unary_expr {
+    | e1=mult_expr MOD e2=unary_expr {
             assert($e1.tree != null);                                                                          
             assert($e2.tree != null);
+            $tree= new Modulo($e1.tree, $e2.tree);
         }
     ;
 
