@@ -20,7 +20,7 @@ public class Not extends AbstractUnaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        Type type = this.getOperand().getType();
+        Type type = this.getOperand().verifyExpr(compiler, localEnv, currentClass);
         if (type != compiler.environmentType.BOOLEAN) {
             throw new ContextualError("Logical not can only be applied to boolean", this.getLocation());
         }
@@ -33,8 +33,30 @@ public class Not extends AbstractUnaryExpr {
     protected String getOperatorName() {
         return "!";
     }
+
     @Override
     protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
-        throw new UnsupportedOperationException("Not yet implemented");
+
+        fr.ensimag.ima.pseudocode.Label labelTrue = new fr.ensimag.ima.pseudocode.Label("E_True" + compiler.getLabelCounter());
+        fr.ensimag.ima.pseudocode.Label labelEnd = new fr.ensimag.ima.pseudocode.Label("E_End" + compiler.getLabelCounter());
+        // Générer le code pour l'opérande avec les labels inversés
+        getOperand().codeGenBool(compiler, r, labelTrue, null);
+        // Si l'opérande est faux, on met 1 dans r
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(1, r));
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BRA(labelEnd));
+        // on met 0 dans r
+        compiler.addLabel(labelTrue);
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(0, r));
+        compiler.addLabel(labelEnd);
+    }
+
+    @Override
+    protected void codeGenBool(DecacCompiler compiler,
+         fr.ensimag.ima.pseudocode.GPRegister r,
+         fr.ensimag.ima.pseudocode.Label labelTrue, 
+         fr.ensimag.ima.pseudocode.Label labelFalse
+    ) {
+        // Inverser les labels pour le not
+        getOperand().codeGenBool(compiler, r, labelFalse, labelTrue);
     }
 }

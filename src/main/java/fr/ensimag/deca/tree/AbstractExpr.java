@@ -166,7 +166,11 @@ public abstract class AbstractExpr extends AbstractInst {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    protected void codeGenBool(DecacCompiler compiler, Label labelTrue, Label labelFalse) {
+    protected void codeGenBool(DecacCompiler compiler,
+         fr.ensimag.ima.pseudocode.GPRegister r,
+         fr.ensimag.ima.pseudocode.Label labelTrue, 
+         fr.ensimag.ima.pseudocode.Label labelFalse
+    ) {
         // laisser vide, sera redéfini dans les classes filles qui en ont besoin
         throw new UnsupportedOperationException("Not yet implemented");
     }

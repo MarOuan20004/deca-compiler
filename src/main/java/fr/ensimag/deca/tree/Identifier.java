@@ -239,4 +239,20 @@ public class Identifier extends AbstractIdentifier {
         compiler.addInstruction(new LOAD(def.getOperand(), r));
     }
 
+    @Override
+    protected void codeGenBool(DecacCompiler compiler,
+         fr.ensimag.ima.pseudocode.GPRegister r,
+         fr.ensimag.ima.pseudocode.Label labelTrue, 
+         fr.ensimag.ima.pseudocode.Label labelFalse
+    ) {
+        // Générer le code pour évaluer l'expression
+        this.codeGenExpr(compiler, r);
+        // Comparer la valeur dans le registre r avec 0
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.CMP(new fr.ensimag.ima.pseudocode.ImmediateInteger(0), r));
+        // Sauter au label approprié en fonction du résultat de la comparaison
+        if (labelTrue != null)
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BNE(labelTrue));
+        if (labelFalse != null)
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BEQ(labelFalse));
+    }
 }

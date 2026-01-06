@@ -22,10 +22,12 @@ public class NotEquals extends AbstractOpExactCmp {
     @Override
     protected void branchingInstructions(DecacCompiler compiler, fr.ensimag.ima.pseudocode.Label labelTrue,
          fr.ensimag.ima.pseudocode.Label labelFalse) {
-        // Si les valeurs sont différentes, on saute à labelTrue
-        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BNE(labelTrue));
-        // Sinon, on saute à labelFalse
-        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BEQ(labelFalse));
+        if(labelTrue != null) {
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BNE(labelTrue));
+        }
+        if (labelFalse != null) {
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BEQ(labelFalse));
+        }
     }
 
 }

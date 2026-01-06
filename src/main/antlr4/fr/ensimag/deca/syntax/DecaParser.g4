@@ -409,9 +409,18 @@ type returns[AbstractIdentifier tree]
         $tree = new Identifier(getDecacCompiler().createSymbol("int"));
         setLocation($tree, $INT);
       }
+    | FLOAT {  // Ajout du type float
+        $tree = new Identifier(getDecacCompiler().createSymbol("float"));
+        setLocation($tree, $FLOAT);
+      }
+    | BOOLEAN { // Ajout du type boolean
+        $tree = new Identifier(getDecacCompiler().createSymbol("boolean"));
+        setLocation($tree, $BOOLEAN);
+      }
     | ident {
-            assert($ident.tree != null);
-        }
+        assert($ident.tree != null);
+        $tree = $ident.tree; // N'oublie pas d'assigner l'identifiant
+      }
     ;
 
 literal returns[AbstractExpr tree]

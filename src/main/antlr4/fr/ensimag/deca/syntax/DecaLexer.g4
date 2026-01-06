@@ -27,7 +27,7 @@ ELSE :'else';
 WHILE : 'while';
 READINT : 'readInt';
 READFLOAT : 'readFloat';
-BOOLEAN : 'boolean' | TRUE |FALSE;
+BOOLEAN : 'boolean' ;
 PRINTLN : 'println';
 PRINT : 'print';
 PRINTX : 'printx';

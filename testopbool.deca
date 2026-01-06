@@ -1,0 +1,20 @@
+{
+    // --- Déclarations ---
+    int x = 10;
+    int y = 20;
+    
+    // Expressions booléennes complexes stockées dans des variables
+    // Cela force le compilateur à transformer les sauts en 0 ou 1
+    boolean b1 = (x < y) && (x != 0);       // true (1)
+    boolean b2 = (x > y) || (y == 0);       // false (0)
+    boolean b3 = !(x == y);                 // true (1)
+    
+    // On mélange tout
+    boolean resultat = (b1 && b3) || b2;    // true (1)
+
+    // --- Instructions ---
+    // On ne peut pas print les booléens, mais on peut print les entiers
+    // pour s'assurer que le programme arrive jusqu'au bout.
+    println("Test effectue avec x =", x, " et y =", y);
+    println("La compilation et l'execution sans if ont reussi.");
+}

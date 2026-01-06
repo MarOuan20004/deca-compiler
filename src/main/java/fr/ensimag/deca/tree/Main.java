@@ -4,6 +4,9 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.TSTO;
 
 import java.io.PrintStream;
@@ -48,13 +51,15 @@ public class Main extends AbstractMain {
         int d = nbVar + maxTemps;
 
         compiler.addInstruction(new TSTO(d));
-        
-        compiler.addComment("Beginning of main instructions:");
+        compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
+        compiler.addInstruction(new ADDSP(nbVar));
+        compiler.addComment("Variables Declarations ");
         // Gestion des variables locales avec offset
         int offset = 1; // début du GB pour ce bloc
         for (AbstractDeclVar decl : declVariables.getList()) {
             offset = ((DeclVar) decl).codeGenDeclVar(compiler, offset);
         }
+        compiler.addComment("Beginning of main instructions:");
         insts.codeGenListInst(compiler);
     }
     

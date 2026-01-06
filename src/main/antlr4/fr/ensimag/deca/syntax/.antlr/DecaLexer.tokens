@@ -49,6 +49,7 @@ CBRACE=42
 'while'=7
 'readInt'=8
 'readFloat'=9
+'boolean'=10
 'println'=11
 'print'=12
 'printx'=13

@@ -1,0 +1,105 @@
+; start main program
+; Main program
+	TSTO #6
+	BOV stack_overflow_error
+	ADDSP #6
+; Variables Declarations 
+	LOAD #10, R0
+	STORE R0, 1(GB)
+	LOAD #20, R0
+	STORE R0, 2(GB)
+	LOAD 1(GB), R0
+	LOAD 2(GB), R2
+	CMP R2, R0
+	BLT E_True0
+	LOAD #0, R0
+	BRA E_End1
+E_True0:
+	LOAD #1, R0
+E_End1:
+	BEQ E_False2
+	LOAD 1(GB), R0
+	LOAD #0, R2
+	CMP R2, R0
+	BNE E_True4
+	LOAD #0, R0
+	BRA E_End5
+E_True4:
+	LOAD #1, R0
+E_End5:
+	BEQ E_False2
+	LOAD #1, R0
+	BRA E_End3
+E_False2:
+	LOAD #0, R0
+E_End3:
+	STORE R0, 3(GB)
+	LOAD 1(GB), R0
+	LOAD 2(GB), R2
+	CMP R2, R0
+	BGT E_True6
+	LOAD 2(GB), R0
+	LOAD #0, R2
+	CMP R2, R0
+	BEQ E_True6
+	BNE E_False8
+E_True6:
+	LOAD #1, R0
+	BRA E_End7
+E_False8:
+	LOAD #0, R0
+E_End7:
+	STORE R0, 4(GB)
+	LOAD 1(GB), R0
+	LOAD 2(GB), R2
+	CMP R2, R0
+	BEQ E_True9
+	LOAD #1, R0
+	BRA E_End10
+E_True9:
+	LOAD #0, R0
+E_End10:
+	STORE R0, 5(GB)
+	LOAD 3(GB), R0
+	CMP #0, R0
+	BEQ E_Fin14
+	LOAD 5(GB), R0
+	CMP #0, R0
+	BNE E_True11
+E_Fin14:
+	LOAD 4(GB), R0
+	CMP #0, R0
+	BNE E_True11
+	BEQ E_False13
+E_True11:
+	LOAD #1, R0
+	BRA E_End12
+E_False13:
+	LOAD #0, R0
+E_End12:
+	STORE R0, 6(GB)
+; Beginning of main instructions:
+	WSTR "Test effectue avec x ="
+	LOAD 1(GB), R1
+	WINT
+	WSTR " et y ="
+	LOAD 2(GB), R1
+	WINT
+	WNL
+	WSTR "La compilation et l'execution sans if ont reussi."
+	WNL
+	HALT
+; Gestion des erreurs
+stack_overflow_error:
+	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+division_by_zero:
+	WSTR "Error: Division by zero"
+	WNL
+	ERROR
+; end main program

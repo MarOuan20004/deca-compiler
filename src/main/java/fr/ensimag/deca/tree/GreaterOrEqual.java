@@ -23,10 +23,12 @@ public class GreaterOrEqual extends AbstractOpIneq {
     @Override
     protected void branchingInstructions(DecacCompiler compiler, fr.ensimag.ima.pseudocode.Label labelTrue,
          fr.ensimag.ima.pseudocode.Label labelFalse) {
-        // Si leftOperand >= rightOperand, on saute à labelTrue
-        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BGE(labelTrue));
-        // Sinon, on saute à labelFalse
-        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BLT(labelFalse));
+        if(labelTrue != null) {
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BGE(labelTrue));
+        }
+        if (labelFalse != null) {
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BLT(labelFalse));
+        }
     }
 
 }

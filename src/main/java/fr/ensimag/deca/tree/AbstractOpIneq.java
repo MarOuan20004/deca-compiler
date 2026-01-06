@@ -13,10 +13,7 @@ public abstract class AbstractOpIneq extends AbstractOpCmp {
         super(leftOperand, rightOperand);
     }
 
-    @Override
-    public void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+    
 
 
 }

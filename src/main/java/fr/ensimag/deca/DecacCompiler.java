@@ -250,5 +250,11 @@ public class DecacCompiler {
         return registerManager;
     }
 
+    private static int labelCounter = 0;
+
+    public int getLabelCounter() {
+        return labelCounter++;
+    }
+
 
 }
