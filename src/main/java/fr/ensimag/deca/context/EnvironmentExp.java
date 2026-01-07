@@ -42,16 +42,14 @@ public class EnvironmentExp {
      * Return the definition of the symbol in the environment, or null if the
      * symbol is undefined.
      */
-    public ExpDefinition get(Symbol key) {
-        ExpDefinition def = dictionary.get(key);
-        if (def != null) {
-            return def;
-        }
-        if (parentEnvironment != null) {
-            return parentEnvironment.get(key);
+    public ExpDefinition get(Symbol name) {
+        if (dictionary.containsKey(name)) {
+            return dictionary.get(name);
+        } else if (parentEnvironment != null) {
+            return parentEnvironment.get(name);
         }
         return null;
-    }
+}
 
     /**
      * Add the definition def associated to the symbol name in the environment.

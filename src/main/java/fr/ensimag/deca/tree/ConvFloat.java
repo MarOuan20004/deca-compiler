@@ -20,12 +20,9 @@ public class ConvFloat extends AbstractUnaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        Type t = getOperand().verifyExpr(compiler, localEnv, currentClass);
-        if (!t.isInt()) {
-            throw new ContextualError("Conversion requires int", getLocation());
-        }
-        setType(compiler.environmentType.FLOAT);
-        return compiler.environmentType.FLOAT;
+        ConvFloat conv = new ConvFloat(getOperand());
+        conv.setType(compiler.environmentType.FLOAT);
+        return conv.getType();
     }
 
 

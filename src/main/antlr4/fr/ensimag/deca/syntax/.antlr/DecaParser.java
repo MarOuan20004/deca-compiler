@@ -704,7 +704,6 @@ public class DecaParser extends AbstractDecaParser {
 				match(SEMI);
 
 				            assert(((InstContext)_localctx).list_expr.tree != null);
-				            System.out.println("Debug: println encountered");
 				            ((InstContext)_localctx).tree = new Println(false,((InstContext)_localctx).list_expr.tree);
 				            setLocation(_localctx.tree, ((InstContext)_localctx).PRINTLN);
 				        
@@ -998,7 +997,6 @@ public class DecaParser extends AbstractDecaParser {
 		enterRule(_localctx, 20, RULE_list_expr);
 
 		            ((List_exprContext)_localctx).tree =  new ListExpr();
-		            System.out.println("Debug: list_expr initialized");
 		        
 		int _la;
 		try {
@@ -1075,7 +1073,6 @@ public class DecaParser extends AbstractDecaParser {
 
 			            assert(((ExprContext)_localctx).assign_expr.tree != null);
 			            ((ExprContext)_localctx).tree = ((ExprContext)_localctx).assign_expr.tree;
-			            System.out.println("Debug: expr parsed");
 
 			        
 			}

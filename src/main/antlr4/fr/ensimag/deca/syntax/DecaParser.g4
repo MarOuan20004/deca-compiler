@@ -129,7 +129,6 @@ inst returns[AbstractInst tree]
         }
     | PRINTLN OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
-            System.out.println("Debug: println encountered");
             $tree=new Println(false,$list_expr.tree);
             setLocation($tree, $PRINTLN);
         }
@@ -188,7 +187,6 @@ if_then_else returns[IfThenElse tree]
 list_expr returns[ListExpr tree]
 @init   {
             $tree = new ListExpr();
-            System.out.println("Debug: list_expr initialized");
         }
     : (e1=expr {
         assert($e1.tree != null);
@@ -205,7 +203,6 @@ expr returns[AbstractExpr tree]
     : assign_expr {
             assert($assign_expr.tree != null);
             $tree=$assign_expr.tree;
-            System.out.println("Debug: expr parsed");
 
         }
     ;

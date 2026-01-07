@@ -32,6 +32,14 @@ public class CompilerOptions {
         return printBanner;
     }
     
+    public boolean getParseOnly() {
+        return parseOnly;
+    }
+    
+    public boolean getVerification() {
+        return verification;
+    }
+    
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
     }
@@ -39,6 +47,8 @@ public class CompilerOptions {
     private int debug = 0;
     private boolean parallel = false;
     private boolean printBanner = false;
+    private boolean parseOnly = false;
+    private boolean verification = false;
     private List<File> sourceFiles = new ArrayList<File>();
 
     
@@ -46,10 +56,13 @@ public class CompilerOptions {
         for (int i=0; i < args.length; i++) {
             String arg = args[i];
             if ("-v".equals(arg)) {
-                debug = Math.max(debug, INFO);
+                verification = true;
             } else if ("-d".equals(arg)) {
                 debug++;
-            } else if ("-P".equals(arg)) {
+            } else if ("-p".equals(arg)) {
+                parseOnly = true;
+            }
+            else if ("-P".equals(arg)) {
                 parallel = true;
             } else if ("-b".equals(arg)) {
                 printBanner = true;
