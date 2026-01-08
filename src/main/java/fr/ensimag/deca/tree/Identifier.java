@@ -244,7 +244,8 @@ public class Identifier extends AbstractIdentifier {
          fr.ensimag.ima.pseudocode.GPRegister r,
          fr.ensimag.ima.pseudocode.Label labelTrue, 
          fr.ensimag.ima.pseudocode.Label labelFalse
-    ) {
+    ) 
+    {
         // Générer le code pour évaluer l'expression
         this.codeGenExpr(compiler, r);
         // Comparer la valeur dans le registre r avec 0

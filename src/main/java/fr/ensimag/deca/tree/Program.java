@@ -42,10 +42,14 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        // A FAIRE: compléter ce squelette très rudimentaire de code
+        compiler.addComment("Construction of methods tables");
+        classes.codeGenMethTable(compiler);
+
         compiler.addComment("Main program");
         main.codeGenMain(compiler);
+
         compiler.addInstruction(new HALT());
+
         compiler.addComment("Gestion des erreurs");
         compiler.addLabel(new Label("stack_overflow_error"));
         compiler.addInstruction(new WSTR("Error: Stack Overflow"));
@@ -61,6 +65,9 @@ public class Program extends AbstractProgram {
         compiler.addInstruction(new WSTR("Error: Division by zero"));
         compiler.addInstruction(new WNL());
         compiler.addInstruction(new ERROR());
+
+        compiler.addComment("Classes code generation");
+        classes.codeGenListClass(compiler);
     }
 
     @Override

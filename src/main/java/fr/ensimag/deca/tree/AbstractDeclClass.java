@@ -1,5 +1,7 @@
 package fr.ensimag.deca.tree;
 
+import java.util.HashMap;
+
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 
@@ -10,6 +12,11 @@ import fr.ensimag.deca.context.ContextualError;
  * @date 01/01/2026
  */
 public abstract class AbstractDeclClass extends Tree {
+        // etiquettes des méthodes de la classe
+        private HashMap<Integer, String> methodLabels = new HashMap<>();
+        public HashMap<Integer, String> getMethodLabels() {
+            return methodLabels;
+        }
 
     /**
      * Pass 1 of [SyntaxeContextuelle]. Verify that the class declaration is OK
@@ -31,5 +38,9 @@ public abstract class AbstractDeclClass extends Tree {
      */
     protected abstract void verifyClassBody(DecacCompiler compiler)
             throws ContextualError;
+
+    public abstract void codeGenClass(DecacCompiler compiler);
+
+    public abstract void codeGenMethTable(DecacCompiler compiler);
 
 }
