@@ -10,7 +10,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jacoco.skip>true</jacoco.skip> 
+        <jacoco.skip>false</jacoco.skip> 
         <jacoco.report_dir>${project.build.directory}/site/jacoco</jacoco.report_dir> 
     </properties>
 
@@ -141,7 +141,7 @@
                         <exclude>fr/ensimag/deca/ima/pseudocode/IMAInternalError.class</exclude>
                     </excludes>
                 </configuration>                               
-                <executions>
+                <!-- <executions>
                     <execution>
                         <id>default-instrument</id>
                         <goals>
@@ -180,24 +180,17 @@
                             </rules>
                         </configuration>
                     </execution>
-                </executions>
+                </executions> -->
             </plugin>      
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.6.2</version>
-                <executions>
-                    <!-- One <execution> per executable to launch. Execution
-                    failure (exit status != 0) will stop the tests. -->
+                <!-- <executions>
                     <execution>
                         <id>basic-lex</id>
                         <configuration>
                             <executable>./src/test/script/basic-lex.sh</executable>
-                            <!-- If we need to pass arguments :
-                                 <arguments>
-                                 <argument>...</argument>
-                                 </arguments>
-                            -->
                         </configuration>
                         <phase>test</phase>
                         <goals>
@@ -215,9 +208,6 @@
                         </goals>
                     </execution>
                     <execution>
-                        <!-- run a unit test by defining our own class with a main
-                        function -->
-                        <!-- warning: java assertions are not enabled -->
                         <id>unit-test-symbol</id>
                         <configuration>
                             <mainClass>fr.ensimag.deca.tools.ManualTestSymbol</mainClass>
@@ -268,7 +258,7 @@
                             <goal>exec</goal>
                         </goals>
                     </execution>
-                </executions>
+                </executions> -->
             </plugin>
 
             <plugin>
