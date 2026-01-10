@@ -79,7 +79,7 @@ public class ClassDefinition extends TypeDefinition {
         this.superClass = superClass;
     }
 
-    private RegisterOffset AdrTable;
+    private RegisterOffset AdrTable=null;
     public RegisterOffset getAdrTable() {
         return AdrTable;
     }

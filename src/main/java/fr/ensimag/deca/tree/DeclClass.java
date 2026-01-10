@@ -1,10 +1,29 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.ExpDefinition;
+import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;
+
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -40,6 +59,42 @@ public class DeclClass extends AbstractDeclClass {
     public ListDeclMethod getMethods() {
         return methods;
     }
+
+    // etiquettes des méthodes de la classe
+    private HashMap<Integer, Label> methodLabels = new HashMap<>();
+    public HashMap<Integer, Label> getMethodLabels() {
+        return methodLabels;
+    }
+
+    public void methodLabelsCreate(DecacCompiler compiler) {
+        // methodes heritees , on cherche dans l'EnvExp
+        ClassType superClassType = (ClassType) superClass.getType();
+        if (superClassType != null) {
+            ClassDefinition superClassDef = superClassType.getDefinition();
+            EnvironmentExp superClassEnv = superClassDef.getMembers();
+            for (Map.Entry<Symbol, ExpDefinition> entry : superClassEnv.getDictionary().entrySet()) {
+                ExpDefinition methodDef = entry.getValue();
+                if (methodDef.isMethod()) {
+                    MethodDefinition superMethodDef = (MethodDefinition) methodDef;
+                    String LabelName = "Code" + superClass.getName().getName()
+                            + "." + entry.getKey().getName();
+                    methodLabels.put(superMethodDef.getIndex(),
+                            new Label(LabelName));
+                }
+            }
+        }
+
+        for (AbstractDeclMethod methodDecl : methods.getList()) {
+            String methodLabelName = "Code" + className.getName().getName()
+                    + "." + ((DeclMethod) methodDecl).getMethodName().getName().getName();
+            MethodDefinition methodDef = (MethodDefinition)((DeclMethod) methodDecl)
+                    .getMethodName().getDefinition();
+            Label methodLabel = new Label(methodLabelName);
+            methodLabels.put(methodDef.getIndex(), methodLabel);
+        }
+    }
+
+
     
 
     @Override
@@ -84,10 +139,21 @@ public class DeclClass extends AbstractDeclClass {
     }
 
     @Override
-    public void codeGenMethTable(DecacCompiler compiler) {
-        // A FAIRE: compléter ce squelette très rudimentaire de code
+    public void codeGenMethTable(DecacCompiler compiler, int offset) {
 
-        this.className.getName();
+        compiler.addComment("Code de la table des méthodes de la classe " + className.getName().getName());
+        // use AdrTable 
+        DAddr addr = getClassName().getClassDefinition().getAdrTable();
+        compiler.addInstruction(new LEA(addr, Register.R0));
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(offset, Register.GB)));
+
+        for (Map.Entry<Integer, Label> entry : methodLabels.entrySet()) {
+            Label methodLabel = entry.getValue();
+            int index= entry.getKey();
+            compiler.addInstruction(new LOAD(new LabelOperand(methodLabel), Register.R0));
+            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(offset+index, Register.GB)));
+            
+        }
     }
 
 }

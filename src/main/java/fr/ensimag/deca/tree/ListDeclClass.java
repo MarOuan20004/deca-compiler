@@ -51,8 +51,10 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     }
 
     public void codeGenMethTable(DecacCompiler compiler) {
+        int offset = 1;
         for (AbstractDeclClass c : getList()) {
-            ((DeclClass) c).codeGenMethTable(compiler);
+            ((DeclClass) c).codeGenMethTable(compiler, offset);
+            offset += ((DeclClass) c).getMethods().getList().size();
         }
     }
 

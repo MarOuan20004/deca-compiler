@@ -25,6 +25,10 @@ public class EnvironmentExp {
 
     private final Map<Symbol, ExpDefinition> dictionary = new HashMap<>();
     EnvironmentExp parentEnvironment;
+
+    public Map<Symbol, ExpDefinition> getDictionary() {
+        return dictionary;
+    }
     
     public EnvironmentExp(EnvironmentExp parentEnvironment) {
         this.parentEnvironment = parentEnvironment;
