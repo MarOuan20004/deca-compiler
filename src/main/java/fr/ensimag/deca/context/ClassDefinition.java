@@ -78,8 +78,8 @@ public class ClassDefinition extends TypeDefinition {
         members = new EnvironmentExp(parent);
         this.superClass = superClass;
     }
-
-    private RegisterOffset AdrTable=null;
+    
+    private RegisterOffset AdrTable;
     public RegisterOffset getAdrTable() {
         return AdrTable;
     }

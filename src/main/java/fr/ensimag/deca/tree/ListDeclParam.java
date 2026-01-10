@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
@@ -22,6 +23,20 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
             first = false;
         }
     }
+
+    /*
+     * Implements non-terminal "list_decl_param" of [SyntaxeContextuelle] in pass 3
+     * @param compiler contains the "env_types" attribute
+     * @param currentClass 
+     *          corresponds to "class" attribute (null in the main bloc).
+     */
+    void verifyListDeclParam(DecacCompiler compiler, fr.ensimag.deca.context.EnvironmentExp localEnv)
+            throws fr.ensimag.deca.context.ContextualError {
+        for (AbstractDeclParam param : this.getList()) {
+            param.verifyDeclParam(compiler, localEnv);
+        }
+    }
+
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {

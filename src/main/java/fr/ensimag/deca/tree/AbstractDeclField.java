@@ -14,8 +14,6 @@ import java.io.PrintStream;
  */
 public abstract class AbstractDeclField extends Tree {
     
-    protected void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
-            throws ContextualError {
-        // To be implemented by subclasses
-    }
+    protected abstract void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
+            throws ContextualError ;
 }

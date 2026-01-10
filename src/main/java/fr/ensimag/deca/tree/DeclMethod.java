@@ -88,17 +88,18 @@ public class DeclMethod extends AbstractDeclMethod {
         body.prettyPrint(s, prefix, true);
     }
 
-    
-    public void prettyPrint(PrintStream s, String prefix) {
-        s.print(prefix);
-        s.println("DeclMethod:");
-        prettyPrintChildren(s, prefix + "  ");
-    }
+
 
     public void iterChildren(TreeFunction f) {
         returnType.iter(f);
         methodName.iter(f);
         params.iter(f);
         body.iter(f);
+    }
+
+    @Override
+    protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
+            throws ContextualError {
+        // Todo
     }
 }

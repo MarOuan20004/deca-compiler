@@ -92,4 +92,10 @@ public class DeclField extends AbstractDeclField {
         fieldName.iter(f);
         initialization.iter(f);
     }
+
+    @Override
+    protected void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
+            throws ContextualError {
+        // Todo
+    }
 }

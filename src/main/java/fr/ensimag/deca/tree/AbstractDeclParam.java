@@ -14,8 +14,6 @@ import java.io.PrintStream;
  */
 public abstract class AbstractDeclParam extends Tree {
     
-    protected void verifyDeclParam(DecacCompiler compiler, EnvironmentExp localEnv)
-            throws ContextualError {
-        // To be implemented by subclasses
-    }
+    protected abstract void verifyDeclParam(DecacCompiler compiler, EnvironmentExp localEnv)
+            throws ContextualError;
 }

@@ -62,4 +62,11 @@ public class DeclParam extends AbstractDeclParam {
         type.iter(f);
         paramName.iter(f);
     }
+
+    @Override
+    protected void verifyDeclParam(DecacCompiler compiler, EnvironmentExp localEnv)
+            throws ContextualError {
+        // Todo
+    }
+    
 }
