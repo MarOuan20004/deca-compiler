@@ -3,8 +3,17 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.ExpDefinition;
+import fr.ensimag.deca.context.MethodDefinition;
+import fr.ensimag.deca.context.Signature;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;
+
 import java.io.PrintStream;
+
+import org.antlr.v4.runtime.atn.SemanticContext.OR;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -100,6 +109,5 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
-        // Todo
-    }
+}
 }

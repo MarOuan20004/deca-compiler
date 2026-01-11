@@ -121,7 +121,7 @@ public class DeclClass extends AbstractDeclClass {
             TypeDefinition classTypeDefinition = compiler.environmentType.defOfType(getClassName().getName());
             if(classTypeDefinition!=null){throw new ContextualError("La classe existe deja dans EnvTypes",getClassName().getLocation());}
             ClassType classType = new ClassType(className,getClassName().getLocation(),(ClassDefinition)superClassTypeDefinition);
-            ClassDefinition classDefinition = new ClassDefinition(classType, getLocation(), (ClassDefinition)superClassTypeDefinition);
+            ClassDefinition classDefinition = new ClassDefinition(classType, getClassName().getLocation(), (ClassDefinition)superClassTypeDefinition);
             getClassName().setType(classType);
             getClassName().setDefinition(classDefinition);
             compiler.environmentType.envTypesAdd(className, classDefinition, getClassName().getLocation());
@@ -129,9 +129,13 @@ public class DeclClass extends AbstractDeclClass {
     }
 
     @Override
-    protected void verifyClassMembers(DecacCompiler compiler)
-            throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    protected void verifyClassMembers(DecacCompiler compiler) throws ContextualError {
+        ClassDefinition classDefinition = getClassName().getClassDefinition() ;
+        EnvironmentExp envExp = classDefinition.getMembers() ;
+        classDefinition.setNumberOfFields(getSuperClass().getClassDefinition().getNumberOfFields());
+        classDefinition.setNumberOfMethods(getSuperClass().getClassDefinition().getNumberOfMethods());
+        fields.verifyListDeclField(compiler,classDefinition);
+        methods.verifyListDeclMethod(compiler, classDefinition);
     }
     
     @Override

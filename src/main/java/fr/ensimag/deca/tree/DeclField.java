@@ -3,7 +3,14 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.ExpDefinition;
+import fr.ensimag.deca.context.FieldDefinition;
+import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -96,6 +103,26 @@ public class DeclField extends AbstractDeclField {
     @Override
     protected void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
-        // Todo
+        Type typeField= type.verifyType(compiler);
+        if(typeField == compiler.environmentType.VOID){
+            throw new ContextualError("le type VOID est interdit ", currentClass.getLocation());
+        }
+        Symbol fieldNom  = fieldName.getName() ;
+        EnvironmentExp envExp = currentClass.getMembers();
+        ExpDefinition expDef = envExp.get(fieldNom) ;
+        if(expDef !=null ){
+            throw new ContextualError("field deja existant", currentClass.getLocation());
+        }
+        int i  = currentClass.getNumberOfFields() ;
+        currentClass.incNumberOfFields() ; 
+        FieldDefinition fieldDef = new FieldDefinition(typeField, currentClass.getLocation(), visibility, currentClass, i);
+        fieldName.setType(typeField);
+        fieldName.setDefinition(fieldDef);
+        try{
+        envExp.declare(fieldNom, fieldDef);
+        }
+        catch(DoubleDefException e ){
+            throw new ContextualError("Field deja existant", currentClass.getLocation());
+        }
     }
 }
