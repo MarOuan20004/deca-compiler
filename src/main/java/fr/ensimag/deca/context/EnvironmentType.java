@@ -44,6 +44,15 @@ public class EnvironmentType {
 
         
     }
+    public void envTypesAdd(Symbol symbol , TypeDefinition typeDefinition , Location location) throws  ContextualError{
+        TypeDefinition typeDef = this.defOfType(symbol);
+        if(typeDef != null){
+            throw new ContextualError("la symbol à ajouté existe deja dans EnvType", location);
+        }
+        else{
+        envTypes.put(symbol, typeDefinition);
+        }
+    }
 
     private final Map<Symbol, TypeDefinition> envTypes;
 

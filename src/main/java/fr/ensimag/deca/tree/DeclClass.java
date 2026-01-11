@@ -4,13 +4,17 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 
+
 import java.io.PrintStream;
+import java.lang.reflect.Type;
 
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
@@ -24,6 +28,8 @@ import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.lang.ObjectUtils.Null;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -104,7 +110,22 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Symbol SuperClassName = getSuperClass().getName();
+        TypeDefinition superClassTypeDefinition = compiler.environmentType.defOfType(SuperClassName);
+        if(superClassTypeDefinition == null ){
+            throw new ContextualError("la classe n'existe pas dans EnvTypes",superClass.getLocation());
+        }
+        else{
+            if(!superClassTypeDefinition.isClass()){throw new ContextualError("Le symbole trouvé ne correspond pas à une classe",superClass.getLocation());}
+            Symbol className = getClassName().getName();
+            TypeDefinition classTypeDefinition = compiler.environmentType.defOfType(getClassName().getName());
+            if(classTypeDefinition!=null){throw new ContextualError("La classe existe deja dans EnvTypes",getClassName().getLocation());}
+            ClassType classType = new ClassType(className,getClassName().getLocation(),(ClassDefinition)superClassTypeDefinition);
+            ClassDefinition classDefinition = new ClassDefinition(classType, getLocation(), (ClassDefinition)superClassTypeDefinition);
+            getClassName().setType(classType);
+            getClassName().setDefinition(classDefinition);
+            compiler.environmentType.envTypesAdd(className, classDefinition, getClassName().getLocation());
+        }
     }
 
     @Override
