@@ -155,6 +155,8 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
+            $tree = new NoOperation(); // Temporary fix
+            setLocation($tree, $RETURN);
         }
     ;
 
@@ -372,21 +374,6 @@ select_expr returns[AbstractExpr tree]
             assert($e.tree != null);
             $tree=$e.tree;
         }
-    | e1=select_expr DOT i=ident {
-            assert($e1.tree != null);
-            assert($i.tree != null);
-        }
-        (o=OPARENT args=list_expr CPARENT {
-            // we matched "e1.i(args)"
-            assert($args.tree != null);
-
-        }
-        | /* epsilon */ {
-            // we matched "e.i"
-
-
-        }
-        )
     ;
 
 primary_expr returns[AbstractExpr tree]
@@ -420,8 +407,23 @@ primary_expr returns[AbstractExpr tree]
     ;
 
 type returns[AbstractIdentifier tree]
-
-    : ident {
+    : INT {
+            $tree = new Identifier(getDecacCompiler().createSymbol("int"));
+            setLocation($tree, $INT);
+        }
+    | FLOAT {
+            $tree = new Identifier(getDecacCompiler().createSymbol("float"));
+            setLocation($tree, $FLOAT);
+        }
+    | BOOLEAN {
+            $tree = new Identifier(getDecacCompiler().createSymbol("boolean"));
+            setLocation($tree, $BOOLEAN);
+        }
+    | VOID {
+            $tree = new Identifier(getDecacCompiler().createSymbol("void"));
+            setLocation($tree, $VOID);
+        }
+    | ident {
             assert($ident.tree != null);
             $tree = $ident.tree;
         }
@@ -515,8 +517,10 @@ class_body  returns[ListDeclField fields, ListDeclMethod methods]
     ;
 
 decl_field_set returns[ListDeclField tree]
-    : v=visibility t=type list_decl_field[ $tree , $v.tree , $t.tree ]
-      SEMI 
+    : v=visibility t=type fields=list_decl_field[ new ListDeclField() , $v.tree , $t.tree ]
+      SEMI {
+        $tree = $fields.result;
+      }
     ;
 
 visibility returns[Visibility tree]
@@ -528,26 +532,28 @@ visibility returns[Visibility tree]
         }
     ;
 
-list_decl_field [ListDeclField tree, Visibility visible , AbstractIdentifier typ]
+list_decl_field [ListDeclField tree, Visibility visible , AbstractIdentifier typ] returns[ListDeclField result]
     : dv1=decl_field[ $visible , $typ ] {
-        $tree.add($dv1.tree);
+        if ($dv1.tree != null) {
+            $tree.add($dv1.tree);
+        }
+        $result = $tree;
         }
         (COMMA dv2=decl_field[ $visible , $typ ] {
-        $tree.add($dv2.tree);
+        if ($dv2.tree != null) {
+            $tree.add($dv2.tree);
+        }
+        $result = $tree;
         }
       )*
     ;
 
 decl_field[Visibility visible , AbstractIdentifier typ] returns[AbstractDeclField tree]
-    : i=ident {
-        }
-      (ASSIGN e=expr {
-            
-        }
-      )? {
+    : i=ident (ASSIGN e=expr)? {
             assert($i.tree != null);
+            assert($visible != null);
+            assert($typ != null);
             if ($e.tree != null) {
-                assert($e.tree != null);
                 Initialization init = new Initialization($e.tree);
                 setLocation(init, $ASSIGN);
                 $tree = new DeclField($visible, $typ, $i.tree, init);

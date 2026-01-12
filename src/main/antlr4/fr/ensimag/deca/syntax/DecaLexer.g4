@@ -41,6 +41,7 @@ NEW : 'new';
 THIS : 'this';
 NULL : 'null';
 PROTECTED : 'protected';
+VOID : 'void';
 
 
  

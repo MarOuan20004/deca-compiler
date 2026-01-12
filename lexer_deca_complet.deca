@@ -1,0 +1,7 @@
+class A {
+    protected int x = 10;
+}
+
+{
+    println("Test classe termine");
+}
