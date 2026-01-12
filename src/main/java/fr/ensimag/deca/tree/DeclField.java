@@ -125,4 +125,11 @@ public class DeclField extends AbstractDeclField {
             throw new ContextualError("Field deja existant", currentClass.getLocation());
         }
     }
+    void verifyDeclFieldBody(DecacCompiler compiler, ClassDefinition currentClass)
+        throws ContextualError {
+    Type fieldType = fieldName.getType();
+    EnvironmentExp env = currentClass.getMembers();
+    initialization.verifyInitialization(compiler,fieldType,env,currentClass);
+}
+
 }

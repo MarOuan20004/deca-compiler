@@ -26,5 +26,12 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         }
     
     }
+    void verifyListDeclMethodBody(DecacCompiler compiler, fr.ensimag.deca.context.ClassDefinition currentClass)
+        throws ContextualError {
+    for (AbstractDeclMethod method : getList()) {
+        ((DeclMethod) method).verifyDeclMethodBody(compiler, currentClass);
+    }
+}
+
 
 }

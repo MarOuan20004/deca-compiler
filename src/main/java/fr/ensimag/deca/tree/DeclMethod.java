@@ -7,6 +7,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
+import fr.ensimag.deca.tree.MethodBody;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -118,11 +119,10 @@ protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentC
     Signature signature = new Signature();
     for (AbstractDeclParam typeParams : params.getList()) {
         DeclParam p = (DeclParam) typeParams;
-        Type t = p.getType().verifyType(compiler);
-        if (t==compiler.environmentType.VOID) {
-            throw new ContextualError("le type VOID est interdit", p.getLocation());
+        if (p.getType().verifyType(compiler)==compiler.environmentType.VOID) {
+            throw new ContextualError(" VOID est interdit", p.getLocation());
         }
-        signature.add(t);
+        signature.add(p.getType().verifyType(compiler));
     }
     Symbol mName = methodName.getName();
     EnvironmentExp membrs = currentClass.getMembers();
@@ -166,5 +166,13 @@ protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentC
         }
     }
 }
+    void verifyDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass)
+        throws ContextualError {
+    MethodDefinition def =(MethodDefinition) methodName.getDefinition();
+    EnvironmentExp envParams = new EnvironmentExp(null);
+    params.verifyListDeclParam(compiler, envParams);
+    body.verifyMethodBody(compiler,envParams,currentClass,def.getType());
+}
+
 
 }

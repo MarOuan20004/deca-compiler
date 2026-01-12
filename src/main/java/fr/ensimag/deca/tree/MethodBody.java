@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -24,6 +25,14 @@ public class MethodBody extends AbstractMethodBody {
         this.declarations = declarations;
         this.instructions = instructions;
     }
+    
+    protected void verifyMethodBody(DecacCompiler compiler,EnvironmentExp envParams,ClassDefinition currentClass,Type returnType)
+        throws ContextualError {
+    EnvironmentExp localEnv = new EnvironmentExp(envParams);
+    declarations.verifyListDeclVariable(compiler, localEnv, currentClass);
+    instructions.verifyListInst(compiler,localEnv,currentClass,returnType);
+}
+
 
     // Getters
     public ListDeclVar getDeclarations() {
