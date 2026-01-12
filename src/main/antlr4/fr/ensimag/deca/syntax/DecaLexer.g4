@@ -32,6 +32,16 @@ PRINTLN : 'println';
 PRINT : 'print';
 PRINTX : 'printx';
 PRINTLNX :'printlnx';
+RETURN : 'return';
+ASM : 'asm';
+CLASS : 'class';
+EXTENDS : 'extends';
+INSTANCEOF : 'instanceof';
+NEW : 'new';
+THIS : 'this';
+NULL : 'null';
+PROTECTED : 'protected';
+
 
  
 //Opérateurs  :
@@ -58,12 +68,25 @@ MOD : '%';
 fragment POSITIVE_DIGIT : '1' .. '9' ;
 INT_LITERAL : '0' | POSITIVE_DIGIT DIGIT*  ;
 fragment NUM : DIGIT+;
-FLOAT_LITERAL : NUM '.' NUM  ;
-STRING : '"' ( '\\' . | ~('\\'|'"') )* '"';
+
+fragment DIGIT     : [0-9];
+fragment SIGN      : [+-]?;
+fragment EXP       : [Ee] SIGN DIGIT+;
+fragment P_EXP     : [Pp] SIGN DIGIT+;
+fragment DIGITHEX  : [0-9a-fA-F];
+
+FLOAT_LITERAL
+    : DIGIT+ '.' DIGIT+ EXP? [Ff]?
+    | '0' [xX] DIGITHEX+ '.' DIGITHEX+ P_EXP [Ff]?
+    ;
+
+fragment STRING_CAR: ~('"' | '\'' | '\n' | '\r' ) ;
+STRING : '"' ( STRING_CAR | '\\"' | '\\\\' )* '"' ;
+MULTI_LINE_STRING :  '"' ( STRING_CAR | '\n' | '\r' | '\\"' | '\\\\' )* '"' ;
 
 
 fragment LETTER : 'a'..'z' | 'A'..'Z';
-fragment DIGIT :'0' .. '9';
+
 //Identificateur 
 IDENT : (LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')*;
 
@@ -88,6 +111,10 @@ OPARENT: '(';
 CPARENT: ')';
 SEMI : ';';
 CBRACE :'}';
+
+// inclusion de fichiers
+FILENAME : (LETTER | DIGIT | '.' | '_' | '-')+ ;
+INCLUDE : '#include' (' ')* '"' FILENAME '"' ;
 
 
 
