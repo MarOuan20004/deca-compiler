@@ -4,12 +4,15 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+
+import static org.mockito.Mockito.never;
 
 import java.io.PrintStream;
 
@@ -106,8 +109,62 @@ public class DeclMethod extends AbstractDeclMethod {
         body.iter(f);
     }
 
-    @Override
-    protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
-            throws ContextualError {
+   @Override
+protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
+        throws ContextualError {
+    // on vérifie le type de retour de la methode
+    Type mType = returnType.verifyType(compiler);
+    // on vérifie les paramètres et on construit la signature
+    Signature signature = new Signature();
+    for (AbstractDeclParam typeParams : params.getList()) {
+        DeclParam p = (DeclParam) typeParams;
+        Type t = p.getType().verifyType(compiler);
+        if (t==compiler.environmentType.VOID) {
+            throw new ContextualError("le type VOID est interdit", p.getLocation());
+        }
+        signature.add(t);
+    }
+    Symbol mName = methodName.getName();
+    EnvironmentExp membrs = currentClass.getMembers();
+    ExpDefinition def = membrs.get(mName);
+
+    // cas: nouvelle méthode
+    if (def == null) {
+        int i = currentClass.getNumberOfMethods();
+        currentClass.incNumberOfMethods();
+        MethodDefinition mDef = new MethodDefinition(mType, getLocation(), signature, i);
+        methodName.setType(mType);
+        methodName.setDefinition(mDef);
+        try {
+            membrs.declare(mName, mDef);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("methode deja definie", methodName.getLocation());
+        }
+    }
+    // cas : redéfinition
+    else {
+        if (!(def instanceof MethodDefinition)) {
+            throw new ContextualError("le nom existe deja mais ce n'es pas une methode",methodName.getLocation());
+        }
+        MethodDefinition oldDef = (MethodDefinition) def;
+        // on vérifie la signature
+        if (!signature.equals(oldDef.getSignature())) {
+            throw new ContextualError("la methode heritee n'a pas la meme singature",methodName.getLocation());
+        }
+        // on vérifie le type de retour
+        if (!mType.sameType(oldDef.getType())) {
+            throw new ContextualError("le type de retour est incompatible", methodName.getLocation());
+        }
+        int i = oldDef.getIndex();
+        MethodDefinition mDef =new MethodDefinition(mType, getLocation(), signature, i);
+        methodName.setType(mType);
+        methodName.setDefinition(mDef);
+        try {
+            membrs.declare(mName, mDef);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("methode deja defini", methodName.getLocation());
+        }
+    }
 }
+
 }
