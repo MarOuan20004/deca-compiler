@@ -12,7 +12,9 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 /**
- * Expression "expr instanceof Type"
+ *
+ * @author gl10
+ * @date 13/01/2026
  */
 public class InstanceOf extends AbstractExpr {
     private AbstractExpr expr;

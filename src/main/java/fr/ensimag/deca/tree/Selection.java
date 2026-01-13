@@ -13,7 +13,7 @@ import org.apache.commons.lang.Validate;
  * Field selection (e.g. x.y)
  *
  * @author gl10
- * @date 01/01/2026
+ * @date 13/01/2026
  */
 public class Selection extends AbstractLValue {
     private AbstractExpr operand;

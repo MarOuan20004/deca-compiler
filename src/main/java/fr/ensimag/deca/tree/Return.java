@@ -14,6 +14,8 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 
 /**
  * Instruction "return expr;"
+ * @author gl10
+ * @date 13/01/2026
  */
 public class Return extends AbstractInst {
     private AbstractExpr exp;

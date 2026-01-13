@@ -168,7 +168,7 @@ public class DeclClass extends AbstractDeclClass {
         ClassDefinition currentClassDefinition = className.getClassDefinition() ;
         EnvironmentExp membrs = currentClassDefinition.getMembers() ;
         fields.verifyListDeclFieldBody(compiler, currentClassDefinition);
-         methods.verifyListDeclMethodBody(compiler, currentClassDefinition);
+        methods.verifyListDeclMethodBody(compiler, currentClassDefinition);
     }
 
 

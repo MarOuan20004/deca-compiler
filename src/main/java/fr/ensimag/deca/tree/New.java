@@ -12,10 +12,9 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 /**
- * Expression "new Identifier()"
  *
- * @author Ensimag
- * @date 2026
+ * @author gl10
+ * @date 13/01/2026
  */
 public class New extends AbstractExpr {
     private AbstractIdentifier typeName;

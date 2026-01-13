@@ -12,7 +12,7 @@ import java.io.PrintStream;
  * "null" keyword
  *
  * @author gl10
- * @date 01/01/2026
+ * @date 13/01/2026
  */
 public class Null extends AbstractExpr {
 
