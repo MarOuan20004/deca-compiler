@@ -57,6 +57,9 @@ public class DeclClass extends AbstractDeclClass {
         return className;
     }
     public AbstractIdentifier getSuperClass() {
+        if (superClass == null) {
+            
+        }
         return superClass;
     }
     public ListDeclField getFields() {
@@ -110,26 +113,48 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        Symbol SuperClassName = getSuperClass().getName();
-        TypeDefinition superClassTypeDefinition = compiler.environmentType.defOfType(SuperClassName);
-        if(superClassTypeDefinition == null ){
-            throw new ContextualError("la classe n'existe pas dans EnvTypes",superClass.getLocation());
+        System.out.println("Début de la vérification de la classe " + getClassName().getName().getName());
+        TypeDefinition superClassTypeDefinition;
+
+        if (superClass == null) {
+            Symbol objectSymb = compiler.createSymbol("Object");
+            superClassTypeDefinition = compiler.environmentType.defOfType(objectSymb);
+            this.superClass = new Identifier(objectSymb);
+            System.out.println("Classe racine détectée : extension implicite de Object");
+            this.superClass.setDefinition(superClassTypeDefinition);
+            this.superClass.setType(superClassTypeDefinition.getType());
+        } else {
+            Symbol SuperClassName = getSuperClass().getName();
+            System.out.println("Vérification de la super-classe : " + SuperClassName.getName());
+            superClassTypeDefinition = compiler.environmentType.defOfType(SuperClassName);
+            if (superClassTypeDefinition == null) {
+                throw new ContextualError("la classe n'existe pas dans EnvTypes", superClass.getLocation());
+            }
+            if (!superClassTypeDefinition.isClass()) {
+                throw new ContextualError("Le symbole trouvé ne correspond pas à une classe", superClass.getLocation());
+            }
+            this.superClass.setDefinition(superClassTypeDefinition);
         }
-        else{
-            if(!superClassTypeDefinition.isClass()){throw new ContextualError("Le symbole trouvé ne correspond pas à une classe",superClass.getLocation());}
-            Symbol className = getClassName().getName();
-            TypeDefinition classTypeDefinition = compiler.environmentType.defOfType(getClassName().getName());
-            if(classTypeDefinition!=null){throw new ContextualError("La classe existe deja dans EnvTypes",getClassName().getLocation());}
-            ClassType classType = new ClassType(className,getClassName().getLocation(),(ClassDefinition)superClassTypeDefinition);
-            ClassDefinition classDefinition = new ClassDefinition(classType, getClassName().getLocation(), (ClassDefinition)superClassTypeDefinition);
-            getClassName().setType(classType);
-            getClassName().setDefinition(classDefinition);
-            compiler.environmentType.envTypesAdd(className, classDefinition, getClassName().getLocation());
+
+        Symbol className = getClassName().getName();
+        TypeDefinition classTypeDefinition = compiler.environmentType.defOfType(getClassName().getName());
+        if (classTypeDefinition != null) {
+            throw new ContextualError("La classe existe deja dans EnvTypes", getClassName().getLocation());
         }
+        ClassType classType = new ClassType(className, getClassName().getLocation(), (ClassDefinition) superClassTypeDefinition);
+        ClassDefinition classDefinition = new ClassDefinition(classType, getClassName().getLocation(), (ClassDefinition) superClassTypeDefinition);
+        getClassName().setType(classType);
+        System.out.println("Définition de la classe " + getClassName().getName().getName() + " créée avec succès.");
+        getClassName().setDefinition(classDefinition);
+        System.out.println("Definition " + classDefinition.toString() + " ajoutée au dictionnaire.");
+        compiler.environmentType.envTypesAdd(className, classDefinition, getClassName().getLocation());
     }
 
     @Override
     protected void verifyClassMembers(DecacCompiler compiler) throws ContextualError {
+        System.out.println("Vérification des membres de la classe " + getClassName().getName().getName());
+        System.out.println("Vérification des membres de la classe " + getSuperClass().getName().getName());
+
         ClassDefinition classDefinition = getClassName().getClassDefinition() ;
         EnvironmentExp envExp = classDefinition.getMembers() ;
         classDefinition.setNumberOfFields(getSuperClass().getClassDefinition().getNumberOfFields());
