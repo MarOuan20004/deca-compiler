@@ -53,9 +53,13 @@ public class New extends AbstractExpr {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         typeName.prettyPrint(s, prefix, true);
     }
-
     @Override
     protected void iterChildren(TreeFunction f) {
         typeName.iter(f);
     }
 }
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        // TODO Auto-generated method stub
+    }
+    
