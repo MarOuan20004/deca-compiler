@@ -38,9 +38,12 @@ public class EnvironmentType {
         Symbol stringSymb = compiler.createSymbol("string");
         STRING = new StringType(stringSymb);
         // not added to envTypes, it's not visible for the user.
+
+        // Creation of the Object class
         Symbol objectSymb = compiler.createSymbol("Object");
-        OBJECT = new ClassType(objectSymb, null, null);
-        envTypes.put(objectSymb, new TypeDefinition(OBJECT, Location.BUILTIN));
+        OBJECT = new ClassType(objectSymb, Location.BUILTIN, null);
+        ClassDefinition objectDef = new ClassDefinition(OBJECT, Location.BUILTIN, null);
+        envTypes.put(objectSymb, objectDef);
 
         
     }

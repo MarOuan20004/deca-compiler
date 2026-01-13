@@ -48,6 +48,15 @@ public class New extends AbstractExpr{
     public void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
         //TODO
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        // TODO 
+    }
+
+>>>>>>> e6152268a94f50b0b87e78aeeff506979ce4e27d
 }
     
 
