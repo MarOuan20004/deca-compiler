@@ -57,9 +57,11 @@ public class New extends AbstractExpr {
     protected void iterChildren(TreeFunction f) {
         typeName.iter(f);
     }
-}
+
     @Override
     protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
-        // TODO Auto-generated method stub
+        // TODO 
     }
+
+}
     
