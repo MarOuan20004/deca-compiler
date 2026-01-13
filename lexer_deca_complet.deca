@@ -4,6 +4,9 @@
 class A {
     protected int field_int_A = 1;
     protected float field_float_A = 1.0;
+    public int meth(){
+        println("hello");
+    }
 }
 
 //-
@@ -17,28 +20,7 @@ class B extends A {
 // Bloc principal
 //-
 {
-    // Déclarations de variables locales
-    int local_int = 10;
-    float local_float = 20.5;
-    boolean local_bool;
-
-    // Instructions simples
-    local_int = local_int + 5;
-    local_float = local_float / 2.0;
-    local_bool = local_int > 12;
-
-    // Structure de contrôle if/else
-    if (local_bool) {
-        println("local_bool est vrai");
-    } else {
-        println("local_bool est faux");
-    }
-
-    // Boucle while
-    while (local_int < 20) {
-        println("Dans la boucle, local_int = ", local_int);
-        local_int = local_int + 1;
-    }
+    A a = new A();
 
     println("Fin du programme de test.");
 }

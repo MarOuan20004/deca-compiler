@@ -1,3 +1,91 @@
-class A {
-    int x = 10;
+// =============================================================================
+// Test de syntaxe complet pour le parser Deca (Étape B)
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// 1. Déclarations de classes (Héritage, Champs, Méthodes)
+// -----------------------------------------------------------------------------
+
+class SuperClasse {
+    // Champs avec et sans initialisation
+    int champInt = 42;
+    float champFloat;
+    protected boolean champProtege = true;
+
+    // Méthode standard
+    void methodeStandard(int a, float b) {
+        int x = a;
+        if (a > 0) {
+            println("A est positif");
+        } else {
+            println("A est nul ou negatif");
+        }
+    }
+
+    // Méthode retournant une valeur
+    int getChampInt() {
+        return champInt;
+    }
+}
+
+class SousClasse extends SuperClasse {
+    // Redéfinition ou nouveaux champs
+    SuperClasse instance;
+
+    // Méthode ASM
+    void methodeAsm() asm (
+        "WSTR \"Ceci est du code assembleur\"
+        HALT"
+    );
+
+    // Méthode avec bloc complexe
+    void calcul(int n) {
+        int i = 0;
+        int resultat = 1;
+        while (i < n) {
+            resultat = resultat * 2;
+            i = i + 1;
+        }
+        println("2^", n, " = ", resultat);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 2. Programme Principal (Main)
+// -----------------------------------------------------------------------------
+
+{
+    // Déclarations de variables locales
+    SousClasse s = new SousClasse();
+    int x, y = 10;
+    float pi = 3.14159;
+    boolean flag = (x == y) && !false;
+
+    // Instructions diverses
+    s.methodeStandard(y, pi);
+    
+    // Expressions complexes et priorités
+    x = (y + 5) * 2 / 1 - (y % 3);
+    
+    // Lectures
+    x = readInt();
+    pi = readFloat();
+
+    // Structures de contrôle imbriquées
+    if (x >= 0 || flag) {
+        if (x == 0) {
+            println("Zero");
+        } else {
+            printlnx("Valeur hex : ", x);
+        }
+    } else if (x < -100) {
+        print("Tres petit");
+    } else {
+        /* Bloc vide ou point-virgule seul */
+        ;
+    }
+
+    // Affichages variés
+    println("Test fini : ", flag, " ", 1.0);
+    printlnx("Mode hexa : ", pi);
 }

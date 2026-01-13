@@ -114,7 +114,7 @@ SEMI : ';';
 CBRACE :'}';
 
 // inclusion de fichiers
-FILENAME : (LETTER | DIGIT | '.' | '_' | '-')+ ;
+fragment FILENAME : (LETTER | DIGIT | '.' | '_' | '-')+ ;
 INCLUDE : '#include' (' ')* '"' FILENAME '"' ;
 
 
