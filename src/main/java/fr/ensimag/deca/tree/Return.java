@@ -27,15 +27,10 @@ public class Return extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType) throws ContextualError {
         
-        // 1. Verifier que nous ne sommes pas dans le Main (le return est interdit dans le main)
-        if (returnType.isVoid() && currentClass == null) {
-             // Note: En Deca, le main est considere comme retournant void
-             // Mais un 'return' explicite y est interdit par la grammaire ou le contexte.
-             throw new ContextualError("Return cannot be used in main program.", getLocation());
+        // Verifier que nous ne sommes pas dans le Main 
+        if (currentClass == null) {
+             throw new ContextualError("Return can't be used in main program.", getLocation());
         }
-
-        // 2. Verifier que l'expression retournee est compatible avec le type de retour de la methode
-        // On utilise verifyRValue pour verifier la compatibilité (assign-compatible)
         exp.verifyRValue(compiler, localEnv, currentClass, returnType);
     }
 

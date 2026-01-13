@@ -16,28 +16,26 @@ import fr.ensimag.deca.tools.IndentPrintStream;
  */
 public class InstanceOf extends AbstractExpr {
     private AbstractExpr expr;
-    private AbstractIdentifier typeName;
+    private AbstractIdentifier typeNom;
 
-    public InstanceOf(AbstractExpr expr, AbstractIdentifier typeName) {
+    public InstanceOf(AbstractExpr expr, AbstractIdentifier typeNom) {
         Validate.notNull(expr);
-        Validate.notNull(typeName);
+        Validate.notNull(typeNom);
         this.expr = expr;
-        this.typeName = typeName;
+        this.typeNom = typeNom;
     }
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         Type exprType = expr.verifyExpr(compiler, localEnv, currentClass);
-        Type targetType = typeName.verifyType(compiler);
-
+        Type targetType = typeNom.verifyType(compiler);
         if (!exprType.isClassOrNull()) {
-            throw new ContextualError("Left operand of instanceof must be a class or null (got " + exprType + ").", getLocation());
+            throw new ContextualError("LOperand needs to be a null or class ", expr.getLocation());
         }
         if (!targetType.isClass()) {
-            throw new ContextualError("Right operand of instanceof must be a class (got " + targetType + ").", getLocation());
+            throw new ContextualError("ROperand of instanceof needs to be a class ", expr.getLocation());
         }
-
         this.setType(compiler.environmentType.BOOLEAN);
         return compiler.environmentType.BOOLEAN;
     }
@@ -46,18 +44,18 @@ public class InstanceOf extends AbstractExpr {
     public void decompile(IndentPrintStream s) {
         expr.decompile(s);
         s.print(" instanceof ");
-        typeName.decompile(s);
+        typeNom.decompile(s);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
         expr.iter(f);
-        typeName.iter(f);
+        typeNom.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         expr.prettyPrint(s, prefix, false);
-        typeName.prettyPrint(s, prefix, true);
+        typeNom.prettyPrint(s, prefix, true);
     }
 }

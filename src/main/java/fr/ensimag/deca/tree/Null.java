@@ -17,10 +17,14 @@ import java.io.PrintStream;
 public class Null extends AbstractExpr {
 
     @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
+        ClassDefinition currentClass) throws ContextualError {
+    Type nulType = compiler.environmentType.defOfType(compiler.symbolTable.create("null")).getType();
+    this.setType(nulType);
+    return nulType;
+}
+
+   
 
     @Override
     public void decompile(IndentPrintStream s) {

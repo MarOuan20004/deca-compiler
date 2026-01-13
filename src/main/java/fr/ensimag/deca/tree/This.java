@@ -15,12 +15,17 @@ import java.io.PrintStream;
  * @date 01/01/2026
  */
 public class This extends AbstractExpr {
-
+    
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
+        ClassDefinition currentClass) throws ContextualError {
+    if (currentClass == null) {
+        throw new ContextualError("this can't be used in main progrm",getLocation());
     }
+    Type thisType = currentClass.getType();
+    this.setType(thisType);
+    return thisType;
+}
 
     @Override
     public void decompile(IndentPrintStream s) {

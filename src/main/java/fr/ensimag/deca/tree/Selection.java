@@ -5,7 +5,10 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.context.Definition ;
+import fr.ensimag.deca.context.ClassType ;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -27,10 +30,46 @@ public class Selection extends AbstractLValue {
     }
 
     @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
+public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
+        ClassDefinition currentClass) throws ContextualError {
+
+    Type operandType = operand.verifyExpr(compiler, localEnv, currentClass);
+
+    if (!operandType.isClass()) {
+        throw new ContextualError("Selection only applied to a class expression",operand.getLocation());
     }
+    ClassDefinition classDef =((ClassType) operandType).getDefinition();
+
+    Definition definition =classDef.getMembers().get(field.getName());
+
+    if (definition == null || !definition.isField()) {
+        throw new ContextualError("the ident isn't a field of the class",field.getLocation());
+    }
+    FieldDefinition fieldDef = (FieldDefinition) definition;
+
+    if (fieldDef.getVisibility() == Visibility.PROTECTED) {
+        if (currentClass == null) {
+            throw new ContextualError("Protected field isn't accessible ",field.getLocation());
+        }
+        boolean accessible = false;
+        ClassDefinition c = currentClass;
+        while (c != null) {
+            if (c == fieldDef.getContainingClass()) {
+                accessible = true;
+                break;
+            }
+            c = c.getSuperClass();
+        }
+        if (!accessible) {
+            throw new ContextualError("Protected field isn't accessible ",field.getLocation());
+        }
+    }
+    field.setDefinition(fieldDef);
+    field.setType(fieldDef.getType());
+    this.setType(fieldDef.getType());
+    return fieldDef.getType();
+}
+
 
     @Override
     public void decompile(IndentPrintStream s) {
@@ -50,4 +89,5 @@ public class Selection extends AbstractLValue {
         operand.iter(f);
         field.iter(f);
     }
+  
 }
