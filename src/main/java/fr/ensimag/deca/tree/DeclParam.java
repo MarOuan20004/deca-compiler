@@ -1,11 +1,15 @@
 package fr.ensimag.deca.tree;
 
+import java.io.PrintStream;
+
+import org.apache.commons.lang.Validate;
+
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.ParamDefinition;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
-import org.apache.commons.lang.Validate;
 
 /**
  * Declaration of a method parameter.
@@ -66,7 +70,20 @@ public class DeclParam extends AbstractDeclParam {
     @Override
     protected void verifyDeclParam(DecacCompiler compiler, EnvironmentExp localEnv)
             throws ContextualError {
-        // Todo
+        Type paramType = type.verifyType(compiler);
+        if (paramType==null) {
+            throw new ContextualError("Type inconnue pour le paramètre", type.getLocation());
+        }
+        if (getParamName()==null) {
+            throw new ContextualError("Nom de paramètre null", paramName.getLocation());
+        }
+        ParamDefinition paramDef = new ParamDefinition(paramType, paramName.getLocation());
+        try {
+            localEnv.declare(paramName.getName(), paramDef);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Paramètre déjà défini", paramName.getLocation());
+        }
+        
     }
     
 }

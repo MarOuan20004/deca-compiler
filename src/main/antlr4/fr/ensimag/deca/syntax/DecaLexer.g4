@@ -42,6 +42,7 @@ THIS : 'this';
 NULL : 'null';
 PROTECTED : 'protected';
 VOID : 'void';
+CAST : 'cast';
 
 
  

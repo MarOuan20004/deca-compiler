@@ -19,7 +19,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        Type type = this.getOperand().getType();
+        Type type = this.getOperand().verifyExpr(compiler, localEnv, currentClass);
         if (type != compiler.environmentType.INT && type != compiler.environmentType.FLOAT) {
             throw new ContextualError("Unary minus can only be applied to int or float", this.getLocation());
         }

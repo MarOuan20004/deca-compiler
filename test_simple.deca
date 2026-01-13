@@ -65,7 +65,7 @@ class SousClasse extends SuperClasse {
     s.methodeStandard(y, pi);
     
     // Expressions complexes et priorités
-    x = (y + 5) * 2 / 1 - (y % 3);
+    x =(int) (y + 5) * 2 / 1 - (y % 3);
     
     // Lectures
     x = readInt();
@@ -86,6 +86,5 @@ class SousClasse extends SuperClasse {
     }
 
     // Affichages variés
-    println("Test fini : ", flag, " ", 1.0);
     printlnx("Mode hexa : ", pi);
 }

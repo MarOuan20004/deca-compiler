@@ -31,44 +31,6 @@ public class Divide extends AbstractOpArith {
         return "/";
     }
 
-    @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
-
-        Type left = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
-        Type right = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
-
-        if (left.isInt() && right.isInt()) {
-            ConvFloat convL = new ConvFloat(this.getLeftOperand());
-            this.setLeftOperand(convL);
-            convL.verifyExpr(compiler, localEnv, currentClass);
-
-            ConvFloat convR = new ConvFloat(this.getRightOperand());
-            this.setRightOperand(convR);
-            convR.verifyExpr(compiler, localEnv, currentClass);
-
-            this.setType(compiler.environmentType.FLOAT);
-        } 
-        else if (left.isFloat() || right.isFloat()) {
-            // On convertit int en float
-            if (left.isInt()) {
-                ConvFloat convL = new ConvFloat(this.getLeftOperand());
-                this.setLeftOperand(convL);
-                convL.verifyExpr(compiler, localEnv, currentClass);
-            } else if (right.isInt()) {
-                ConvFloat convR = new ConvFloat(this.getRightOperand());
-                this.setRightOperand(convR);
-                convR.verifyExpr(compiler, localEnv, currentClass);
-            }
-            this.setType(compiler.environmentType.FLOAT);
-        } 
-        else {
-            throw new ContextualError("Division impossible entre types " + left + " et " + right, 
-                                    this.getLocation());
-        }
-
-        return this.getType();
-    }
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {

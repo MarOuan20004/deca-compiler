@@ -425,6 +425,11 @@ primary_expr returns[AbstractExpr tree]
             $tree = new This();
             setLocation($tree, $THIS);
         }
+    | OPARENT t=type CPARENT OPARENT e=expr CPARENT{
+            assert($e.tree != null);
+            assert($t.tree != null);
+            $tree=new Cast($t.tree,$e.tree);
+    }
     
     ;
 
