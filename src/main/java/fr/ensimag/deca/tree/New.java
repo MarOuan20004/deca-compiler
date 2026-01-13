@@ -2,8 +2,6 @@ package fr.ensimag.deca.tree;
 
 import java.io.PrintStream;
 
-import org.apache.commons.lang.Validate;
-
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -11,56 +9,52 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
+
 /**
  *
  * @author gl10
  * @date 13/01/2026
  */
-public class New extends AbstractExpr {
-    private AbstractIdentifier typeName;
 
-    public New(AbstractIdentifier typeName) {
-        Validate.notNull(typeName);
-        this.typeName = typeName;
+public class New extends AbstractExpr{
+    private AbstractIdentifier classNom;
+
+    public New(AbstractIdentifier classNom) {
+        this.classNom = classNom;
     }
-
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        // 1. On vérifie que l'identificateur correspond bien à un type existant
-        Type type = typeName.verifyType(compiler);
-        
-        // 2. On vérifie que ce type est bien une classe (on ne peut pas faire new int())
-        if (!type.isClass()) {
-            throw new ContextualError("Type '" + typeName.getName() + "' is not a class.",
-                    getLocation());
+                Type typeClass = classNom.verifyType(compiler) ;
+        if(!typeClass.isClass()){
+            throw new ContextualError("Only a class can use new ", classNom.getLocation());
         }
-        
-        // On fixe le type de l'expression New
-        this.setType(type);
-        return type;
-    }
+        this.setType(typeClass);
+        return typeClass;
+        }
+
 
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("new ");
-        typeName.decompile(s);
+        classNom.decompile(s);
         s.print("()");
     }
 
     @Override
-    protected void prettyPrintChildren(PrintStream s, String prefix) {
-        typeName.prettyPrint(s, prefix, true);
-    }
-    @Override
     protected void iterChildren(TreeFunction f) {
-        typeName.iter(f);
+        // leaf node => nothing to do
     }
 
     @Override
-    protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
-        // TODO 
+    protected void prettyPrintChildren(PrintStream s, String prefix) {
+        // leaf node => nothing to do
     }
 
+    @Override
+    public void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
+        //TODO
+    }
 }
     
+
