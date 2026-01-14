@@ -1,35 +1,30 @@
 package fr.ensimag.deca.tree;
 
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
-import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-
-
-import java.io.PrintStream;
-import java.lang.reflect.Type;
-
 import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang.ObjectUtils.Null;
+import fr.ensimag.ima.pseudocode.instructions.SUBSP;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -194,8 +189,26 @@ public class DeclClass extends AbstractDeclClass {
     public void codeGenClass(DecacCompiler compiler) {
         // A FAIRE: compléter ce squelette très rudimentaire de code
         // code pour les champs et autres initialisations
+  
+        // creation init.className
+        String classConstructorLabel = "init" + className.getName().getName();
+        compiler.addLabel(new Label(classConstructorLabel));
+
+        //Pre-initialisation des champs propres à la classe
+        fields.codeGenListDeclFieldInit(compiler);
+
+        // appel au Super-constructeur
+        compiler.addInstruction(new PUSH(Register.R1));
+        String superConstructorLabel = "Code" + superClass.getName().getName() + ".init";
+        compiler.addInstruction(new LOAD(new LabelOperand(new Label(superConstructorLabel)), Register.R0));
+        compiler.addInstruction(new BSR(Register.R0));
+        compiler.addInstruction(new SUBSP(1));
+
+        // champs propres à la classe
+        fields.codeGenListDeclField(compiler);
         // code pour les méthodes de chaque classe
         
+        methods.codeGenListDeclMethod(compiler, className.getClassDefinition());
         
     }
 

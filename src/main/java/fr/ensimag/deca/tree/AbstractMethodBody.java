@@ -5,8 +5,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
 
 /**
  * Abstract class for method body.
@@ -17,7 +15,6 @@ import java.io.PrintStream;
 public abstract class AbstractMethodBody extends Tree {
     
     protected abstract void verifyMethodBody(DecacCompiler compiler,EnvironmentExp localEnv,ClassDefinition currentClass,Type returnType) throws ContextualError;
- {
-        // To be implemented by subclasses
-    }
+
+    protected abstract void codeGenMethodBody(DecacCompiler compiler);
 }

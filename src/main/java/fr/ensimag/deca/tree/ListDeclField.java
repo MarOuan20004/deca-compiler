@@ -4,7 +4,6 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 /**
@@ -41,6 +40,21 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
             throws ContextualError {
         for (AbstractDeclField field : getList()) {
             ((DeclField) field).verifyDeclFieldBody(compiler, currentClass);
+        }
+    }
+
+    void codeGenListDeclFieldInit(DecacCompiler compiler) {
+        for (AbstractDeclField absField : getList()) {
+            DeclField field = (DeclField) absField;
+            field.codeGenInitField(compiler, field.getFieldName().getFieldDefinition().getIndex());
+        }
+    }
+
+    void codeGenListDeclField(DecacCompiler compiler) {
+
+        for (AbstractDeclField absField : getList()) {
+            DeclField field = (DeclField) absField;
+            field.codeGenDeclField(compiler, field.getFieldName().getFieldDefinition().getIndex());
         }
     }
 

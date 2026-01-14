@@ -58,4 +58,10 @@ public class MethodAsmBody extends AbstractMethodBody {
             Type returnType) throws ContextualError {
         // No verification needed for assembly method body
     }
+
+    @Override
+    protected void codeGenMethodBody(DecacCompiler compiler) {
+        // Generate the assembly code directly
+        
+    }
 }

@@ -1,12 +1,13 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import java.io.PrintStream;
+
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
 
 /**
  * "this" keyword
@@ -19,13 +20,13 @@ public class This extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
         ClassDefinition currentClass) throws ContextualError {
-    if (currentClass == null) {
-        throw new ContextualError("this can't be used in main progrm",getLocation());
+        if (currentClass == null) {
+            throw new ContextualError("this can't be used in main progrm",getLocation());
+        }
+        Type thisType = currentClass.getType();
+        this.setType(thisType);
+        return thisType;
     }
-    Type thisType = currentClass.getType();
-    this.setType(thisType);
-    return thisType;
-}
 
     @Override
     public void decompile(IndentPrintStream s) {

@@ -1,24 +1,22 @@
 package fr.ensimag.deca.tree;
 
+import java.io.PrintStream;
+import java.util.Set;
+
+import org.apache.commons.lang.Validate;
+
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
-import fr.ensimag.deca.tree.MethodBody;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-
-import static org.mockito.Mockito.never;
-
-import java.io.PrintStream;
-
-import org.antlr.v4.runtime.atn.SemanticContext.OR;
-import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 
 /**
  * Declaration of a class method.
@@ -111,68 +109,96 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
    @Override
-protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
-        throws ContextualError {
-    // on vérifie le type de retour de la methode
-    Type mType = returnType.verifyType(compiler);
-    // on vérifie les paramètres et on construit la signature
-    Signature signature = new Signature();
-    for (AbstractDeclParam typeParams : params.getList()) {
-        DeclParam p = (DeclParam) typeParams;
-        if (p.getType().verifyType(compiler)==compiler.environmentType.VOID) {
-            throw new ContextualError(" VOID est interdit", p.getLocation());
+    protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
+            throws ContextualError {
+        // on vérifie le type de retour de la methode
+        Type mType = returnType.verifyType(compiler);
+        // on vérifie les paramètres et on construit la signature
+        Signature signature = new Signature();
+        for (AbstractDeclParam typeParams : params.getList()) {
+            DeclParam p = (DeclParam) typeParams;
+            if (p.getType().verifyType(compiler)==compiler.environmentType.VOID) {
+                throw new ContextualError(" VOID est interdit", p.getLocation());
+            }
+            signature.add(p.getType().verifyType(compiler));
         }
-        signature.add(p.getType().verifyType(compiler));
-    }
-    Symbol mName = methodName.getName();
-    EnvironmentExp membrs = currentClass.getMembers();
-    ExpDefinition def = membrs.get(mName);
+        Symbol mName = methodName.getName();
+        EnvironmentExp membrs = currentClass.getMembers();
+        ExpDefinition def = membrs.get(mName);
 
-    // cas: nouvelle méthode
-    if (def == null) {
-        int i = currentClass.getNumberOfMethods();
-        currentClass.incNumberOfMethods();
-        MethodDefinition mDef = new MethodDefinition(mType, getLocation(), signature, i);
-        methodName.setType(mType);
-        methodName.setDefinition(mDef);
-        try {
-            membrs.declare(mName, mDef);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("methode deja definie", methodName.getLocation());
+        // cas: nouvelle méthode
+        if (def == null) {
+            int i = currentClass.getNumberOfMethods();
+            currentClass.incNumberOfMethods();
+            MethodDefinition mDef = new MethodDefinition(mType, getLocation(), signature, i);
+            methodName.setType(mType);
+            methodName.setDefinition(mDef);
+            try {
+                membrs.declare(mName, mDef);
+            } catch (EnvironmentExp.DoubleDefException e) {
+                throw new ContextualError("methode deja definie", methodName.getLocation());
+            }
+        }
+        // cas : redéfinition
+        else {
+            if (!(def instanceof MethodDefinition)) {
+                throw new ContextualError("le nom existe deja mais ce n'es pas une methode",methodName.getLocation());
+            }
+            MethodDefinition oldDef = (MethodDefinition) def;
+            // on vérifie la signature
+            if (!signature.equals(oldDef.getSignature())) {
+                throw new ContextualError("la methode heritee n'a pas la meme singature",methodName.getLocation());
+            }
+            // on vérifie le type de retour
+            if (!mType.sameType(oldDef.getType())) {
+                throw new ContextualError("le type de retour est incompatible", methodName.getLocation());
+            }
+            int i = oldDef.getIndex();
+            MethodDefinition mDef =new MethodDefinition(mType, getLocation(), signature, i);
+            methodName.setType(mType);
+            methodName.setDefinition(mDef);
+            try {
+                membrs.declare(mName, mDef);
+            } catch (EnvironmentExp.DoubleDefException e) {
+                throw new ContextualError("methode deja defini", methodName.getLocation());
+            }
         }
     }
-    // cas : redéfinition
-    else {
-        if (!(def instanceof MethodDefinition)) {
-            throw new ContextualError("le nom existe deja mais ce n'es pas une methode",methodName.getLocation());
-        }
-        MethodDefinition oldDef = (MethodDefinition) def;
-        // on vérifie la signature
-        if (!signature.equals(oldDef.getSignature())) {
-            throw new ContextualError("la methode heritee n'a pas la meme singature",methodName.getLocation());
-        }
-        // on vérifie le type de retour
-        if (!mType.sameType(oldDef.getType())) {
-            throw new ContextualError("le type de retour est incompatible", methodName.getLocation());
-        }
-        int i = oldDef.getIndex();
-        MethodDefinition mDef =new MethodDefinition(mType, getLocation(), signature, i);
-        methodName.setType(mType);
-        methodName.setDefinition(mDef);
-        try {
-            membrs.declare(mName, mDef);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("methode deja defini", methodName.getLocation());
-        }
-    }
-}
     void verifyDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass)
-        throws ContextualError {
-    MethodDefinition def =(MethodDefinition) methodName.getDefinition();
-    EnvironmentExp envParams = new EnvironmentExp(null);
-    params.verifyListDeclParam(compiler, envParams);
-    body.verifyMethodBody(compiler,envParams,currentClass,def.getType());
-}
+            throws ContextualError {
+        MethodDefinition def =(MethodDefinition) methodName.getDefinition();
+        EnvironmentExp envParams = new EnvironmentExp(null);
+        params.verifyListDeclParam(compiler, envParams);
+        body.verifyMethodBody(compiler,envParams,currentClass,def.getType());
+        }
 
+    @Override
+    public void codeGenDeclMethod(DecacCompiler compiler) {
+        compiler.getRegisterManager().beginMethodScope();
 
+        // On génère d'abord le corps de la méthode pour savoir quels registres sont utilisés.
+        // On stocke le corps dans un programme IMA temporaire.
+        DecacCompiler tempCompiler = new DecacCompiler(compiler.getCompilerOptions(), compiler.getSource());
+        tempCompiler.setRegisterManager(compiler.getRegisterManager());
+        body.codeGenMethodBody(tempCompiler);
+
+        // Prologue: sauvegarder les registres utilisés
+        compiler.addComment("Sauvegarde des registres pour la méthode " + methodName.getName().getName());
+        Set<GPRegister> usedRegisters = compiler.getRegisterManager().getUsedInCurrentMethod();
+        for (GPRegister reg : usedRegisters) {
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.PUSH(reg));
+        }
+        
+        // On ajoute le corps de la méthode au programme principal
+        compiler.append(tempCompiler.getProgram());
+
+        // Épilogue: restaurer les registres
+        compiler.addComment("Restauration des registres pour la méthode " + methodName.getName().getName());
+        // On utilise un stream pour inverser l'ordre facilement pour POP
+        usedRegisters.stream()
+            .sorted((r1, r2) -> Integer.compare(r2.getNumber(), r1.getNumber()))
+            .forEach(reg -> compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.POP(reg)));
+        
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.RTS());
+    }
 }

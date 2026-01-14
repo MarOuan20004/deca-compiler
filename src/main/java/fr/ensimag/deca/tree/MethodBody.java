@@ -1,13 +1,19 @@
 package fr.ensimag.deca.tree;
 
+import java.io.PrintStream;
+
+import org.apache.commons.lang.Validate;
+
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
-import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.SUBSP;
+import fr.ensimag.ima.pseudocode.instructions.TSTO;
 
 /**
  * Method body with declarations and instructions.
@@ -28,10 +34,30 @@ public class MethodBody extends AbstractMethodBody {
     
     protected void verifyMethodBody(DecacCompiler compiler,EnvironmentExp envParams,ClassDefinition currentClass,Type returnType)
         throws ContextualError {
-    EnvironmentExp localEnv = new EnvironmentExp(envParams);
-    declarations.verifyListDeclVariable(compiler, localEnv, currentClass);
-    instructions.verifyListInst(compiler,localEnv,currentClass,returnType);
-}
+        EnvironmentExp localEnv = new EnvironmentExp(envParams);
+        declarations.verifyListDeclVariable(compiler, localEnv, currentClass);
+        instructions.verifyListInst(compiler,localEnv,currentClass,returnType);
+    }
+
+    public void codeGenMethodBody(DecacCompiler compiler) {
+        int nbVar = declarations.getList().size();
+        int maxTemps = instructions.maxTemp();
+        int d = nbVar + maxTemps;
+
+        compiler.addInstruction(new TSTO(d));
+        compiler.addInstruction(new BOV(new fr.ensimag.ima.pseudocode.Label("stack_overflow_error")));
+        compiler.addInstruction(new ADDSP(nbVar));
+        compiler.addComment("Variables Declarations ");
+        // Gestion des variables locales avec offset
+        int offset = 1; // début du GB pour ce bloc
+        for (AbstractDeclVar decl : declarations.getList()) {
+            offset = ((DeclVar) decl).codeGenDeclVar(compiler, offset);
+        }
+        // traiter les instructions
+        instructions.codeGenListInst(compiler);
+        // libérer l'espace des variables locales
+        compiler.addInstruction(new SUBSP(nbVar));
+    }
 
 
     // Getters
