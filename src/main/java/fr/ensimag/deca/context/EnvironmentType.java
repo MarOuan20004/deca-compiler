@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.Location;
+import fr.ensimag.deca.tree.Visibility;
 
 // A FAIRE: étendre cette classe pour traiter la partie "avec objet" de Déca
 /**
@@ -43,6 +44,18 @@ public class EnvironmentType {
         Symbol objectSymb = compiler.createSymbol("Object");
         OBJECT = new ClassType(objectSymb, Location.BUILTIN, null);
         ClassDefinition objectDef = new ClassDefinition(OBJECT, Location.BUILTIN, null);
+        
+        // Add the 'equals' method to Object's members
+        Symbol equalsSymb = compiler.createSymbol("equals");
+        Signature equalsSig = new Signature();
+        equalsSig.add(OBJECT);
+        MethodDefinition equalsDef = new MethodDefinition(BOOLEAN, Location.BUILTIN, equalsSig, 1, Visibility.PUBLIC);
+        try {
+            objectDef.getMembers().declare(equalsSymb, equalsDef);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            // This should not happen
+        }
+        
         envTypes.put(objectSymb, objectDef);
 
         

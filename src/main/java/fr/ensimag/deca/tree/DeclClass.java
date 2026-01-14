@@ -150,11 +150,16 @@ public class DeclClass extends AbstractDeclClass {
         System.out.println("Vérification des membres de la classe " + getClassName().getName().getName());
         System.out.println("Vérification des membres de la classe " + getSuperClass().getName().getName());
 
-        ClassDefinition classDefinition = getClassName().getClassDefinition() ;
-        EnvironmentExp envExp = classDefinition.getMembers() ;
-        classDefinition.setNumberOfFields(getSuperClass().getClassDefinition().getNumberOfFields());
-        classDefinition.setNumberOfMethods(getSuperClass().getClassDefinition().getNumberOfMethods());
-        fields.verifyListDeclField(compiler,classDefinition);
+        ClassDefinition classDefinition = getClassName().getClassDefinition();
+        ClassDefinition superClassDefinition = getSuperClass().getClassDefinition();
+        
+        // Chainer les environnements pour l'héritage
+        EnvironmentExp envExp = classDefinition.getMembers();
+        envExp.setParentEnvironment(superClassDefinition.getMembers());
+
+        classDefinition.setNumberOfFields(superClassDefinition.getNumberOfFields());
+        classDefinition.setNumberOfMethods(superClassDefinition.getNumberOfMethods());
+        fields.verifyListDeclField(compiler, classDefinition);
         methods.verifyListDeclMethod(compiler, classDefinition);
     }
     

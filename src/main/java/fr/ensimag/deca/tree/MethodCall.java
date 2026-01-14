@@ -9,6 +9,8 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.context.Definition ;
 import fr.ensimag.deca.context.ClassType ;
 import fr.ensimag.deca.context.MethodDefinition ;
+import fr.ensimag.deca.tree.Visibility;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -43,12 +45,26 @@ public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
     }
     ClassDefinition classDef =((ClassType) operandType).getDefinition();
 
+    System.out.println("Searching for method '" + method.getName().getName() + "' in class '" + classDef.getType().getName().getName() + "'");
+    System.out.println("Class members: " + classDef.getMembers().getDictionary().keySet());
+
     Definition def =classDef.getMembers().get(method.getName());
 
     if (def == null || !def.isMethod()) {
+        if (classDef.getSuperClass() != null) {
+            System.out.println("Also checking superclass '" + classDef.getSuperClass().getType().getName().getName() + "'");
+             System.out.println("Superclass members: " + classDef.getSuperClass().getMembers().getDictionary().keySet());
+        }
         throw new ContextualError("Selected identifier isn't a method of the class", method.getLocation());
     }
     MethodDefinition methodDef = (MethodDefinition) def;
+
+    // Check visibility
+    if (methodDef.getVisibility() == Visibility.PROTECTED) {
+        if (currentClass == null || !currentClass.getType().isSubClassOf(((ClassType)operandType).getDefinition().getType())) {
+            throw new ContextualError("The method " + method.getName().getName() + " is protected and cannot be accessed from here.", method.getLocation());
+        }
+    }
 
     if (arguments.size() != methodDef.getSignature().size()) {
         throw new ContextualError( "th number of arguments in method call is false",getLocation());

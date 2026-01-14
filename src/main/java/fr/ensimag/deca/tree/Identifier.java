@@ -171,15 +171,25 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        // Look up the identifier in the local environment
-        ExpDefinition def = localEnv.get(name);
+        
+        ExpDefinition def = localEnv.get(this.getName());
+
         if (def == null) {
-            throw new ContextualError("Variable '" + name + "' non déclarée", getLocation());
+            // Pas dans l'environnement local, on cherche dans les champs de la classe
+            if (currentClass == null) {
+                throw new ContextualError("Variable '" + this.getName().getName() + "' non déclarée",
+                                           this.getLocation());
+            }
+            def = currentClass.getMembers().get(this.getName());
+            if (def == null || !def.isField()) {
+                 throw new ContextualError("Variable '" + this.getName().getName() + "' non déclarée",
+                                           this.getLocation());
+            }
         }
-        setDefinition(def);
-        Type t = def.getType();
-        setType(t);
-        return t;
+        
+        this.setDefinition(def);
+        this.setType(def.getType());
+        return def.getType();
     }
 
     /**
