@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.Location;
-import fr.ensimag.deca.tree.Visibility;
+
 
 // A FAIRE: étendre cette classe pour traiter la partie "avec objet" de Déca
 /**
