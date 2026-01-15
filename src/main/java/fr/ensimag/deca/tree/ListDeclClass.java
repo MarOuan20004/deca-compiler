@@ -5,6 +5,12 @@ import org.apache.log4j.Logger;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 /**
  *
@@ -65,11 +71,20 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     }
 
     public void codeGenMethTable(DecacCompiler compiler) {
-        codeGenMeth
-        int offset = 1;
+        // pour object : 
+        compiler.addLabel(new Label("method_table_object"));
+        compiler.addInstruction(new LOAD (0, Register.R0));
+        compiler.addInstruction(new STORE(Register.R0,new RegisterOffset(1, Register.GB)));
+        Label equalsLabel = new Label("code_equals_object");
+        compiler.addInstruction(new LOAD (new LabelOperand(equalsLabel), Register.R0));
+        compiler.addInstruction(new STORE(Register.R0,new RegisterOffset(2, Register.GB)));
+
+        int offset = 3;  // Object table occupe 2 positions
         for (AbstractDeclClass c : getList()) {
-            ((DeclClass) c).codeGenMethTable(compiler, offset);
-            offset += ((DeclClass) c).getMethods().getList().size();
+            DeclClass dc = (DeclClass) c;
+            dc.codeGenMethTable(compiler, offset);
+            // Après codeGenMethTable, getNumberOfMethods() contient le nombre de positions utilisées
+            offset += dc.getClassName().getClassDefinition().getNumberOfMethods() + 1;
         }
     }
 

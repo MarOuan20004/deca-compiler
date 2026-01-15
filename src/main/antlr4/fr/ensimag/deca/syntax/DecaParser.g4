@@ -536,7 +536,6 @@ class_body  returns[ListDeclField fields, ListDeclMethod methods]
     : (m=decl_method {
         assert($decl_method.tree != null);
         $methods.add($decl_method.tree);
-
         }
       | f=decl_field_set {
         assert($decl_field_set.tree != null);
@@ -614,6 +613,7 @@ decl_method returns[AbstractDeclMethod tree]
         MethodBody body = new MethodBody($block.decls, $block.insts);
         setLocation(body, $block.start);
         $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body, $v.tree);
+        setLocation($tree,$type.start);
         }
       | ASM OPARENT s=multi_line_string CPARENT SEMI {
             assert($s.text != null);

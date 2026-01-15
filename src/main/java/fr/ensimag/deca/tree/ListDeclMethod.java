@@ -4,9 +4,11 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.ima.pseudocode.Label;
 
+import org.apache.log4j.Logger;
+
 
 public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
-    
+    private static final Logger LOG = Logger.getLogger(ListDeclMethod.class);
     public void decompile(fr.ensimag.deca.tools.IndentPrintStream s) {
         for (AbstractDeclMethod m : getList()) {
             m.decompile(s);
@@ -22,9 +24,11 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
      */
     void verifyListDeclMethod(DecacCompiler compiler, fr.ensimag.deca.context.ClassDefinition currentClass)
             throws ContextualError {
+        LOG.debug("verify listDeclMethod: start");
         for (AbstractDeclMethod m : getList()) {
             m .verifyDeclMethod(compiler, currentClass);
         }
+        LOG.debug("verify listDeclMethod: end");
     
     }
     void verifyListDeclMethodBody(DecacCompiler compiler, fr.ensimag.deca.context.ClassDefinition currentClass)

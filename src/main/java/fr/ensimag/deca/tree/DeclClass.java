@@ -68,34 +68,77 @@ public class DeclClass extends AbstractDeclClass {
     }
 
     public void methodLabelsCreate(DecacCompiler compiler) {
-        // methodes heritees , on cherche dans l'EnvExp
+        // add Recursively herited methods first
+        int currentMethodIndex = 1;
         ClassType superClassType = (ClassType) superClass.getType();
+        // Ajouter les méthodes héritées
         if (superClassType != null) {
             ClassDefinition superClassDef = superClassType.getDefinition();
-            EnvironmentExp superClassEnv = superClassDef.getMembers();
-            for (Map.Entry<Symbol, ExpDefinition> entry : superClassEnv.getDictionary().entrySet()) {
-                ExpDefinition methodDef = entry.getValue();
-                if (methodDef.isMethod()) {
-                    MethodDefinition superMethodDef = (MethodDefinition) methodDef;
-                    String LabelName = "Code" + superClass.getName().getName()
-                            + "." + entry.getKey().getName();
-                    methodLabels.put(superMethodDef.getIndex(),
-                            new Label(LabelName));
+            addInheritedMethodsToLabels(superClassDef, currentMethodIndex);
+            currentMethodIndex = methodLabels.size() + 1;
+        }
+        // Maintenant ajouter ou remplacer les méthodes propres
+        for (AbstractDeclMethod methodDecl : methods.getList()) {
+            DeclMethod declMethod = (DeclMethod) methodDecl;
+            String methodName = declMethod.getMethodName().getName().getName();
+            String methodLabelFullName = "Code" + className.getName().getName() + "." + methodName;
+            Label methodLabel = new Label(methodLabelFullName);
+            // Check for overriding
+            boolean isMethodOverridden = false;
+            Integer overriddenMethodIndex = null;
+            for (Map.Entry<Integer, Label> labelEntry : methodLabels.entrySet()) {
+                String existingLabelName = labelEntry.getValue().toString();
+                if (existingLabelName.endsWith("." + methodName)) {
+                    overriddenMethodIndex = labelEntry.getKey();
+                    isMethodOverridden = true;
+                    break;
                 }
             }
+            
+            if (isMethodOverridden && overriddenMethodIndex != null) {
+                methodLabels.put(overriddenMethodIndex, methodLabel);
+            } else {
+                methodLabels.put(currentMethodIndex, methodLabel);
+                currentMethodIndex++;
+            }
         }
-
-        int offset = methodLabels.size();
-        RegisterOffset addr = new RegisterOffset(offset, Register.GB);
-        getClassName().getClassDefinition().setAdrTable(addr);
-
-        for (AbstractDeclMethod methodDecl : methods.getList()) {
-            String methodLabelName = "Code" + className.getName().getName()
-                    + "." + ((DeclMethod) methodDecl).getMethodName().getName().getName();
-            MethodDefinition methodDef = (MethodDefinition)((DeclMethod) methodDecl)
-                    .getMethodName().getDefinition();
-            Label methodLabel = new Label(methodLabelName);
-            methodLabels.put(methodDef.getIndex() + offset, methodLabel);
+        
+        // Stocker le nombre de positions utilisées par la table de cette classe
+        getClassName().getClassDefinition().setNumberOfMethods(methodLabels.size());
+    }
+    
+    private void addInheritedMethodsToLabels(ClassDefinition superClassDef, int startIndex) {
+        int index = startIndex;
+        // D'abord, traiter la super-classe récursivement
+        ClassDefinition superOfSuper = superClassDef.getSuperClass();  
+        if (superOfSuper != null) {
+            // call recursively
+            addInheritedMethodsToLabels(superOfSuper, index);
+            index = methodLabels.size() + 1;
+        }
+        
+        // Ajouter les méthodes de la super-classe actuelle
+        EnvironmentExp env = superClassDef.getMembers();
+        String superClassName = superClassDef.getType().getName().getName();
+        for (Map.Entry<Symbol, ExpDefinition> entry : env.getDictionary().entrySet()) {
+            if (entry.getValue().isMethod()) {
+                String methodName = entry.getKey().getName();
+                String methodLabelName = "Code" + superClassName + "." + methodName;
+                Label methodLabel = new Label(methodLabelName);
+                
+                // Vérifier que le label n'existe pas déjà
+                boolean exists = false;
+                for (Label existingLabel : methodLabels.values()) {
+                    if (existingLabel.toString().equals(methodLabelName)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) {
+                    methodLabels.put(index, methodLabel);
+                    index++;
+                }
+            }
         }
     }
 
@@ -130,6 +173,7 @@ public class DeclClass extends AbstractDeclClass {
                 throw new ContextualError("Le symbole trouvé ne correspond pas à une classe", superClass.getLocation());
             }
             this.superClass.setDefinition(superClassTypeDefinition);
+            this.superClass.setType(superClassTypeDefinition.getType());
         }
 
         Symbol className = getClassName().getName();
@@ -199,21 +243,35 @@ public class DeclClass extends AbstractDeclClass {
     public void codeGenMethTable(DecacCompiler compiler, int offset) {
 
         methodLabelsCreate(compiler);
-        System.out.println("methodLabels: " + methodLabels);
 
         compiler.addComment("Code de la table des méthodes de la classe " + className.getName().getName());
-        // use AdrTable 
-        DAddr addr = getClassName().getClassDefinition().getAdrTable();
-        System.out.println("adresse de la table des méthodes : "+addr);
-        compiler.addInstruction(new LEA(addr, Register.R0));
+        
+        // Setter l'adresse de la table dans la ClassDefinition
+        RegisterOffset addr = new RegisterOffset(offset, Register.GB);
+        getClassName().getClassDefinition().setAdrTable(addr);
+        
+        // Stocker l'adresse de la table de la super-classe
+        DAddr superTableAddr = null;
+        ClassType superClassType = (ClassType) superClass.getType();
+        if (superClassType != null) {
+            ClassDefinition superClassDef = superClassType.getDefinition();
+            superTableAddr = superClassDef.getAdrTable();
+        }
+        
+        if (superTableAddr != null) {
+            compiler.addInstruction(new LEA(superTableAddr, Register.R0));
+        } else {
+            // Si pas de super-classe (Object), stocker null
+            compiler.addInstruction(new LOAD(new fr.ensimag.ima.pseudocode.NullOperand(), Register.R0));
+        }
         compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(offset, Register.GB)));
 
+        int currentOffset = offset + 1;
         for (Map.Entry<Integer, Label> entry : methodLabels.entrySet()) {
             Label methodLabel = entry.getValue();
-            int index= entry.getKey();
             compiler.addInstruction(new LOAD(new LabelOperand(methodLabel), Register.R0));
-            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(offset+index, Register.GB)));
-            
+            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(currentOffset, Register.GB)));
+            currentOffset++;
         }
     }
 

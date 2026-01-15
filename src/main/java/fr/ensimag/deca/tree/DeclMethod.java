@@ -140,11 +140,15 @@ public class DeclMethod extends AbstractDeclMethod {
             if (!signature.equals(superMethodDef.getSignature())) {
                 throw new ContextualError("Signature is incompatible with the overridden method", getLocation());
             }
+            System.out.println("Method " + mName.getName() + " overrides method at line ");
+            System.out.println(superMethodDef.getLocation());
             mDef = new MethodDefinition(mType, getLocation(), signature, superMethodDef.getIndex());
         } else {
             // It's a new method
             int methodIndex = currentClass.getNumberOfMethods() + 1;
             currentClass.incNumberOfMethods();
+            System.out.println("Method " + mName.getName() + " defined at line " );
+            System.out.println(getLocation());
             mDef = new MethodDefinition(mType, getLocation(), signature, methodIndex);
         }
         
