@@ -1,10 +1,13 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.DecacCompiler;
+
+
 import java.util.HashMap;
 import java.util.Map;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.Location;
+import fr.ensimag.deca.tree.Visibility;
 
 // A FAIRE: étendre cette classe pour traiter la partie "avec objet" de Déca
 /**
@@ -37,12 +40,21 @@ public class EnvironmentType {
 
         Symbol stringSymb = compiler.createSymbol("string");
         STRING = new StringType(stringSymb);
-        // not added to envTypes, it's not visible for the user.
-
         // Creation of the Object class
         Symbol objectSymb = compiler.createSymbol("Object");
         OBJECT = new ClassType(objectSymb, Location.BUILTIN, null);
-        ClassDefinition objectDef = new ClassDefinition(OBJECT, Location.BUILTIN, null);
+        ClassDefinition objectDef = OBJECT.getDefinition();
+        // add equals method to Object class
+        Symbol equalsSymb = compiler.createSymbol("equals");
+        Signature equalsSig = new Signature();
+        equalsSig.add(OBJECT);
+        MethodDefinition equalsDef = new MethodDefinition(
+            BOOLEAN,Location.BUILTIN,equalsSig,1);
+        try {
+            objectDef.getMembers().declare(equalsSymb, equalsDef);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new InternalError("double definition dans la classe Object");
+        }
         envTypes.put(objectSymb, objectDef);
 
         

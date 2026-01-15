@@ -109,62 +109,64 @@ public class DeclMethod extends AbstractDeclMethod {
         params.iter(f);
         body.iter(f);
     }
-
-   @Override
+@Override
 protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
         throws ContextualError {
-    // on vérifie le type de retour de la methode
+    
+    // 1. Types et Signature
     Type mType = returnType.verifyType(compiler);
-    // on vérifie les paramètres et on construit la signature
     Signature signature = new Signature();
-    for (AbstractDeclParam typeParams : params.getList()) {
-        DeclParam p = (DeclParam) typeParams;
-        if (p.getType().verifyType(compiler)==compiler.environmentType.VOID) {
-            throw new ContextualError(" VOID est interdit", p.getLocation());
+    for (AbstractDeclParam p : params.getList()) {
+        Type pType =((DeclParam) p).getType().verifyType(compiler); // Utilise la méthode de l'objet p directement
+        if (pType.isVoid()) {
+            throw new ContextualError("Le type void est interdit pour un paramètre", p.getLocation());
         }
-        signature.add(p.getType().verifyType(compiler));
+        signature.add(pType);
     }
-    Symbol mName = methodName.getName();
-    EnvironmentExp membrs = currentClass.getMembers();
-    ExpDefinition def = membrs.get(mName);
 
-    // cas: nouvelle méthode
-    if (def == null) {
-        int i = currentClass.getNumberOfMethods();
+    Symbol mName = methodName.getName();
+    
+    // 2. Recherche de la définition dans la SUPER CLASSE uniquement pour l'override
+    MethodDefinition superDef = null;
+    if (currentClass.getSuperClass() != null) {
+        ExpDefinition defInSuper = currentClass.getSuperClass().getMembers().get(mName);
+        if (defInSuper != null && defInSuper.isMethod()) {
+            superDef = (MethodDefinition) defInSuper;
+        } else if (defInSuper != null && defInSuper.isField()) {
+            throw new ContextualError("Le nom " + mName + " est déjà utilisé par un champ dans une super-classe", getLocation());
+        }
+    }
+
+    MethodDefinition mDef;
+    if (superDef == null) {
+        // CAS : Nouvelle méthode
+        int index = currentClass.getNumberOfMethods();
+        mDef = new MethodDefinition(mType, getLocation(), signature, index);
         currentClass.incNumberOfMethods();
-        MethodDefinition mDef = new MethodDefinition(mType, getLocation(), signature, i);
-        methodName.setType(mType);
-        methodName.setDefinition(mDef);
-        try {
-            membrs.declare(mName, mDef);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("methode deja definie", methodName.getLocation());
+    } else {
+        // CAS : Redéfinition (Override)
+        // Vérification de la signature (doit être identique)
+        if (!signature.equals(superDef.getSignature())) {
+            throw new ContextualError("Redéfinition impossible : signature différente", getLocation());
         }
+        // Vérification du type de retour (doit être compatible/identique)
+        if (!mType.sameType(superDef.getType())) { // Ou isSubtypeOf selon ton avancement
+            throw new ContextualError("Redéfinition impossible : type de retour incompatible", getLocation());
+        }
+        
+        // On garde le MÊME index que la méthode héritée pour la VTable
+        mDef = new MethodDefinition(mType, getLocation(), signature, superDef.getIndex());
     }
-    // cas : redéfinition
-    else {
-        if (!(def instanceof MethodDefinition)) {
-            throw new ContextualError("le nom existe deja mais ce n'es pas une methode",methodName.getLocation());
-        }
-        MethodDefinition oldDef = (MethodDefinition) def;
-        // on vérifie la signature
-        if (!signature.equals(oldDef.getSignature())) {
-            throw new ContextualError("la methode heritee n'a pas la meme singature",methodName.getLocation());
-        }
-        // on vérifie le type de retour
-        if (!mType.sameType(oldDef.getType())) {
-            throw new ContextualError("le type de retour est incompatible", methodName.getLocation());
-        }
-        int i = oldDef.getIndex();
-        MethodDefinition mDef =new MethodDefinition(mType, getLocation(), signature, i);
-        methodName.setType(mType);
-        methodName.setDefinition(mDef);
-        try {
-            membrs.declare(mName, mDef);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("methode deja defini", methodName.getLocation());
-        }
+
+    // 3. ON DÉCLARE DANS LA CLASSE COURANTE
+    try {
+        currentClass.getMembers().declare(mName, mDef);
+    } catch (EnvironmentExp.DoubleDefException e) {
+        throw new ContextualError("Méthode " + mName + " déjà définie dans cette classe", methodName.getLocation());
     }
+
+    methodName.setDefinition(mDef);
+    methodName.setType(mType);
 }
     void verifyDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass)
         throws ContextualError {

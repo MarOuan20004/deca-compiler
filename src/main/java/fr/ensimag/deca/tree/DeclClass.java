@@ -142,7 +142,7 @@ public class DeclClass extends AbstractDeclClass {
             throw new ContextualError("La classe existe deja dans EnvTypes", getClassName().getLocation());
         }
         ClassType classType = new ClassType(className, getClassName().getLocation(), (ClassDefinition) superClassTypeDefinition);
-        ClassDefinition classDefinition = new ClassDefinition(classType, getClassName().getLocation(), (ClassDefinition) superClassTypeDefinition);
+        ClassDefinition classDefinition = classType.getDefinition();
         getClassName().setType(classType);
         System.out.println("Définition de la classe " + getClassName().getName().getName() + " créée avec succès.");
         getClassName().setDefinition(classDefinition);

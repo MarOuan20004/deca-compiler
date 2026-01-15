@@ -6,9 +6,11 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.context.Definition ;
 import fr.ensimag.deca.context.ClassType ;
 import fr.ensimag.deca.context.MethodDefinition ;
+import fr.ensimag.deca.context.ExpDefinition ;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -43,12 +45,12 @@ public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
     }
     ClassDefinition classDef =((ClassType) operandType).getDefinition();
 
-    Definition def =classDef.getMembers().get(method.getName());
+    ExpDefinition def = classDef.getMembers().get(method.getName());
 
     if (def == null || !def.isMethod()) {
         throw new ContextualError("Selected identifier isn't a method of the class", method.getLocation());
     }
-    MethodDefinition methodDef = (MethodDefinition) def;
+    MethodDefinition methodDef = def.asMethodDefinition("Selected identifier isn't a method of the class", method.getLocation());
 
     if (arguments.size() != methodDef.getSignature().size()) {
         throw new ContextualError( "th number of arguments in method call is false",getLocation());
