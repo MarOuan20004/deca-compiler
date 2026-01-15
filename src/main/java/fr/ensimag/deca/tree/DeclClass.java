@@ -1,23 +1,20 @@
 package fr.ensimag.deca.tree;
 
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
-import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-
-
-import java.io.PrintStream;
-import java.lang.reflect.Type;
-
 import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
@@ -25,11 +22,6 @@ import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang.ObjectUtils.Null;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -93,13 +85,17 @@ public class DeclClass extends AbstractDeclClass {
             }
         }
 
+        int offset = methodLabels.size();
+        RegisterOffset addr = new RegisterOffset(offset, Register.GB);
+        getClassName().getClassDefinition().setAdrTable(addr);
+
         for (AbstractDeclMethod methodDecl : methods.getList()) {
             String methodLabelName = "Code" + className.getName().getName()
                     + "." + ((DeclMethod) methodDecl).getMethodName().getName().getName();
             MethodDefinition methodDef = (MethodDefinition)((DeclMethod) methodDecl)
                     .getMethodName().getDefinition();
             Label methodLabel = new Label(methodLabelName);
-            methodLabels.put(methodDef.getIndex(), methodLabel);
+            methodLabels.put(methodDef.getIndex() + offset, methodLabel);
         }
     }
 
@@ -202,9 +198,13 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     public void codeGenMethTable(DecacCompiler compiler, int offset) {
 
+        methodLabelsCreate(compiler);
+        System.out.println("methodLabels: " + methodLabels);
+
         compiler.addComment("Code de la table des méthodes de la classe " + className.getName().getName());
         // use AdrTable 
         DAddr addr = getClassName().getClassDefinition().getAdrTable();
+        System.out.println("adresse de la table des méthodes : "+addr);
         compiler.addInstruction(new LEA(addr, Register.R0));
         compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(offset, Register.GB)));
 

@@ -1,4 +1,14 @@
+class A {
+    int x;
+    float b;
+    int meth(){
+        println("jdssd");
+    }
+    int sth(){
+        println("jdssd");
+    }
+
+}
 {
-    x=5;
-    println(x%2);
+    println("hi");
 }
