@@ -425,6 +425,11 @@ primary_expr returns[AbstractExpr tree]
             $tree = new This();
             setLocation($tree, $THIS);
         }
+    | OPARENT t=type CPARENT OPARENT e=expr CPARENT{
+            assert($e.tree != null);
+            assert($t.tree != null);
+            $tree=new Cast($t.tree,$e.tree);
+    }
     
     ;
 
@@ -603,12 +608,12 @@ decl_field[Visibility visible , AbstractIdentifier typ] returns[AbstractDeclFiel
 decl_method returns[AbstractDeclMethod tree]
 @init {
 }
-    : type ident OPARENT params=list_params CPARENT (block {
+    : v=visibility type ident OPARENT params=list_params CPARENT (block {
         assert($block.decls != null);
         assert($block.insts != null);
         MethodBody body = new MethodBody($block.decls, $block.insts);
         setLocation(body, $block.start);
-        $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body);
+        $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body, $v.tree);
         }
       | ASM OPARENT s=multi_line_string CPARENT SEMI {
             assert($s.text != null);
@@ -616,7 +621,7 @@ decl_method returns[AbstractDeclMethod tree]
             setLocation(asmLiteral, $ASM);
             MethodAsmBody body = new MethodAsmBody(asmLiteral);
             setLocation(body, $ASM);
-            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body);
+            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body, $v.tree);
         }
       ) {
         }

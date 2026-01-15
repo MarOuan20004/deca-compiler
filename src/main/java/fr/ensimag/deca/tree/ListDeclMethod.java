@@ -1,7 +1,8 @@
 package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
-import java.util.List;
+import fr.ensimag.ima.pseudocode.Label;
 
 
 public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
@@ -28,10 +29,27 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     }
     void verifyListDeclMethodBody(DecacCompiler compiler, fr.ensimag.deca.context.ClassDefinition currentClass)
         throws ContextualError {
-    for (AbstractDeclMethod method : getList()) {
-        ((DeclMethod) method).verifyDeclMethodBody(compiler, currentClass);
+        for (AbstractDeclMethod method : getList()) {
+            ((DeclMethod) method).verifyDeclMethodBody(compiler, currentClass);
+        }
     }
-}
+
+    void codeGenListDeclMethod(DecacCompiler compiler, ClassDefinition currentClass) {
+        for (AbstractDeclMethod m : getList()){
+            DeclMethod method = (DeclMethod) m;
+            // code de l'étiquette de la méthode
+            String methodName = method.getMethodName().getName().getName();
+            String className = currentClass.getType().getName().getName();
+            Label methodLabel = new Label("Code." + className + "." + methodName);
+            compiler.addLabel(methodLabel);
+
+            method.codeGenDeclMethod(compiler);
+            // ajouter l'instruction de fin de méthode
+            String endString = "fin." + className + "." + methodName;
+            compiler.addLabel(new Label(endString));
+
+        }
+    }
 
 
 }

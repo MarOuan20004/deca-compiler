@@ -106,6 +106,14 @@ public class DecacCompiler {
     }
     
     /**
+     * Appends a whole IMAProgram to the current one.
+     * @param p The program to append.
+     */
+    public void append(IMAProgram p) {
+        program.append(p);
+    }
+
+    /**
      * @see 
      * fr.ensimag.ima.pseudocode.IMAProgram#display()
      */
@@ -120,6 +128,9 @@ public class DecacCompiler {
      */
     private final IMAProgram program = new IMAProgram();
  
+    public IMAProgram getProgram() {
+        return program;
+    }
 
     /** The global environment for types (and the symbolTable) */
     public final SymbolTable symbolTable = new SymbolTable();
@@ -248,6 +259,10 @@ public class DecacCompiler {
 
     public RegisterManager getRegisterManager() {
         return registerManager;
+    }
+
+    public void setRegisterManager(RegisterManager registerManager) {
+        this.registerManager = registerManager;
     }
 
     private static int labelCounter = 0;

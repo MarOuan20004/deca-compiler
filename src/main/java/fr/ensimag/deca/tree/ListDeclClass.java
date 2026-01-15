@@ -1,9 +1,10 @@
 package fr.ensimag.deca.tree;
 
+import org.apache.log4j.Logger;
+
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -39,7 +40,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     public void verifyListClassMembers(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify listClass: start");
         for (AbstractDeclClass c : getList()) {
-            c.verifyClassMembers(compiler);//on parcourt la liste des classes puis on vérifie la passe 1
+            c.verifyClassMembers(compiler);//on parcourt la liste des classes puis on vérifie la passe 2
             
         }
         LOG.debug("verify listClass: end");
@@ -51,7 +52,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     public void verifyListClassBody(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify listClass: start");
         for (AbstractDeclClass c : getList()) {
-            c.verifyClassBody(compiler);//on parcourt la liste des classes puis on vérifie la passe 1
+            c.verifyClassBody(compiler);//on parcourt la liste des classes puis on vérifie la passe 3
             
         }
         LOG.debug("verify listClass: end");

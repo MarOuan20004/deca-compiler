@@ -1,18 +1,24 @@
 package fr.ensimag.deca.tree;
 
+import java.io.PrintStream;
+
+import org.apache.commons.lang.Validate;
+
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-
-import java.io.PrintStream;
-import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 /**
  * Declaration of a class field.
@@ -127,9 +133,29 @@ public class DeclField extends AbstractDeclField {
     }
     void verifyDeclFieldBody(DecacCompiler compiler, ClassDefinition currentClass)
         throws ContextualError {
-    Type fieldType = fieldName.getType();
-    EnvironmentExp env = currentClass.getMembers();
-    initialization.verifyInitialization(compiler,fieldType,env,currentClass);
-}
+        Type fieldType = fieldName.getType();
+        EnvironmentExp env = currentClass.getMembers();
+        initialization.verifyInitialization(compiler,fieldType,env,currentClass);
+    }
+
+    void codeGenInitField(DecacCompiler compiler, int index) {
+        compiler.addInstruction(new LOAD(0,Register.R0));
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2,Register.LB), Register.R1));
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.R1)));
+    }
+    void codeGenDeclField(DecacCompiler compiler, int index) {
+        if (getInitialization() instanceof NoInitialization) {
+            // Pas d'initialisation, donc on met la valeur par défaut
+            compiler.addInstruction(new LOAD(0, Register.R0));
+        } else {
+            // Générer le code pour l'initialisation
+            getInitialization().codeGenInitialization(compiler, Register.R0);
+        }
+        // Charger l'adresse du champ dans R1
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2,Register.LB), Register.R1));
+        // Stocker la valeur dans le champ de l'objet courant
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.R1)));
+        compiler.addInstruction(new RTS());
+    }
 
 }

@@ -1,27 +1,26 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.ClassType;
+import java.io.PrintStream;
+
+import org.apache.commons.lang.Validate;
+
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
-import fr.ensimag.deca.context.ExpDefinition;
-import fr.ensimag.deca.context.VariableDefinition;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.TypeDefinition;
+import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
-
-import java.io.PrintStream;
-import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
 
 /**
  * Deca Identifier
@@ -172,14 +171,25 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        ExpDefinition def = localEnv.get(name);
+        
+        ExpDefinition def = localEnv.get(this.getName());
+
         if (def == null) {
-            throw new ContextualError("Variable '" + name + "' non déclarée", getLocation());
+            // Pas dans l'environnement local, on cherche dans les champs de la classe
+            if (currentClass == null) {
+                throw new ContextualError("Variable '" + this.getName().getName() + "' non déclarée",
+                                           this.getLocation());
+            }
+            def = currentClass.getMembers().get(this.getName());
+            if (def == null || !def.isField()) {
+                 throw new ContextualError("Variable '" + this.getName().getName() + "' non déclarée",
+                                           this.getLocation());
+            }
         }
-        setDefinition(def);
-        Type t = def.getType();
-        setType(t);
-        return t;
+        
+        this.setDefinition(def);
+        this.setType(def.getType());
+        return def.getType();
     }
 
     /**
@@ -233,10 +243,22 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
-        // Récupérer la définition de la variable
-        VariableDefinition def = getVariableDefinition();
-        // Charger la valeur depuis l'opérande (GB) vers le registre r
-        compiler.addInstruction(new LOAD(def.getOperand(), r));
+        // Récupérer la définition de l'operande 
+        Definition def =getDefinition();
+        if (def instanceof FieldDefinition) {
+            // charger l'adresse this dans un registre temporaire
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2,Register.LB),r));
+            int indexField = ((FieldDefinition) def).getIndex();
+            compiler.addInstruction(new LOAD(new RegisterOffset(indexField, r), r));
+        }
+        else if (def instanceof VariableDefinition) {
+            VariableDefinition varDef = (VariableDefinition) def;
+            // Charger la valeur depuis l'opérande (GB) vers le registre r
+            compiler.addInstruction(new LOAD(varDef.getOperand(), r));
+        }
+        else{
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
     }
 
     @Override
