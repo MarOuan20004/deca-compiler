@@ -58,6 +58,8 @@ public class EnvironmentType {
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new InternalError("double definition dans la classe Object");
         }
+        // Set numberOfMethods for Object class to 1 (has equals method)
+        objectDef.setNumberOfMethods(1);
         envTypes.put(objectSymb, objectDef);
 
         

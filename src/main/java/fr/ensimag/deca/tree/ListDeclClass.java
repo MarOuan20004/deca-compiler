@@ -7,6 +7,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -73,7 +74,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     public void codeGenMethTable(DecacCompiler compiler) {
         // pour object : 
         compiler.addLabel(new Label("method_table_object"));
-        compiler.addInstruction(new LOAD (0, Register.R0));
+        compiler.addInstruction(new LOAD (new NullOperand(), Register.R0));
         compiler.addInstruction(new STORE(Register.R0,new RegisterOffset(1, Register.GB)));
         Label equalsLabel = new Label("code_equals_object");
         compiler.addInstruction(new LOAD (new LabelOperand(equalsLabel), Register.R0));

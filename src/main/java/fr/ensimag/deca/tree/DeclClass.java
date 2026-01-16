@@ -68,76 +68,47 @@ public class DeclClass extends AbstractDeclClass {
     }
 
     public void methodLabelsCreate(DecacCompiler compiler) {
-        // add Recursively herited methods first
-        int currentMethodIndex = 1;
+        // For each method, find its index and put the method label at this index
         ClassType superClassType = (ClassType) superClass.getType();
-        // Ajouter les méthodes héritées
+        // Add inherited methods first (recursively)
         if (superClassType != null) {
             ClassDefinition superClassDef = superClassType.getDefinition();
-            addInheritedMethodsToLabels(superClassDef, currentMethodIndex);
-            currentMethodIndex = methodLabels.size() + 1;
+            addInheritedMethodsToLabels(superClassDef);
         }
-        // Maintenant ajouter ou remplacer les méthodes propres
+        
+        // Add or replace methods of the current class
+        // Each method goes at its own index from MethodDefinition
         for (AbstractDeclMethod methodDecl : methods.getList()) {
             DeclMethod declMethod = (DeclMethod) methodDecl;
             String methodName = declMethod.getMethodName().getName().getName();
-            String methodLabelFullName = "Code" + className.getName().getName() + "." + methodName;
+            String methodLabelFullName = "Code." + className.getName().getName() + "." + methodName;
             Label methodLabel = new Label(methodLabelFullName);
-            // Check for overriding
-            boolean isMethodOverridden = false;
-            Integer overriddenMethodIndex = null;
-            for (Map.Entry<Integer, Label> labelEntry : methodLabels.entrySet()) {
-                String existingLabelName = labelEntry.getValue().toString();
-                if (existingLabelName.endsWith("." + methodName)) {
-                    overriddenMethodIndex = labelEntry.getKey();
-                    isMethodOverridden = true;
-                    break;
-                }
-            }
-            
-            if (isMethodOverridden && overriddenMethodIndex != null) {
-                methodLabels.put(overriddenMethodIndex, methodLabel);
-            } else {
-                methodLabels.put(currentMethodIndex, methodLabel);
-                currentMethodIndex++;
-            }
+            MethodDefinition methodDef = (MethodDefinition) declMethod.getMethodName().getDefinition();
+            int methodOwnIndex = methodDef.getIndex();           
+            // Put the label at this method's index
+            // If it's overriding, this replaces the parent's label at the same index
+            methodLabels.put(methodOwnIndex, methodLabel);
         }
-        
-        // Stocker le nombre de positions utilisées par la table de cette classe
         getClassName().getClassDefinition().setNumberOfMethods(methodLabels.size());
     }
     
-    private void addInheritedMethodsToLabels(ClassDefinition superClassDef, int startIndex) {
-        int index = startIndex;
-        // D'abord, traiter la super-classe récursivement
-        ClassDefinition superOfSuper = superClassDef.getSuperClass();  
+    private void addInheritedMethodsToLabels(ClassDefinition superClassDef) {
+        // Recursively add inherited methods by their own indices
+        ClassDefinition superOfSuper = superClassDef.getSuperClass();
         if (superOfSuper != null) {
-            // call recursively
-            addInheritedMethodsToLabels(superOfSuper, index);
-            index = methodLabels.size() + 1;
+            addInheritedMethodsToLabels(superOfSuper);
         }
-        
-        // Ajouter les méthodes de la super-classe actuelle
         EnvironmentExp env = superClassDef.getMembers();
         String superClassName = superClassDef.getType().getName().getName();
+        
         for (Map.Entry<Symbol, ExpDefinition> entry : env.getDictionary().entrySet()) {
             if (entry.getValue().isMethod()) {
+                MethodDefinition methodDef = (MethodDefinition) entry.getValue();
                 String methodName = entry.getKey().getName();
-                String methodLabelName = "Code" + superClassName + "." + methodName;
+                String methodLabelName = "Code." + superClassName + "." + methodName;
                 Label methodLabel = new Label(methodLabelName);
-                
-                // Vérifier que le label n'existe pas déjà
-                boolean exists = false;
-                for (Label existingLabel : methodLabels.values()) {
-                    if (existingLabel.toString().equals(methodLabelName)) {
-                        exists = true;
-                        break;
-                    }
-                }
-                if (!exists) {
-                    methodLabels.put(index, methodLabel);
-                    index++;
-                }
+                // Put the label at the method's own index
+                methodLabels.put(methodDef.getIndex(), methodLabel);
             }
         }
     }
@@ -234,6 +205,8 @@ public class DeclClass extends AbstractDeclClass {
     public void codeGenClass(DecacCompiler compiler) {
         // A FAIRE: compléter ce squelette très rudimentaire de code
         // code pour les champs et autres initialisations
+        fields.codeGenListDeclFieldInit(compiler);
+        fields.codeGenListDeclField(compiler);
         // code pour les méthodes de chaque classe
         
         

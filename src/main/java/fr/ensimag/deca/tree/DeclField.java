@@ -131,6 +131,7 @@ public class DeclField extends AbstractDeclField {
             throw new ContextualError("Field deja existant", currentClass.getLocation());
         }
     }
+    
     void verifyDeclFieldBody(DecacCompiler compiler, ClassDefinition currentClass)
         throws ContextualError {
         Type fieldType = fieldName.getType();
@@ -143,6 +144,7 @@ public class DeclField extends AbstractDeclField {
         compiler.addInstruction(new LOAD(new RegisterOffset(-2,Register.LB), Register.R1));
         compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.R1)));
     }
+    
     void codeGenDeclField(DecacCompiler compiler, int index) {
         if (getInitialization() instanceof NoInitialization) {
             // Pas d'initialisation, donc on met la valeur par défaut
