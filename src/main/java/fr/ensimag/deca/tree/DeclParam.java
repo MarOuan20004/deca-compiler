@@ -74,6 +74,9 @@ public class DeclParam extends AbstractDeclParam {
         if (paramType==null) {
             throw new ContextualError("Type inconnue pour le paramètre", type.getLocation());
         }
+        if (paramType.isVoid()) {
+            throw new ContextualError("Le type d'un paramètre ne peut pas être void", type.getLocation());
+        }
         if (getParamName()==null) {
             throw new ContextualError("Nom de paramètre null", paramName.getLocation());
         }

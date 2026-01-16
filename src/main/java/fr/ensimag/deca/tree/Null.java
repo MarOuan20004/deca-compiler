@@ -20,7 +20,7 @@ public class Null extends AbstractExpr {
     @Override
 public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
         ClassDefinition currentClass) throws ContextualError {
-    Type nulType = compiler.environmentType.defOfType(compiler.symbolTable.create("null")).getType();
+    Type nulType = compiler.environmentType.NULL;
     this.setType(nulType);
     return nulType;
 }

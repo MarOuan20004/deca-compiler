@@ -62,6 +62,10 @@ public class EnvironmentType {
         objectDef.setNumberOfMethods(1);
         envTypes.put(objectSymb, objectDef);
 
+        Symbol nullSymb = compiler.createSymbol("null");
+        NULL = new NullType(nullSymb);
+        envTypes.put(nullSymb, new TypeDefinition(NULL, Location.BUILTIN));
+
         
     }
     public void envTypesAdd(Symbol symbol , TypeDefinition typeDefinition , Location location) throws  ContextualError{
@@ -86,4 +90,5 @@ public class EnvironmentType {
     public final StringType  STRING;
     public final BooleanType BOOLEAN;
     public final ClassType   OBJECT;
+    public final NullType    NULL ;
 }

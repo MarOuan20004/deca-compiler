@@ -111,7 +111,7 @@ public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             compiler.addInstruction(new PUSH(r));
         }
         
-        // 2. Évaluer et empiler l'opérande (this)
+        // 2. Évaluer et empiler l'opérande
         operand.codeGenExpr(compiler, r);
         
         // Check if null
