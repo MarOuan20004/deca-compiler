@@ -82,7 +82,7 @@ FLOAT_LITERAL
     | '0' [xX] DIGITHEX+ '.' DIGITHEX+ P_EXP [Ff]?
     ;
 
-fragment STRING_CAR: ~('"' | '\'' | '\n' | '\r' ) ;
+fragment STRING_CAR: ~('"' | '\\' | '\n' | '\r' ) ;
 STRING : '"' ( STRING_CAR | '\\"' | '\\\\' )* '"' ;
 MULTI_LINE_STRING :  '"' ( STRING_CAR | '\n' | '\r' | '\\"' | '\\\\' )* '"' ;
 

@@ -14,7 +14,8 @@ import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.QUO;
 import fr.ensimag.ima.pseudocode.instructions.SUB;
-
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.Label;
 /**
  *
  * @author gl10
@@ -42,7 +43,13 @@ public class Divide extends AbstractOpArith {
         if (r2 != null) {
             // Cas registre
             getRightOperand().codeGenExpr(compiler, r2);
-            compiler.addInstruction(new DIV(r2, r)); // r = gauche / droite
+            if(getType().isInt()) {
+                compiler.addInstruction(new QUO(r2, r));
+            }
+            else{
+                compiler.addInstruction(new DIV(r2, r)); // r = gauche / droite
+            }
+            compiler.addInstruction(new BOV(new Label("division_by_zero")));
             compiler.getRegisterManager().freeRegister(r2);
         } else {
             // Cas pile

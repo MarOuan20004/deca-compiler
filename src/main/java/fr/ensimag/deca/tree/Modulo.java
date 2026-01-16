@@ -2,6 +2,8 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.REM;
 import fr.ensimag.ima.pseudocode.instructions.POP;
@@ -52,6 +54,7 @@ public class Modulo extends AbstractOpArith {
             // Cas registre
             getRightOperand().codeGenExpr(compiler, r2);
             compiler.addInstruction(new REM(r2, r)); // r = gauche % droite
+            compiler.addInstruction(new BOV(new Label("division_by_zero")));
             compiler.getRegisterManager().freeRegister(r2);
         } else {
             // Cas pile
@@ -59,6 +62,7 @@ public class Modulo extends AbstractOpArith {
             getRightOperand().codeGenExpr(compiler, r);    // r = droite
             compiler.addInstruction(new POP(GPRegister.R0)); // R0 = gauche
             compiler.addInstruction(new REM(r, GPRegister.R0)); // R0 = gauche % droite
+            compiler.addInstruction(new BOV(new Label("division_by_zero")));
             compiler.addInstruction(new LOAD(GPRegister.R0, r)); // r = résultat
         }
     }
