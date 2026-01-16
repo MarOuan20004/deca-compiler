@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -10,18 +11,28 @@ import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.ExpDefinition;
+import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.instructions.SUB;
+import fr.ensimag.ima.pseudocode.instructions.SUBSP;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -30,6 +41,7 @@ import fr.ensimag.ima.pseudocode.instructions.STORE;
  * @date 01/01/2026
  */
 public class DeclClass extends AbstractDeclClass {
+    private static final Logger LOG = Logger.getLogger(DeclClass.class);
     private AbstractIdentifier className;
     private AbstractIdentifier superClass;
     private ListDeclField fields;
@@ -123,19 +135,19 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        System.out.println("Début de la vérification de la classe " + getClassName().getName().getName());
+        LOG.debug("Début de la vérification de la classe " + getClassName().getName().getName());
         TypeDefinition superClassTypeDefinition;
 
         if (superClass == null) {
             Symbol objectSymb = compiler.createSymbol("Object");
             superClassTypeDefinition = compiler.environmentType.defOfType(objectSymb);
             this.superClass = new Identifier(objectSymb);
-            System.out.println("Classe racine détectée : extension implicite de Object");
+            LOG.debug("Classe racine détectée : extension implicite de Object");
             this.superClass.setDefinition(superClassTypeDefinition);
             this.superClass.setType(superClassTypeDefinition.getType());
         } else {
             Symbol SuperClassName = getSuperClass().getName();
-            System.out.println("Vérification de la super-classe : " + SuperClassName.getName());
+            LOG.debug("Vérification de la super-classe : " + SuperClassName.getName());
             superClassTypeDefinition = compiler.environmentType.defOfType(SuperClassName);
             if (superClassTypeDefinition == null) {
                 throw new ContextualError("la classe n'existe pas dans EnvTypes", superClass.getLocation());
@@ -155,16 +167,16 @@ public class DeclClass extends AbstractDeclClass {
         ClassType classType = new ClassType(className, getClassName().getLocation(), (ClassDefinition) superClassTypeDefinition);
         ClassDefinition classDefinition = classType.getDefinition();
         getClassName().setType(classType);
-        System.out.println("Définition de la classe " + getClassName().getName().getName() + " créée avec succès.");
+        LOG.debug("Définition de la classe " + getClassName().getName().getName() + " créée avec succès.");
         getClassName().setDefinition(classDefinition);
-        System.out.println("Definition " + classDefinition.toString() + " ajoutée au dictionnaire.");
+        LOG.debug("Definition " + classDefinition.toString() + " ajoutée au dictionnaire.");
         compiler.environmentType.envTypesAdd(className, classDefinition, getClassName().getLocation());
     }
 
     @Override
     protected void verifyClassMembers(DecacCompiler compiler) throws ContextualError {
-        System.out.println("Vérification des membres de la classe " + getClassName().getName().getName());
-        System.out.println("Vérification des membres de la classe " + getSuperClass().getName().getName());
+        LOG.debug("Vérification des membres de la classe " + getClassName().getName().getName());
+        LOG.debug("Vérification des membres de la classe " + getSuperClass().getName().getName());
 
         ClassDefinition classDefinition = getClassName().getClassDefinition() ;
         EnvironmentExp envExp = classDefinition.getMembers() ;
@@ -203,13 +215,40 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     public void codeGenClass(DecacCompiler compiler) {
-        // A FAIRE: compléter ce squelette très rudimentaire de code
-        // code pour les champs et autres initialisations
-        fields.codeGenListDeclFieldInit(compiler);
+        // 1-initialiser à 0
+        compiler.addLabel(new Label("init."+className.getName().getName()));
+        if (!superClass.getName().getName().equals("Object")) {
+            // 2- Appeler le constructeur par defaut de la super classe
+            callConstructorOfSuperClass(compiler);
+            fields.codeGenListDeclFieldInit(compiler);
+        }
+        // 3-Intisialisation explicite
         fields.codeGenListDeclField(compiler);
-        // code pour les méthodes de chaque classe
+        compiler.addInstruction(new RTS());
         
-        
+        // 4-Code des méthodes
+        methods.codeGenListDeclMethod(compiler, className.getClassDefinition());
+    }
+
+    private void callConstructorOfSuperClass(DecacCompiler compiler) {
+        ClassType superClassType = (ClassType) superClass.getType();
+        if (superClassType != null && !superClassType.getName().getName().equals("Object")) {
+            ClassDefinition superClassDef = superClassType.getDefinition();
+            String superClassName = superClassDef.getType().getName().getName();
+            String constructorLabelName = "init." + superClassName;
+            Label constructorLabel = new Label(constructorLabelName);
+            // Appeler le constructeur de la super-classe
+            compiler.addComment("Appel du constructeur de la super-classe " + superClassName);
+            // Préparer l'appel en empilant l'adresse de l'objet courant (this)
+            // On charge "this" (paramètre -2(LB)) dans R1 avant de le pusher
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
+            compiler.addInstruction(new PUSH(Register.R1));
+            // Appeler le constructeur
+            compiler.addInstruction(new BSR(constructorLabel));
+            // Nettoyer la pile après l'appel
+            compiler.addInstruction(new SUBSP(1));
+            
+        }
     }
 
     @Override
@@ -239,12 +278,10 @@ public class DeclClass extends AbstractDeclClass {
         }
         compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(offset, Register.GB)));
 
-        int currentOffset = offset + 1;
         for (Map.Entry<Integer, Label> entry : methodLabels.entrySet()) {
             Label methodLabel = entry.getValue();
             compiler.addInstruction(new LOAD(new LabelOperand(methodLabel), Register.R0));
-            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(currentOffset, Register.GB)));
-            currentOffset++;
+            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(offset + entry.getKey(), Register.GB)));
         }
     }
 

@@ -13,6 +13,17 @@ import fr.ensimag.deca.context.MethodDefinition ;
 import fr.ensimag.deca.context.ExpDefinition ;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BSR;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.SUBSP;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.NullOperand;
 
 /**
  * Method call (e.g. x.y(a, b))
@@ -90,5 +101,42 @@ public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
         operand.iter(f);
         method.iter(f);
         arguments.iter(f);
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {
+        // 1. Évaluer et empiler les arguments
+        for (AbstractExpr arg : arguments.getList()) {
+            arg.codeGenExpr(compiler, r);
+            compiler.addInstruction(new PUSH(r));
+        }
+        
+        // 2. Évaluer et empiler l'opérande (this)
+        operand.codeGenExpr(compiler, r);
+        
+        // Check if null
+        compiler.addInstruction(new CMP(new NullOperand(), r));
+        compiler.addInstruction(new BEQ(new Label("dereference_null")));
+
+        compiler.addInstruction(new PUSH(r));
+        
+        // 3. Charger la VTable (l'objet est dans r)
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, r), r));
+        
+        // 4. Charger l'adresse de la méthode
+        MethodDefinition methodDef = (MethodDefinition) method.getDefinition();
+        int index = methodDef.getIndex();
+        compiler.addInstruction(new LOAD(new RegisterOffset(index, r), r));
+        
+        // 5. Appeler la méthode
+        compiler.addInstruction(new BSR(r));
+        
+        // 6. Dépiler this et les arguments
+        compiler.addInstruction(new SUBSP(arguments.size() + 1));
+        
+        // 7. Le résultat est dans R0 par convention
+        if (!getType().isVoid() && r != Register.R0) {
+            compiler.addInstruction(new LOAD(Register.R0, r));
+        }
     }
 }

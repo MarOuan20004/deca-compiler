@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import java.io.PrintStream;
 
 /**
@@ -25,6 +26,12 @@ public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
 }
 
    
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(new fr.ensimag.ima.pseudocode.NullOperand(), r));
+    }
+
 
     @Override
     public void decompile(IndentPrintStream s) {

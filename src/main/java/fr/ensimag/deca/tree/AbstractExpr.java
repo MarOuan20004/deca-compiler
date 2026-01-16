@@ -88,10 +88,12 @@ public abstract class AbstractExpr extends AbstractInst {
             throws ContextualError {
         Type actualType = verifyExpr(compiler, localEnv, currentClass);
         if (expectedType.isFloat() && actualType.isInt()) {
-            return new ConvFloat(this);
+            ConvFloat conv = new ConvFloat(this);
+            conv.verifyExpr(compiler, localEnv, currentClass);
+            return conv;
         }
-        if (!expectedType.sameType(actualType)) {
-            throw new ContextualError("Incompatible right value", getLocation());
+        if (!actualType.isAssignableTo(expectedType)) {
+            throw new ContextualError("Incompatible assignment: expected " + expectedType + " but got " + actualType, getLocation());
         }
         return this;
     }

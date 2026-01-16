@@ -121,7 +121,7 @@ public class DeclField extends AbstractDeclField {
         }
         int i  = currentClass.getNumberOfFields() ;
         currentClass.incNumberOfFields() ; 
-        FieldDefinition fieldDef = new FieldDefinition(typeField, currentClass.getLocation(), visibility, currentClass, i);
+        FieldDefinition fieldDef = new FieldDefinition(typeField, currentClass.getLocation(), visibility, currentClass, i + 1);
         fieldName.setType(typeField);
         fieldName.setDefinition(fieldDef);
         try{
@@ -157,7 +157,6 @@ public class DeclField extends AbstractDeclField {
         compiler.addInstruction(new LOAD(new RegisterOffset(-2,Register.LB), Register.R1));
         // Stocker la valeur dans le champ de l'objet courant
         compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.R1)));
-        compiler.addInstruction(new RTS());
     }
 
 }

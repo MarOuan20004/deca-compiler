@@ -48,10 +48,10 @@ public class Program extends AbstractProgram {
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
         compiler.addComment("Construction of methods tables");
-        classes.codeGenMethTable(compiler);
+        int nextOffset = classes.codeGenMethTable(compiler);
 
         compiler.addComment("Main program");
-        main.codeGenMain(compiler);
+        main.codeGenMain(compiler, nextOffset);
 
         compiler.addInstruction(new HALT());
 
@@ -68,6 +68,16 @@ public class Program extends AbstractProgram {
 
         compiler.addLabel(new Label("division_by_zero"));
         compiler.addInstruction(new WSTR("Error: Division by zero"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
+
+        compiler.addLabel(new Label("heap_overflow"));
+        compiler.addInstruction(new WSTR("Error: Heap Overflow"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
+
+        compiler.addLabel(new Label("dereference_null"));
+        compiler.addInstruction(new WSTR("Error: Dereference null"));
         compiler.addInstruction(new WNL());
         compiler.addInstruction(new ERROR());
 

@@ -55,7 +55,13 @@ public class Return extends AbstractInst {
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         GPRegister reg = compiler.getRegisterManager().allocateRegister();
-        exp.codeGenExpr(compiler,reg);
+        exp.codeGenExpr(compiler, reg);
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(reg, fr.ensimag.ima.pseudocode.Register.R0));
+        compiler.getRegisterManager().freeRegister(reg);
         
+        fr.ensimag.ima.pseudocode.Label endLabel = compiler.getCurrentMethodEndLabel();
+        if (endLabel != null) {
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BRA(endLabel));
+        }
     }
 }

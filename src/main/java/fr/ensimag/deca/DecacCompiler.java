@@ -271,5 +271,15 @@ public class DecacCompiler {
         return labelCounter++;
     }
 
+    private Label currentMethodEndLabel;
+
+    public Label getCurrentMethodEndLabel() {
+        return currentMethodEndLabel;
+    }
+
+    public void setCurrentMethodEndLabel(Label currentMethodEndLabel) {
+        this.currentMethodEndLabel = currentMethodEndLabel;
+    }
+
 
 }

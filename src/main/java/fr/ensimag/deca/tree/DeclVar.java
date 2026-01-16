@@ -82,10 +82,10 @@ public class DeclVar extends AbstractDeclVar {
         varName.prettyPrint(s, prefix, false);
         initialization.prettyPrint(s, prefix, true);
     }
-    protected int codeGenDeclVar(DecacCompiler compiler, int currentOffset) {
+    protected int codeGenDeclVar(DecacCompiler compiler, int currentOffset, Register base) {
         VariableDefinition def = (VariableDefinition) varName.getDefinition();
-        // Chaque variable a son offset dans le GB
-        def.setOperand(new RegisterOffset(currentOffset, Register.GB));
+        // Chaque variable a son offset par rapport au registre de base
+        def.setOperand(new RegisterOffset(currentOffset, base));
 
         // Calculer la valeur dans R0
         initialization.codeGenInitialization(compiler, Register.R0);

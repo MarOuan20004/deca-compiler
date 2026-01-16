@@ -10,6 +10,18 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 /**
  *
@@ -40,6 +52,46 @@ public class InstanceOf extends AbstractExpr {
         }
         this.setType(compiler.environmentType.BOOLEAN);
         return compiler.environmentType.BOOLEAN;
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {
+        int id = compiler.getLabelCounter();
+        Label loopLabel = new Label("instance_of_loop_" + id);
+        Label trueLabel = new Label("instance_of_true_" + id);
+        Label falseLabel = new Label("instance_of_false_" + id);
+        Label endLabel = new Label("instance_of_end_" + id);
+
+        GPRegister r1 = compiler.getRegisterManager().allocateRegister();
+        expr.codeGenExpr(compiler, r1);
+
+        // Check if null
+        compiler.addInstruction(new CMP(new NullOperand(), r1));
+        compiler.addInstruction(new BEQ(falseLabel));
+
+        // Get method table address of the object
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, r1), r1));
+
+        compiler.addLabel(loopLabel);
+        // Get method table address of the target class
+        compiler.addInstruction(new LEA(typeNom.getClassDefinition().getAdrTable(), Register.R0));
+        compiler.addInstruction(new CMP(Register.R0, r1));
+        compiler.addInstruction(new BEQ(trueLabel));
+
+        // Get parent method table
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, r1), r1));
+        compiler.addInstruction(new CMP(new NullOperand(), r1));
+        compiler.addInstruction(new BNE(loopLabel));
+
+        compiler.addLabel(falseLabel);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(0), r));
+        compiler.addInstruction(new BRA(endLabel));
+
+        compiler.addLabel(trueLabel);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(1), r));
+
+        compiler.addLabel(endLabel);
+        compiler.getRegisterManager().freeRegister(r1);
     }
 
     @Override

@@ -47,11 +47,7 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
             Label methodLabel = new Label("Code." + className + "." + methodName);
             compiler.addLabel(methodLabel);
 
-            method.codeGenDeclMethod(compiler);
-            // ajouter l'instruction de fin de méthode
-            String endString = "fin." + className + "." + methodName;
-            compiler.addLabel(new Label(endString));
-
+            method.codeGenDeclMethod(compiler, currentClass);
         }
     }
 

@@ -50,6 +50,12 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             setType(compiler.environmentType.BOOLEAN);
             return compiler.environmentType.BOOLEAN;
         }
+        if (left.isClassOrNull() && right.isClassOrNull()) {
+            if (this instanceof AbstractOpExactCmp) {
+                setType(compiler.environmentType.BOOLEAN);
+                return compiler.environmentType.BOOLEAN;
+            }
+        }
         throw new ContextualError("Operations non compatible pour la comparison", getLocation());
     }
 

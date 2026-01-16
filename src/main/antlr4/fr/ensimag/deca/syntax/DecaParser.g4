@@ -155,7 +155,7 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
-            $tree = new NoOperation(); // Temporary fix
+            $tree = new Return($expr.tree);
             setLocation($tree, $RETURN);
         }
     ;
@@ -303,6 +303,12 @@ inequality_expr returns[AbstractExpr tree]
             assert($e2.tree != null);
             $tree = new Lower($e1.tree,$e2.tree);
             setLocation($tree, $op);
+        }
+    | e1=inequality_expr INSTANCEOF t=type {
+            assert($e1.tree != null);
+            assert($t.tree != null);
+            $tree = new InstanceOf($e1.tree, $t.tree);
+            setLocation($tree, $INSTANCEOF);
         }
     ;
 

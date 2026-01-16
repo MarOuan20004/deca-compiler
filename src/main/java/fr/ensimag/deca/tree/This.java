@@ -8,6 +8,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
 
 /**
  * "this" keyword
@@ -41,5 +42,10 @@ public class This extends AbstractExpr {
     @Override
     protected void iterChildren(TreeFunction f) {
         // No children
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(new fr.ensimag.ima.pseudocode.RegisterOffset(-2, fr.ensimag.ima.pseudocode.Register.LB), r));
     }
 }

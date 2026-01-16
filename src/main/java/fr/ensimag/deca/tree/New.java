@@ -55,12 +55,12 @@ public class New extends AbstractExpr{
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        // leaf node => nothing to do
+        classNom.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        // leaf node => nothing to do
+        classNom.prettyPrint(s, prefix, true);
     }
 
     @Override
@@ -77,10 +77,10 @@ public void codeGenExpr(DecacCompiler compiler, GPRegister r) {
     compiler.addInstruction(new BOV(new Label("heap_overflow")));
     
     // 4. Installation du pointeur de VTable
-    // On charge l'adresse de la VTable (qui est dans la pile) dans R0
-    compiler.addInstruction(new LEA(classDef.getAdrTable(), Register.R0));
+    // On charge l'adresse de la VTable (qui est dans la pile) dans R1 (pour ne pas écraser r si r=R0)
+    compiler.addInstruction(new LEA(classDef.getAdrTable(), Register.R1));
     // On stocke cette adresse au début de l'objet alloué (offset 0)
-    compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(0, r)));
+    compiler.addInstruction(new STORE(Register.R1, new RegisterOffset(0, r)));
     
     // 5. Appel de l'initialisation des champs (init.NomClasse)
     // On sauvegarde l'objet (r) car l'appel BSR peut écraser les registres

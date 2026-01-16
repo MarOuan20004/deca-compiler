@@ -5,6 +5,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 
 /**
  * List of field declarations.
@@ -44,6 +45,9 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     }
 
     void codeGenListDeclFieldInit(DecacCompiler compiler) {
+
+
+        // champs propre à la classe
         for (AbstractDeclField absField : getList()) {
             DeclField field = (DeclField) absField;
             field.codeGenInitField(compiler, field.getFieldName().getFieldDefinition().getIndex());
@@ -54,8 +58,11 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
 
         for (AbstractDeclField absField : getList()) {
             DeclField field = (DeclField) absField;
-            field.codeGenDeclField(compiler, field.getFieldName().getFieldDefinition().getIndex());
+            if (field.getInitialization() != null) {
+                field.codeGenDeclField(compiler, field.getFieldName().getFieldDefinition().getIndex());
+            }
         }
+        compiler.addInstruction(new RTS());
     }
 
 }

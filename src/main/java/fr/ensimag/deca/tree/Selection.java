@@ -14,6 +14,10 @@ import fr.ensimag.deca.context.FieldDefinition ;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
 /**
  * Field selection (e.g. x.y)
  *
@@ -93,5 +97,20 @@ public class Selection extends AbstractLValue {
         operand.iter(f);
         field.iter(f);
     }
-  
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {
+        // 1. Évaluer l'opérande (l'objet)
+        operand.codeGenExpr(compiler, r);
+        
+        // Check if null
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.CMP(new fr.ensimag.ima.pseudocode.NullOperand(), r));
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BEQ(new fr.ensimag.ima.pseudocode.Label("dereference_null")));
+
+        // 2. Récupérer la définition du champ pour avoir son offset
+        FieldDefinition fieldDef = (FieldDefinition) field.getDefinition();
+        int offset = fieldDef.getIndex();
+        
+        // 3. Charger la valeur du champ
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(new fr.ensimag.ima.pseudocode.RegisterOffset(offset, r), r));
+    }
 }

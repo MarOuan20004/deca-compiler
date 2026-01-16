@@ -40,7 +40,7 @@ public class Main extends AbstractMain {
     }
 
     @Override
-    protected void codeGenMain(DecacCompiler compiler) {
+    protected void codeGenMain(DecacCompiler compiler, int nextOffset) {
         // traiter les déclarations de variables.
         //  calculer le nombre de variables
         int nbVar = declVariables.getList().size();
@@ -48,16 +48,16 @@ public class Main extends AbstractMain {
         // calculer le nombre maximal de temporaires
         int maxTemps = insts.maxTemp(); // implémenter maxTemp() dans ListInst
 
-        int d = nbVar + maxTemps;
+        int d = nbVar + maxTemps + nextOffset; // On réserve aussi pour les tables de méthodes
 
         compiler.addInstruction(new TSTO(d));
         compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
-        compiler.addInstruction(new ADDSP(nbVar));
+        compiler.addInstruction(new ADDSP(nextOffset + nbVar - 1)); // -1 car GB commence à 1
         compiler.addComment("Variables Declarations ");
         // Gestion des variables locales avec offset
-        int offset = 1; // début du GB pour ce bloc
+        int offset = nextOffset; // début du GB après les tables de méthodes
         for (AbstractDeclVar decl : declVariables.getList()) {
-            offset = ((DeclVar) decl).codeGenDeclVar(compiler, offset);
+            offset = ((DeclVar) decl).codeGenDeclVar(compiler, offset, fr.ensimag.ima.pseudocode.Register.GB);
         }
         compiler.addComment("Beginning of main instructions:");
         insts.codeGenListInst(compiler);

@@ -68,6 +68,25 @@ public abstract class Type {
         return false;
     }
 
+    public boolean isAssignableTo(Type other) {
+        if (this.sameType(other)) {
+            return true;
+        }
+        if (this.isFloat() && other.isFloat()) {
+            return true;
+        }
+        if (this.isInt() && other.isFloat()) {
+            return true;
+        }
+        if (this.isNull() && other.isClass()) {
+            return true;
+        }
+        if (this.isClass() && other.isClass()) {
+            return ((ClassType)this).isSubClassOf((ClassType)other);
+        }
+        return false;
+    }
+
     /**
      * Returns the same object, as type ClassType, if possible. Throws
      * ContextualError(errorMessage, l) otherwise.

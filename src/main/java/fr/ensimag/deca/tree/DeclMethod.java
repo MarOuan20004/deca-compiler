@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import java.io.PrintStream;
 import java.util.Set;
+import org.apache.log4j.Logger;
 
 import org.apache.commons.lang.Validate;
 
@@ -15,8 +16,10 @@ import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.deca.context.ParamDefinition;
 
 /**
  * Declaration of a class method.
@@ -25,6 +28,7 @@ import fr.ensimag.ima.pseudocode.instructions.PUSH;
  * @date 01/01/2026
  */
 public class DeclMethod extends AbstractDeclMethod {
+    private static final Logger LOG = Logger.getLogger(DeclMethod.class);
     private AbstractIdentifier returnType;
     private AbstractIdentifier methodName;
     private ListDeclParam params;
@@ -140,15 +144,13 @@ public class DeclMethod extends AbstractDeclMethod {
             if (!signature.equals(superMethodDef.getSignature())) {
                 throw new ContextualError("Signature is incompatible with the overridden method", getLocation());
             }
-            System.out.println("Method " + mName.getName() + " overrides method at line ");
-            System.out.println(superMethodDef.getLocation());
+            LOG.debug("Method " + mName.getName() + " overrides method at " + superMethodDef.getLocation());
             mDef = new MethodDefinition(mType, getLocation(), signature, superMethodDef.getIndex());
         } else {
             // It's a new method
             int methodIndex = currentClass.getNumberOfMethods() + 1;
             currentClass.incNumberOfMethods();
-            System.out.println("Method " + mName.getName() + " defined at line " );
-            System.out.println(getLocation());
+            LOG.debug("Method " + mName.getName() + " defined at " + getLocation());
             mDef = new MethodDefinition(mType, getLocation(), signature, methodIndex);
         }
         
@@ -166,17 +168,34 @@ public class DeclMethod extends AbstractDeclMethod {
         MethodDefinition def =(MethodDefinition) methodName.getDefinition();
         EnvironmentExp envParams = new EnvironmentExp(null);
         params.verifyListDeclParam(compiler, envParams);
-        body.verifyMethodBody(compiler,envParams,currentClass,def.getType());
+        
+        // Set operands for parameters
+        int n = params.size();
+        for (int i = 0; i < n; i++) {
+            AbstractDeclParam p = params.getList().get(i);
+            DeclParam dp = (DeclParam) p;
+            ParamDefinition pDef = (ParamDefinition) envParams.get(dp.getParamName().getName());
+            pDef.setOperand(new RegisterOffset(-(n - i + 2), Register.LB));
         }
+        
+        body.verifyMethodBody(compiler,envParams,currentClass,def.getType());
+    }
 
     @Override
-    public void codeGenDeclMethod(DecacCompiler compiler) {
+    public void codeGenDeclMethod(DecacCompiler compiler, ClassDefinition currentClass) {
         compiler.getRegisterManager().beginMethodScope();
+
+        // Create end label for Return
+        String className = currentClass.getType().getName().getName();
+        String methodLabelName = methodName.getName().getName();
+        fr.ensimag.ima.pseudocode.Label endLabel = new fr.ensimag.ima.pseudocode.Label("fin." + className + "." + methodLabelName);
+        compiler.setCurrentMethodEndLabel(endLabel);
 
         // On génère d'abord le corps de la méthode pour savoir quels registres sont utilisés.
         // On stocke le corps dans un programme IMA temporaire.
         DecacCompiler tempCompiler = new DecacCompiler(compiler.getCompilerOptions(), compiler.getSource());
         tempCompiler.setRegisterManager(compiler.getRegisterManager());
+        tempCompiler.setCurrentMethodEndLabel(endLabel);
         body.codeGenMethodBody(tempCompiler);
 
         // Prologue: sauvegarder les registres utilisés
@@ -189,6 +208,9 @@ public class DeclMethod extends AbstractDeclMethod {
         // On ajoute le corps de la méthode au programme principal
         compiler.append(tempCompiler.getProgram());
 
+        // Étiquette de fin pour les returns
+        compiler.addLabel(endLabel);
+
         // Épilogue: restaurer les registres
         compiler.addComment("Restauration des registres pour la méthode " + methodName.getName().getName());
         // On utilise un stream pour inverser l'ordre facilement pour POP
@@ -197,5 +219,7 @@ public class DeclMethod extends AbstractDeclMethod {
             .forEach(reg -> compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.POP(reg)));
         
         compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.RTS());
+        
+        compiler.setCurrentMethodEndLabel(null);
     }
 }

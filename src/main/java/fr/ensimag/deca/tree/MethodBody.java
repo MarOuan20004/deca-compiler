@@ -49,9 +49,9 @@ public class MethodBody extends AbstractMethodBody {
         compiler.addInstruction(new ADDSP(nbVar));
         compiler.addComment("Variables Declarations ");
         // Gestion des variables locales avec offset
-        int offset = 1; // début du GB pour ce bloc
+        int offset = 1; // début par rapport à LB
         for (AbstractDeclVar decl : declarations.getList()) {
-            offset = ((DeclVar) decl).codeGenDeclVar(compiler, offset);
+            offset = ((DeclVar) decl).codeGenDeclVar(compiler, offset, fr.ensimag.ima.pseudocode.Register.LB);
         }
         // traiter les instructions
         instructions.codeGenListInst(compiler);

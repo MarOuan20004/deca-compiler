@@ -203,6 +203,7 @@ public class Identifier extends AbstractIdentifier {
             throw new ContextualError("Unknown type", getLocation());
         }
         setDefinition(def);
+        setType(def.getType());
         return def.getType();
     }
     
@@ -255,6 +256,9 @@ public class Identifier extends AbstractIdentifier {
             VariableDefinition varDef = (VariableDefinition) def;
             // Charger la valeur depuis l'opérande (GB) vers le registre r
             compiler.addInstruction(new LOAD(varDef.getOperand(), r));
+        }
+        else if (def.isParam()) {
+            compiler.addInstruction(new LOAD(((fr.ensimag.deca.context.ExpDefinition)def).getOperand(), r));
         }
         else{
             throw new UnsupportedOperationException("Not supported yet.");
