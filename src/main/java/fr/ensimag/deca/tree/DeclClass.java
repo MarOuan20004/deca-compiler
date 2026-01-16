@@ -225,7 +225,6 @@ public class DeclClass extends AbstractDeclClass {
         // 3-Intisialisation explicite
         fields.codeGenListDeclField(compiler);
         compiler.addInstruction(new RTS());
-        
         // 4-Code des méthodes
         methods.codeGenListDeclMethod(compiler, className.getClassDefinition());
     }

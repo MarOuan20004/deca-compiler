@@ -82,21 +82,21 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
             // Génération du code pour la méthode equals de la classe Object
             compiler.addLabel(new Label("Code.Object.equals"));
             // Comparer les deux références d'objet
-            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R0)); // this
-            compiler.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB), Register.R1)); // other
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R0));
+            compiler.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB), Register.R1));
             compiler.addInstruction(new SUB(Register.R0, Register.R1));
-            // Si égales, retourner true (1), sinon false (0)
-            Label labelTrue = new Label("equals_true");
-            Label labelEnd = new Label("equals_end");
-            compiler.addInstruction(new BEQ(labelTrue));
-            // Faux
+            // Comparaison
+            Label trueLabel = new Label("equals_true");
+            Label endLabel = new Label("equals_end");
+            compiler.addInstruction(new BEQ(trueLabel));
+            // Inequality
             compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.R0));
-            compiler.addInstruction(new BRA(labelEnd));
-            // Vrai
-            compiler.addLabel(labelTrue);
+            compiler.addInstruction(new BRA(endLabel));
+            // Equals
+            compiler.addLabel(trueLabel);
             compiler.addInstruction(new LOAD(new ImmediateInteger(1), Register.R0));
             // Fin
-            compiler.addLabel(labelEnd);
+            compiler.addLabel(endLabel);
             compiler.addInstruction(new RTS());
         
     }

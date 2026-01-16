@@ -185,7 +185,7 @@ public class DeclMethod extends AbstractDeclMethod {
     public void codeGenDeclMethod(DecacCompiler compiler, ClassDefinition currentClass) {
         compiler.getRegisterManager().beginMethodScope();
 
-        // Create end label for Return
+        // Create end label
         String className = currentClass.getType().getName().getName();
         String methodLabelName = methodName.getName().getName();
         fr.ensimag.ima.pseudocode.Label endLabel = new fr.ensimag.ima.pseudocode.Label("fin." + className + "." + methodLabelName);
@@ -198,21 +198,18 @@ public class DeclMethod extends AbstractDeclMethod {
         tempCompiler.setCurrentMethodEndLabel(endLabel);
         body.codeGenMethodBody(tempCompiler);
 
-        // Prologue: sauvegarder les registres utilisés
-        compiler.addComment("Sauvegarde des registres pour la méthode " + methodName.getName().getName());
+        //sauvegarder les registres utilisés
+        compiler.addComment("Sauvegarde des registres");
         Set<GPRegister> usedRegisters = compiler.getRegisterManager().getUsedInCurrentMethod();
         for (GPRegister reg : usedRegisters) {
             compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.PUSH(reg));
-        }
-        
+        }   
         // On ajoute le corps de la méthode au programme principal
         compiler.append(tempCompiler.getProgram());
-
-        // Étiquette de fin pour les returns
+        // Étiquette de fin
         compiler.addLabel(endLabel);
-
-        // Épilogue: restaurer les registres
-        compiler.addComment("Restauration des registres pour la méthode " + methodName.getName().getName());
+        // restaurer les registres
+        compiler.addComment("Restauration des registres  " );
         // On utilise un stream pour inverser l'ordre facilement pour POP
         usedRegisters.stream()
             .sorted((r1, r2) -> Integer.compare(r2.getNumber(), r1.getNumber()))

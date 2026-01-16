@@ -113,4 +113,23 @@ public class Selection extends AbstractLValue {
         // 3. Charger la valeur du champ
         compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(new fr.ensimag.ima.pseudocode.RegisterOffset(offset, r), r));
     }
+
+    protected void codeGenAssign(DecacCompiler compiler, GPRegister valueReg) {
+        // 1. Évaluer l'opérande (l'objet)
+        GPRegister objectReg = compiler.getRegisterManager().allocateRegister();
+        operand.codeGenExpr(compiler, objectReg);
+        
+        // Check if null
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.CMP(new fr.ensimag.ima.pseudocode.NullOperand(), objectReg));
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BEQ(new fr.ensimag.ima.pseudocode.Label("dereference_null")));
+
+        // 2. Récupérer la définition du champ pour avoir son offset
+        FieldDefinition fieldDef = (FieldDefinition) field.getDefinition();
+        int offset = fieldDef.getIndex();
+        
+        // 3. Stocker la valeur dans le champ : Mem[obj + offset] = valueReg
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.STORE(valueReg, new fr.ensimag.ima.pseudocode.RegisterOffset(offset, objectReg)));
+        
+        compiler.getRegisterManager().freeRegister(objectReg);
+    }
 }
