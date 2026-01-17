@@ -1,0 +1,20 @@
+// Description:
+//    Declaration en double de la meme classe.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Point {
+    int x;
+}
+
+class Point {
+    int y;
+}
+
+{
+    println(1);
+}

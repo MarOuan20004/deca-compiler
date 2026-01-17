@@ -1,0 +1,18 @@
+// Description:
+//    Tentative de chainage sur un type primitif (non-objet).
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Container {
+    int value;
+}
+
+{
+    Container c;
+    c = new Container();
+    println(c.value.data);
+}

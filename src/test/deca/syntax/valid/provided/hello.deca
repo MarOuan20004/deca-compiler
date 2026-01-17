@@ -8,5 +8,5 @@
 //    cree le 01/01/2026
 
 {
-        println("Hello 2 World");
+        println("Hello");
 }

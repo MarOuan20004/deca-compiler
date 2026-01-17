@@ -2,10 +2,10 @@
 //    Calcul arithmetique chaine.
 //
 // Resultats:
-//    Affiche 38.
+//    Affiche 44.
 //
 // Historique:
-//    cree le 06/01/2026
+//    cree le 09/01/2026
 
 {
     int a;

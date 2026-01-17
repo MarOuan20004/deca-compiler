@@ -1,0 +1,22 @@
+// Description:
+//    Classe heritant d'une autre.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Animal {
+    int age;
+}
+
+class Dog extends Animal {
+    int breed;
+}
+
+{
+    Dog dog;
+    dog = new Dog();
+    println(1);
+}

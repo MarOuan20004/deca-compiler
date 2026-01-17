@@ -1,0 +1,19 @@
+// Description:
+//    Creation et utilisation simple d'un objet.
+//
+// Resultats:
+//    Affiche 42.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Answer {
+    int value;
+}
+
+{
+    Answer ans;
+    ans = new Answer();
+    ans.value = 42;
+    println(ans.value);
+}

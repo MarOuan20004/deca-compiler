@@ -1,0 +1,12 @@
+// Description:
+//    String contient guillemet non echappe.
+//
+// Resultats:
+//    Erreur lexicale attendue.
+//
+// Historique:
+//    cree le 05/01/2026
+
+{
+    println("Bonjour "monde);
+}

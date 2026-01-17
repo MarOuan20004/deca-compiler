@@ -1,0 +1,17 @@
+// Description:
+//    Commentaires simple ligne.
+//
+// Resultats:
+//    test_synt accepte; commentaires ignores.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int a;
+    int b;
+    a = 5; // Commentaire apres ligne
+    b = 10;
+    println(a);
+    println(b);
+}

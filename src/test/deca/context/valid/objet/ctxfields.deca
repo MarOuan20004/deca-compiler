@@ -1,0 +1,21 @@
+// Description:
+//    Acces et affectation de champs.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Point {
+    int x;
+    int y;
+}
+
+{
+    Point p;
+    p = new Point();
+    p.x = 10;
+    p.y = 20;
+    println(p.x);
+}

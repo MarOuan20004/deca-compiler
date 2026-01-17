@@ -1,0 +1,21 @@
+// Description:
+//    Negation unaire et operations.
+//
+// Resultats:
+//    Affiche -5 puis 10.
+//
+// Historique:
+//    cree le 12/01/2026
+
+{
+    int a;
+    int b;
+
+    a = 5;
+    b = -a;
+    println(b);
+
+    a = -10;
+    b = -a;
+    println(b);
+}

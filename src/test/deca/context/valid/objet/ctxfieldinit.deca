@@ -1,0 +1,19 @@
+// Description:
+//    Initialisation de champs a la declaration dans la classe.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Config {
+    int param1 = 10;
+    int param2 = 20;
+}
+
+{
+    Config cfg;
+    cfg = new Config();
+    println(1);
+}

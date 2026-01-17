@@ -1,0 +1,19 @@
+// Description:
+//    Negation unaire sur boolean (operateur ! sur boolean).
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    boolean flag;
+
+    flag = true;
+
+    if (-flag) {
+        println(1);
+    }
+}
+

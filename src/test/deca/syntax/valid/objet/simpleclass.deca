@@ -1,0 +1,12 @@
+// Description:
+//    Declaration simple d'une classe avec champ.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 12/01/2026
+
+class Point {
+    int x;
+}

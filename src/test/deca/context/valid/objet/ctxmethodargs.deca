@@ -1,0 +1,25 @@
+// Description:
+//    Appels de methodes avec arguments varies (differents types).
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Calculator {
+    int add(int a, int b) {
+        return a + b;
+    }
+    
+    float addFloat(int a, float b) {
+        return a + b;
+    }
+}
+
+{
+    Calculator calc;
+    calc = new Calculator();
+    println(calc.add(10, 20));
+    println(calc.addFloat(10, 5.5));
+}

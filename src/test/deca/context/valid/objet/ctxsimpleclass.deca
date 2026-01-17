@@ -1,0 +1,18 @@
+// Description:
+//    Classe simple acceptee en contexte.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class MyClass {
+    int value;
+}
+
+{
+    MyClass obj;
+    obj = new MyClass();
+    println(1);
+}

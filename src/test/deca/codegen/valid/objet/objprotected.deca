@@ -1,0 +1,25 @@
+// Description:
+//    Visibilite 'protected' pour des champs accessibles aux classes derivees.
+//
+// Resultats:
+//    Affiche 5.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Parent {
+    protected int protectedField;
+}
+
+class Child extends Parent {
+    int getProtected() {
+        return protectedField;
+    }
+}
+
+{
+    Child c;
+    c = new Child();
+    c.protectedField = 5;
+    println(c.getProtected());
+}

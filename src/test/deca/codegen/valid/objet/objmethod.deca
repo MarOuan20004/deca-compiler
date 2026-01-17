@@ -1,0 +1,20 @@
+// Description:
+//    Methode simple retournant une valeur.
+//
+// Resultats:
+//    Affiche 8.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Calc {
+    int add(int a, int b) {
+        return a + b;
+    }
+}
+
+{
+    Calc c;
+    c = new Calc();
+    println(c.add(3, 5));
+}

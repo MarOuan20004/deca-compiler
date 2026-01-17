@@ -3,6 +3,7 @@
 # Test de l'interface en ligne de commande de decac.
 # On ne met ici qu'un test trivial, a vous d'en ecrire de meilleurs.
 
+cd "$(dirname "$0")"/../../.. || exit 1
 PATH=./src/main/bin:"$PATH"
 
 decac_moins_b=$(decac -b)

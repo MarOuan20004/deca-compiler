@@ -1,0 +1,15 @@
+// Description:
+//    Meme variable declaree deux fois dans le meme bloc.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    int x;
+    int x;
+    x = 5;
+    println(x);
+}

@@ -89,6 +89,7 @@ public abstract class AbstractExpr extends AbstractInst {
         Type actualType = verifyExpr(compiler, localEnv, currentClass);
         if (expectedType.isFloat() && actualType.isInt()) {
             ConvFloat conv = new ConvFloat(this);
+            conv.setLocation(getLocation());
             conv.verifyExpr(compiler, localEnv, currentClass);
             return conv;
         }
@@ -174,7 +175,7 @@ public abstract class AbstractExpr extends AbstractInst {
          fr.ensimag.ima.pseudocode.Label labelFalse
     ) {
         // laisser vide, sera redéfini dans les classes filles qui en ont besoin
-        throw new UnsupportedOperationException("Not yet implemented");
+
     }
 
 }

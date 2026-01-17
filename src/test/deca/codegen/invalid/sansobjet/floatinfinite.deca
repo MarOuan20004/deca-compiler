@@ -1,0 +1,18 @@
+// Description:
+//    Valeur Infinity (Inf) resultant de la division flottante.
+//
+// Resultats:
+//    Erreur d'execution attendue ou Infinity.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    float x;
+    float y;
+    
+    x = 1.0;
+    y = 0.0;
+    println(x / y);
+}
+

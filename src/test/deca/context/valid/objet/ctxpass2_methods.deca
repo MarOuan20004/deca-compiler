@@ -1,0 +1,29 @@
+// Description:
+//    Passe 2 - Verification des signatures de methodes avec parametres varies.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Calculator {
+    int add(int a, int b) {
+        return a + b;
+    }
+    
+    float multiply(float a, float b) {
+        return a * b;
+    }
+    
+    boolean compare(int x, int y) {
+        return x == y;
+    }
+}
+
+{
+    Calculator c;
+    c = new Calculator();
+    println(c.add(10, 20));
+    println(c.compare(5, 5));
+}

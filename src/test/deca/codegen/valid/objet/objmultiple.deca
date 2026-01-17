@@ -1,0 +1,23 @@
+// Description:
+//    Creation de plusieurs objets.
+//
+// Resultats:
+//    Affiche 10 puis 20.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Box {
+    int content;
+}
+
+{
+    Box b1;
+    Box b2;
+    b1 = new Box();
+    b2 = new Box();
+    b1.content = 10;
+    b2.content = 20;
+    println(b1.content);
+    println(b2.content);
+}

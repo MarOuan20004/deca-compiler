@@ -1,0 +1,26 @@
+// Description:
+//    Surcharge de methodes heritees (overriding) dans une classe derivee.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Base {
+    int getValue() {
+        return 50;
+    }
+}
+
+class Derived extends Base {
+    int getValue() {
+        return 100;
+    }
+}
+
+{
+    Derived d;
+    d = new Derived();
+    println(1);
+}

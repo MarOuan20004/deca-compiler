@@ -1,0 +1,24 @@
+// Description:
+//    Visibilite 'protected' pour des champs accessibles aux classes derivees.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Parent {
+    protected int secret;
+}
+
+class Child extends Parent {
+    int getSecret() {
+        return secret;
+    }
+}
+
+{
+    Child c;
+    c = new Child();
+    println(1);
+}

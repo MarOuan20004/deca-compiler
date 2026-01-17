@@ -1,0 +1,24 @@
+// Description:
+//    Classe heritant avec propres champs et methodes.
+//
+// Resultats:
+//    Affiche 5.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Animal {
+    int age;
+}
+
+class Dog extends Animal {
+    int barkCount;
+}
+
+{
+    Dog dog;
+    dog = new Dog();
+    dog.age = 3;
+    dog.barkCount = 5;
+    println(dog.barkCount);
+}

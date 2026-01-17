@@ -1,0 +1,22 @@
+// Description:
+//    Operateur instanceof pour verifier le type.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 12/01/2026
+
+class Animal {
+}
+
+class Dog extends Animal {
+}
+
+{
+    Animal a;
+    a = new Dog();
+    if (a instanceof Dog) {
+        println(1);
+    }
+}

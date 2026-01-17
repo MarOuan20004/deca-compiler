@@ -1,0 +1,18 @@
+// Description:
+//    Utilisation du mot-cle 'null' comme litteral de reference nulle.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Obj {
+    int x;
+}
+
+{
+    Obj o;
+    o = null;
+    println(1);
+}

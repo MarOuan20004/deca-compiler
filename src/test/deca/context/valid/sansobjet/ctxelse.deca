@@ -1,0 +1,23 @@
+// Description:
+//    Conditions else et else if.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    int value;
+    value = 5;
+
+    if (value < 0) {
+        println(-1);
+    } else if (value == 0) {
+        println(0);
+    } else if (value < 10) {
+        println(1);
+    } else {
+        println(2);
+    }
+}

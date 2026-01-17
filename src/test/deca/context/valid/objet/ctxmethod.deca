@@ -1,0 +1,20 @@
+// Description:
+//    Declaration et appel de methode.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Calculator {
+    int multiply(int a, int b) {
+        return a * b;
+    }
+}
+
+{
+    Calculator calc;
+    calc = new Calculator();
+    println(calc.multiply(5, 3));
+}

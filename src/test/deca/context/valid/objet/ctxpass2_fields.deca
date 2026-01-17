@@ -1,0 +1,22 @@
+// Description:
+//    Passe 2 - Verification correcte des champs avec differents types.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class DataHolder {
+    int intField;
+    float floatField;
+    boolean boolField;
+}
+
+{
+    DataHolder dh;
+    dh = new DataHolder();
+    dh.intField = 10;
+    dh.floatField = 5.5;
+    println(1);
+}

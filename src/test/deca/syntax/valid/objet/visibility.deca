@@ -1,0 +1,17 @@
+// Description:
+//    Champs avec visibilite protected.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 12/01/2026
+
+class BankAccount {
+    protected float balance;
+    int accountNumber;
+}
+
+{
+    println(1);
+}

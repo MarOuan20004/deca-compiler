@@ -1,0 +1,22 @@
+// Description:
+//    Passe 2 - Redeclaration d'une methode dans la meme classe.
+//
+// Resultats:
+//    Erreur contextuelle attendue (methode dupliquee).
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Calc {
+    int add(int a, int b) {
+        return a + b;
+    }
+    
+    int add(int x, int y) {
+        return x + y;
+    }
+}
+
+{
+    println(1);
+}

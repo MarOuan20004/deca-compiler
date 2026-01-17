@@ -32,6 +32,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         else if (left.isFloat() && right.isInt()) {
             // convert right operand to float
             ConvFloat conv = new ConvFloat(this.getRightOperand());
+            conv.setLocation(this.getRightOperand().getLocation());
             this.setRightOperand(conv);
             conv.verifyExpr(compiler, localEnv, currentClass);
             this.setType(left);
@@ -40,6 +41,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         else if (left.isInt() && right.isFloat()) {
             // convert left operand to float
             ConvFloat conv = new ConvFloat(this.getLeftOperand());
+            conv.setLocation(this.getLeftOperand().getLocation());
             this.setLeftOperand(conv);
             conv.verifyExpr(compiler, localEnv, currentClass);
             this.setType(right);

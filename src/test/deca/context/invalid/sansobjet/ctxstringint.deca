@@ -1,0 +1,17 @@
+// Description:
+//    Affectation de chaine vers int interdite.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    string s;
+    int x;
+
+    s = "hello";
+    x = s;
+}
+

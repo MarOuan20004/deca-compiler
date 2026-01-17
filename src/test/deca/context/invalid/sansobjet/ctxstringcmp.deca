@@ -1,0 +1,21 @@
+// Description:
+//    Comparaison invalide sur string.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    string s1;
+    string s2;
+
+    s1 = "hello";
+    s2 = "world";
+
+    if (s1 < s2) {
+        println(1);
+    }
+}
+

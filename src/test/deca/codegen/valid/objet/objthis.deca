@@ -1,0 +1,23 @@
+// Description:
+//    Utilisation du mot-cle 'this' pour acceder a l'objet courant.
+//
+// Resultats:
+//    Affiche 42.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Counter {
+    int value;
+    
+    int getValue() {
+        return this.value;
+    }
+}
+
+{
+    Counter c;
+    c = new Counter();
+    c.value = 42;
+    println(c.getValue());
+}

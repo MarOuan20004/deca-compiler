@@ -1,11 +1,11 @@
 // Description:
-//    Melange print/println avec chaine et entier.
+//    Melange print/println avec chaine, entier, et echappements.
 //
 // Resultats:
-//    Affiche 'Val=' puis 'Val=7'.
+//    Affiche 'Val=' puis 'Val=7' puis Ligne1/Ligne2 et Tab-Stop.
 //
 // Historique:
-//    cree le 06/01/2026
+//    cree le 11/01/2026
 
 {
     int v;
@@ -14,5 +14,9 @@
     println();
     print("Val=");
     println(v);
+    print("Ligne1\nLigne2");
+    println();
+    print("Tab\tStop");
+    println();
 }
 

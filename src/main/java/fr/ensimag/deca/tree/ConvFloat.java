@@ -20,9 +20,8 @@ public class ConvFloat extends AbstractUnaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        ConvFloat conv = new ConvFloat(getOperand());
-        conv.setType(compiler.environmentType.FLOAT);
-        return conv.getType();
+        this.setType(compiler.environmentType.FLOAT);
+        return this.getType();
     }
 
 

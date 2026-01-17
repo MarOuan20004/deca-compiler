@@ -1,0 +1,26 @@
+// Description:
+//    Chainage de selection sur plusieurs niveaux (obj1.obj2.field).
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Inner {
+    int value;
+}
+
+class Outer {
+    Inner inner;
+}
+
+{
+    Outer outer;
+    Inner in;
+    outer = new Outer();
+    in = new Inner();
+    outer.inner = in;
+    println(outer.inner.value);
+}
+

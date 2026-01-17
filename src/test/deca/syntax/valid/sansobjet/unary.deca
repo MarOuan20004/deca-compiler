@@ -1,0 +1,26 @@
+// Description:
+//    Operateurs unaires (negation et NOT).
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    int a;
+    int b;
+    boolean flag;
+    
+    a = 5;
+    b = -a;
+    flag = false;
+    
+    if (!flag) {
+        println(b);
+    }
+    
+    if (!(a > 10)) {
+        println(1);
+    }
+}

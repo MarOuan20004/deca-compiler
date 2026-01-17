@@ -81,6 +81,12 @@ public class Program extends AbstractProgram {
         compiler.addInstruction(new WNL());
         compiler.addInstruction(new ERROR());
 
+        compiler.addLabel(new Label("arithmetic_overflow"));
+        compiler.addInstruction(new WSTR("Error: Arithmetic Overflow"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
+
+
         compiler.addComment("Classes code generation");
         classes.codeGenListClass(compiler);
     }

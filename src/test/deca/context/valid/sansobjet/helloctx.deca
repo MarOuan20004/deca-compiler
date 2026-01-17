@@ -5,7 +5,7 @@
 //    Aucun message d'erreur contextuelle.
 //
 // Historique:
-//    cree le 06/01/2026
+//    cree le 09/01/2026
 
 {
     println("Bonjour !");

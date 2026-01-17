@@ -1,0 +1,20 @@
+// Description:
+//    Appel d'une methode sur un objet.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 12/01/2026
+
+class Calc {
+    int add(int a, int b) {
+        return a + b;
+    }
+}
+
+{
+    Calc c;
+    c = new Calc();
+    println(c.add(3, 5));
+}

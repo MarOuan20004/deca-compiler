@@ -1,0 +1,16 @@
+// Description:
+//    Structure if mal formee (absence de condition).
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 05/01/2026
+
+{
+    int x;
+    x = 5;
+    if {
+        println(x);
+    }
+}

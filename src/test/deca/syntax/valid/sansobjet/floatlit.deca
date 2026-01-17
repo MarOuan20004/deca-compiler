@@ -1,0 +1,26 @@
+// Description:
+//    Float literals negatifs et formats varies.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    float a;
+    float b;
+    float c;
+    
+    a = -1.5;
+    b = -0.25;
+    c = 3.14159;
+    
+    println(a);
+    println(b);
+    println(c);
+    
+    if (a < b) {
+        println(a);
+    }
+}

@@ -1,0 +1,22 @@
+// Description:
+//    Objets imbriques (un objet contient un autre objet comme champ).
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Node {
+    int data;
+    Node next;
+}
+
+{
+    Node n1;
+    Node n2;
+    n1 = new Node();
+    n2 = new Node();
+    n1.next = n2;
+    println(1);
+}

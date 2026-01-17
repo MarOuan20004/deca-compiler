@@ -2,7 +2,7 @@
 //    Blocs imbriques avec declarations.
 //
 // Resultats:
-//    Erreur de bloc attendue
+//    test_synt accepte sans erreur.
 //
 // Historique:
 //    cree le 06/01/2026

@@ -1,0 +1,16 @@
+// Description:
+//    Classe sans nom.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 12/01/2026
+
+class {
+    int x;
+}
+
+{
+    println(1);
+}

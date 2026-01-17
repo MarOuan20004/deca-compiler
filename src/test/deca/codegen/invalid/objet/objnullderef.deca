@@ -1,0 +1,17 @@
+// Description:
+//    Dereferencement d'une reference null.
+//
+// Resultats:
+//    Erreur d'execution attendue.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Point {
+    int x;
+}
+
+{
+    Point p;
+    println(p.x);
+}

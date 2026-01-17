@@ -1,0 +1,26 @@
+// Description:
+//    Utilisation de l'operateur 'instanceof' pour verifier le type d'un objet.
+//
+// Resultats:
+//    Affiche 1 (true).
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Animal {
+    int age;
+}
+
+class Dog extends Animal {
+    int barkCount;
+}
+
+{
+    Dog dog;
+    dog = new Dog();
+    if (dog instanceof Dog) {
+        println(1);
+    } else {
+        println(0);
+    }
+}

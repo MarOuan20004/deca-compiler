@@ -1,0 +1,22 @@
+// Description:
+//    Utilisation du mot-cle 'null' comme litteral de reference nulle.
+//
+// Resultats:
+//    Affiche 0 (comparaison null avec null).
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Obj {
+    int x;
+}
+
+{
+    Obj o;
+    o = null;
+    if (o == null) {
+        println(1);
+    } else {
+        println(0);
+    }
+}

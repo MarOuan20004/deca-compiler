@@ -1,0 +1,20 @@
+// Description:
+//    Nombre d'arguments incorrect dans l'appel d'une methode.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Calculator {
+    int add(int a, int b) {
+        return a + b;
+    }
+}
+
+{
+    Calculator calc;
+    calc = new Calculator();
+    println(calc.add(10));
+}

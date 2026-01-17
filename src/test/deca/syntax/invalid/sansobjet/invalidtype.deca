@@ -1,0 +1,14 @@
+// Description:
+//    Type invalide utilise.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 05/01/2026
+
+{
+    string x;
+    x = "bonjour";
+    println(x);
+}

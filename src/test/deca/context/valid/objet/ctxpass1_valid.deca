@@ -1,0 +1,26 @@
+// Description:
+//    Passe 1 - Hierarchie de classes correcte avec differents niveaux d'heritage.
+//
+// Resultats:
+//    Pas d'erreur contextuelle.
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Animal {
+    int age;
+}
+
+class Mammal extends Animal {
+    int legs;
+}
+
+class Dog extends Mammal {
+    int breed;
+}
+
+{
+    Dog dog;
+    dog = new Dog();
+    println(1);
+}

@@ -1,0 +1,25 @@
+// Description:
+//    Conditions multiples avec else if.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 06/01/2026
+
+{
+    int value;
+    value = 2;
+    
+    if (value < 0) {
+        println(-1);
+    } else if (value == 0) {
+        println(0);
+    } else if (value < 5) {
+        println(1);
+    } else if (value < 10) {
+        println(2);
+    } else {
+        println(3);
+    }
+}

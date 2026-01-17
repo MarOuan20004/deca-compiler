@@ -1,0 +1,17 @@
+// Description:
+//    Multiples champs dans une meme declaration.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 12/01/2026
+
+class Point3D {
+    int x, y, z;
+    float precision;
+}
+
+{
+    println(1);
+}

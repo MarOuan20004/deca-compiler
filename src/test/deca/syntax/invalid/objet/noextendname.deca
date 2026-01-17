@@ -1,0 +1,16 @@
+// Description:
+//    Extends sans nom de classe parente.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 12/01/2026
+
+class Dog extends {
+    int age;
+}
+
+{
+    println(1);
+}

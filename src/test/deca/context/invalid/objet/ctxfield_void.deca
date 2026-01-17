@@ -1,0 +1,16 @@
+// Description:
+//    Passe 2 - Declaration d'un champ avec type void (interdit).
+//
+// Resultats:
+//    Erreur contextuelle attendue (champ de type void).
+//
+// Historique:
+//    cree le 13/01/2026
+
+class Container {
+    void field;
+}
+
+{
+    println(1);
+}
