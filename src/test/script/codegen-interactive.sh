@@ -12,7 +12,7 @@ for src in ./src/test/deca/codegen/interactive/*.deca; do
         echo "Fichier $asm manquant"
         exit 1
     fi
-    if ! ima "$asm" >/dev/null 2>&1; then
+    if ! ima "$asm" ; then
         echo "Echec ima sur $src"
         rm -f "$asm"
         exit 1
