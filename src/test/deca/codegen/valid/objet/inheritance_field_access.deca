@@ -1,0 +1,22 @@
+// Description:
+//    Heritage et acces champ 17.
+//
+// Resultats:
+//    Affiche 34.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class A17 {
+    int x17;
+}
+
+class B17 extends A17 {
+}
+
+{
+    B17 b;
+    b = new B17();
+    b.x17 = 17;
+    println(b.x17 * 2);
+}

@@ -1,0 +1,16 @@
+// Description:
+//    Assignation d'un float a un int sans conversion interdite.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    int x;
+    float f;
+    f = 3.5;
+    x = f;
+}
+

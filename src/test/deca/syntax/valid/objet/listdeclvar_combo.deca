@@ -1,0 +1,16 @@
+// Description:
+//    Liste mixte de declarations avec initialisations et conversion.
+//
+// Resultats:
+//    test_synt accepte .
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    int a, b = 2, c;
+    float d = 1.5;
+    a = b + 1;
+    c = a + (int)(d);
+    println(c);
+}

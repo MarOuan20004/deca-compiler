@@ -1,0 +1,13 @@
+// Description:
+//    Expression booleenne avec operateur AND sans operande droit.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    boolean b;
+    b = true &&;
+}

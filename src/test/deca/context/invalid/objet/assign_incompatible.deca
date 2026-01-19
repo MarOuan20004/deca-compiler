@@ -1,0 +1,22 @@
+// Description:
+//    Tentative d'assigner un type Parent à une variable Enfant sans cast.
+//
+// Resultats:
+//    Erreur contextuelle attendue : Type incompatible (A vers B impossible).
+//
+// Historique:
+//    Cree le 17/01/2026
+
+class A {
+}
+
+class B extends A {
+}
+
+{
+    A a = new A();
+    B b;
+
+    // ERREUR
+    b = a;
+}

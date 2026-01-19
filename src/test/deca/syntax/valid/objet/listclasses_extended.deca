@@ -1,0 +1,25 @@
+// Description:
+//    Deux classes avec heritage, champs et methodes d'accesseurs.
+//
+// Resultats:
+//    test_synt accepte .
+//
+// Historique:
+//    cree le 18/01/2026
+
+class A {
+    int x;
+    void setX(int v) {
+        x = v;
+    }
+    int getX() {
+        return x;
+    }
+}
+
+class B extends A {
+    int y;
+    int sum() {
+        return x + y;
+    }
+}

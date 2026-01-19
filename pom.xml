@@ -10,27 +10,24 @@
     <version>0.0.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jacoco.skip>false</jacoco.skip> 
-        <jacoco.report_dir>${project.build.directory}/site/jacoco</jacoco.report_dir> 
+        <jacoco.skip>false</jacoco.skip>
+        <jacoco.report_dir>${project.build.directory}/site/jacoco</jacoco.report_dir>
     </properties>
 
     <dependencies>
         <dependency>
-            <!-- ANTLR needs a runtime library -->
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
             <version>4.13.2</version>
         </dependency>
 
         <dependency>
-            <!-- log4j: logging API for Java -->
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
 
         <dependency>
-            <!-- We use the class Validate, to check preconditions -->
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
@@ -56,19 +53,17 @@
         </dependency>
 
         <dependency>
-            <!-- Mockup framework -->
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>5.20.0</version>
         </dependency>
         <dependency>
-            <!-- must be on the classpath -->
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.agent</artifactId>
             <classifier>runtime</classifier>
             <version>0.8.13</version>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -87,13 +82,12 @@
                                 <requireMavenVersion>
                                     <version>3.6.3</version>
                                 </requireMavenVersion>
-                            </rules>    
+                            </rules>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
-                <!-- usual plugin to compile Java code -->
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.14.1</version>
                 <configuration>
@@ -108,11 +102,9 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.4</version>
-            </plugin>            
+            </plugin>
 
             <plugin>
-                <!-- compute the classpath when building, for use by various
-                scripts (wrappers calling java) -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.9.0</version>
@@ -140,13 +132,13 @@
                         <exclude>fr/ensimag/deca/tools/DecacInternalError.class</exclude>
                         <exclude>fr/ensimag/deca/ima/pseudocode/IMAInternalError.class</exclude>
                     </excludes>
-                </configuration>                               
-                <!-- <executions>
+                </configuration>
+                <executions>
                     <execution>
                         <id>default-instrument</id>
                         <goals>
                             <goal>instrument</goal>
-                        </goals>             
+                        </goals>
                     </execution>
                     <execution>
                         <id>default-restore-instrumented-classes</id>
@@ -180,13 +172,13 @@
                             </rules>
                         </configuration>
                     </execution>
-                </executions> -->
-            </plugin>      
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.6.2</version>
-                <!-- <executions>
+                <executions>
                     <execution>
                         <id>basic-lex</id>
                         <configuration>
@@ -200,7 +192,10 @@
                     <execution>
                         <id>basic-synt</id>
                         <configuration>
-                            <executable>./src/test/script/basic-synt.sh</executable>
+                            <executable>/bin/sh</executable>
+                            <arguments>
+                                <argument>./src/test/script/basic-synt.sh</argument>
+                            </arguments>
                         </configuration>
                         <phase>test</phase>
                         <goals>
@@ -221,7 +216,10 @@
                     <execution>
                         <id>basic-context</id>
                         <configuration>
-                            <executable>./src/test/script/basic-context.sh</executable>
+                            <executable>/bin/sh</executable>
+                            <arguments>
+                                <argument>./src/test/script/basic-context.sh</argument>
+                            </arguments>
                         </configuration>
                         <phase>test</phase>
                         <goals>
@@ -231,7 +229,10 @@
                     <execution>
                         <id>basic-gencode</id>
                         <configuration>
-                            <executable>./src/test/script/basic-gencode.sh</executable>
+                            <executable>/bin/sh</executable>
+                            <arguments>
+                                <argument>./src/test/script/basic-gencode.sh</argument>
+                            </arguments>
                         </configuration>
                         <phase>test</phase>
                         <goals>
@@ -241,7 +242,10 @@
                     <execution>
                         <id>basic-decac</id>
                         <configuration>
-                            <executable>./src/test/script/basic-decac.sh</executable>
+                            <executable>/bin/sh</executable>
+                            <arguments>
+                                <argument>./src/test/script/basic-lex.sh</argument>
+                            </arguments>
                         </configuration>
                         <phase>test</phase>
                         <goals>
@@ -251,14 +255,233 @@
                     <execution>
                         <id>common-tests</id>
                         <configuration>
-                            <executable>./src/test/script/common-tests.sh</executable>
+                            <executable>/bin/sh</executable>
+                            <arguments>
+                                <argument>./src/test/script/common-tests.sh</argument>
+                            </arguments>
                         </configuration>
                         <phase>test</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                     </execution>
-                </executions> -->
+
+                    <execution>
+                        <id>syntax-valid-helloworld</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/syntax-valid-helloworld.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>syntax-invalid-helloworld</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/syntax-invalid-helloworld.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>syntax-valid-provided</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/syntax-valid-provided.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>syntax-invalid-provided</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/syntax-invalid-provided.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>syntax-valid-sansobjet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/syntax-valid-sansobjet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>syntax-invalid-sansobjet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/syntax-invalid-sansobjet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>syntax-valid-objet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/syntax-valid-objet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>syntax-invalid-objet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/syntax-invalid-objet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+
+                    <execution>
+                        <id>context-valid-provided</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/context-valid-provided.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>context-invalid-provided</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/context-invalid-provided.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>context-valid-sansobjet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/context-valid-sansobjet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>context-invalid-sansobjet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/context-invalid-sansobjet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>context-valid-objet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/context-valid-objet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>context-invalid-objet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/context-invalid-objet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+
+                    <execution>
+                        <id>codegen-valid-sansobjet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/codegen-valid-sansobjet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>codegen-invalid-sansobjet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/codegen-invalid-sansobjet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>codegen-valid-objet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/codegen-valid-objet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>codegen-invalid-objet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/codegen-invalid-objet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>codegen-perf-provided</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/codegen-perf-provided.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>codegen-perf-sansobjet</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/codegen-perf-sansobjet.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>codegen-interactive</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/codegen-interactive.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>codegen-valid-provided</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments><argument>./src/test/script/codegen-valid-provided.sh</argument></arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals><goal>exec</goal></goals>
+                    </execution>
+
+
+                    <execution>
+                        <id>jacoco-report</id>
+                        <configuration>
+                            <executable>/bin/sh</executable>
+                            <arguments>
+                                <argument>./src/test/script/jacoco-report.sh</argument>
+                            </arguments>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -273,18 +496,6 @@
                         <configuration>
                             <visitor>false</visitor>
                             <listener>false</listener>
-                            <!-- Uncomment to print details about the grammar when
-                            compiling -->
-                            <!--
-                            <verbose>true</verbose>
-                            <printGrammar>true</printGrammar>
-                            -->
-                            <!-- Uncomment the following to debug the grammar. With
-                            trace enabled, the execution of the generated code
-                            will produce debug traces when entering/exiting
-                            each grammar rule. You need "mvn clean" for the
-                            option to be taken into account. -->
-                            <!-- <trace>true</trace> -->
                         </configuration>
                     </execution>
                 </executions>
@@ -299,24 +510,9 @@
                     <execution>
                         <id>make-jar</id>
                         <configuration>
-                            <!--
-                                Build an uber-jar that is packaged with all the other dependencies,
-                                such as the antlr-runtime and so on. You can run this as:
-                                
-                                java -jar Deca-0.0.1-jar-with-dependencies.jar foo.deca
-                                
-                                assuming you have a file called foo.deca to attempt a parse.
-                                
-                                Not really useful for developers, but may be useful for
-                                users.
-                            -->
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <!--
-                                Specify that we want the resulting jar to be executable
-                                via java -jar, which we do by modifying the manifest.
-                            -->
                             <archive>
                                 <manifest>
                                     <mainClass>fr.ensimag.deca.DecacMain</mainClass>
@@ -334,16 +530,9 @@
                             <appendAssemblyId>false</appendAssemblyId>
                             <finalName>package</finalName>
                             <descriptors>
-                                <!-- Generate a package containing the .jar
-                                and a simple wrapper script -->
                                 <descriptor>src/main/assembly/unix.xml</descriptor>
                             </descriptors>
                         </configuration>
-                        <!--
-                            We don't want to have to specifically ask for the uber
-                            jar, so we attach the running of this plugin to the
-                            execution of the package life-cycle phase.
-                        -->
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
@@ -362,8 +551,6 @@
                     <version>3.9.0</version>
                 </plugin>
 
-                <!--This plugin's configuration is used to store Eclipse m2e settings only.
-                It has no influence on the Maven build itself.-->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
@@ -409,7 +596,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>4.0.0-M16</version>
-                </plugin>                
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -417,7 +604,6 @@
     <reporting>
         <plugins>
 
-            <!-- cross-referencable pretty-print of the code. Nice combination with FindBugs -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
@@ -444,7 +630,7 @@
                     <threshold>Exp</threshold>
                 </configuration>
             </plugin>
-      
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -459,7 +645,7 @@
                                 <additionalparam>-Xdoclint:none</additionalparam>
                             </configuration>
                         </execution>
-                    </executions>          
+                    </executions>
                     <tags>
                         <tag>
                             <name>date</name>

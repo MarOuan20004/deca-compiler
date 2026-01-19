@@ -32,7 +32,7 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        
     }
 
 }

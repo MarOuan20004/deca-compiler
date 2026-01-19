@@ -1,0 +1,17 @@
+// Description:
+//    Boucle while avec condition booleenne composee.
+//
+// Resultats:
+//    test_synt accepte .
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    int i;
+    i = 0;
+    while ((i < 3) && !(i == 2)) {
+        i = i + 1;
+        println(i);
+    }
+}

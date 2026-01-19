@@ -1,0 +1,18 @@
+// Description:
+//    Addition entre booleans interdite.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    boolean a;
+    boolean b;
+    boolean res;
+    a = true;
+    b = false;
+    res = a + b;
+}
+

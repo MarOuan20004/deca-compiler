@@ -1,0 +1,27 @@
+// Description:
+//    Déclaration de méthode sans corps (point-virgule direct).
+//
+// Resultats:
+//    Erreur syntaxique attendue (attendu '{' ou 'asm').
+//
+// Historique:
+//    Cree le 17/01/2026
+
+class Forme {
+    int x;
+    int y;
+
+    // ERREUR
+    void dessiner();
+}
+
+class Carre extends Forme {
+    void dessiner() {
+        println("Carre");
+    }
+}
+
+{
+    Forme f = new Carre();
+    f.dessiner();
+}

@@ -65,25 +65,15 @@ public class New extends AbstractExpr{
 
     @Override
 public void codeGenExpr(DecacCompiler compiler, GPRegister r) {
-    // 1. Récupérer la définition de la classe pour avoir sa taille et son adresse
+
     ClassDefinition classDef = classNom.getClassDefinition();
-    
-    // 2. Allocation mémoire
-    // Taille = nombre de champs + 1 (pour le pointeur vers la VTable)
     int size = classDef.getNumberOfFields() + 1;
     compiler.addInstruction(new NEW(new ImmediateInteger(size), r));
-    
-    // 3. Vérification du débordement du tas (Heap Overflow)
+
     compiler.addInstruction(new BOV(new Label("heap_overflow")));
-    
-    // 4. Installation du pointeur de VTable
-    // On charge l'adresse de la VTable (qui est dans la pile) dans R1 (pour ne pas écraser r si r=R0)
     compiler.addInstruction(new LEA(classDef.getAdrTable(), Register.R1));
-    // On stocke cette adresse au début de l'objet alloué (offset 0)
     compiler.addInstruction(new STORE(Register.R1, new RegisterOffset(0, r)));
-    
-    // 5. Appel de l'initialisation des champs (init.NomClasse)
-    // On sauvegarde l'objet (r) car l'appel BSR peut écraser les registres
+    // On sauvegarde l'objet avant l'appel
     compiler.addInstruction(new PUSH(r));
     // On appelle la routine d'initialisation
     compiler.addInstruction(new BSR(new Label("init." + classNom.getName().getName())));

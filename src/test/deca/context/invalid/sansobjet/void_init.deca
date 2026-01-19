@@ -1,0 +1,14 @@
+// Description:
+//    Declaration void avec initialisation interdite.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    void x;
+    x = 5;
+}
+

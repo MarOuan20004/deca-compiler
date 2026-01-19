@@ -2,7 +2,9 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.ADD;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.MUL;
 import fr.ensimag.ima.pseudocode.instructions.POP;
@@ -35,6 +37,9 @@ public class Plus extends AbstractOpArith {
             // Cas registre
             getRightOperand().codeGenExpr(compiler, r2);
             compiler.addInstruction(new ADD(r2, r)); // r = gauche  droite
+            if(getType().isFloat()){
+                compiler.addInstruction(new BOV(new Label("float_arithmetic_overflow")));
+            }
             compiler.getRegisterManager().freeRegister(r2);
         } else {
             // Cas pile
@@ -42,6 +47,9 @@ public class Plus extends AbstractOpArith {
             getRightOperand().codeGenExpr(compiler, r);    // r = droite
             compiler.addInstruction(new POP(GPRegister.R0)); // R0 = gauche
             compiler.addInstruction(new ADD(r, GPRegister.R0)); // R0 = gauche + droite
+            if(getType().isFloat()){
+                compiler.addInstruction(new BOV(new Label("float_arithmetic_overflow")));
+            }
             compiler.addInstruction(new LOAD(GPRegister.R0, r)); // r = résultat
         }
     }

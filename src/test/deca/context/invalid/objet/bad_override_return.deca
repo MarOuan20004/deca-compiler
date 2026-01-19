@@ -1,0 +1,25 @@
+// Description:
+//    Redéfinition incorrecte : changement de type de retour.
+//
+// Resultats:
+//    Erreur contextuelle attendue : Le type de retour (float) n'est pas compatible avec (int).
+//
+// Historique:
+//    Cree le 17/01/2026
+
+class A {
+    int getVal() {
+        return 1;
+    }
+}
+
+class B extends A {
+    // ERREUR
+    float getVal() {
+        return 2.5;
+    }
+}
+
+{
+    B b = new B();
+}

@@ -1,0 +1,21 @@
+// Description:
+//    Structures if imbriquees.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    int x;
+    int y;
+    x = 10;
+    y = 20;
+    if (x > 0) {
+        if (y > x) {
+            println(y);
+        }
+    }
+}
+

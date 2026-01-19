@@ -81,11 +81,15 @@ public class Program extends AbstractProgram {
         compiler.addInstruction(new WNL());
         compiler.addInstruction(new ERROR());
 
-        compiler.addLabel(new Label("arithmetic_overflow"));
-        compiler.addInstruction(new WSTR("Error: Arithmetic Overflow"));
+        compiler.addLabel(new Label("float_arithmetic_overflow"));
+        compiler.addInstruction(new WSTR("Error: float_Arithmetic overflow"));
         compiler.addInstruction(new WNL());
         compiler.addInstruction(new ERROR());
 
+        compiler.addLabel(new Label("no_return_error"));
+        compiler.addInstruction(new WSTR("Error: No return value "));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
 
         compiler.addComment("Classes code generation");
         classes.codeGenListClass(compiler);

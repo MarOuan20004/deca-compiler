@@ -1,0 +1,15 @@
+// Description:
+//    Lecture d'un entier puis affectation dans un float.
+//
+// Resultats:
+//    Passe la verification contextuelle (conversion int->float autorisee).
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    int i;
+    float f;
+    i = readInt();
+    f = i;
+}

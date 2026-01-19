@@ -1,0 +1,39 @@
+// Description:
+//      Test interactif de validation d'intervalle.
+//      Simule la validation d'une note d'examen avec un bonus.
+//      Vérifie l'arithmétique mixte (int + float) et les bornes [0, 20].
+//
+// Resultats:
+//      Si (input + bonus) est dans [0, 20] -> Valide
+//      Sinon -> Invalide
+//
+// Historique:
+//    cree le 15/01/2026
+
+class GradeValidator {
+
+
+    int bonusPoint = 1;
+
+    void checkGrade() {
+       float inputGrade;
+       float finalGrade;
+
+       println("Veuillez entrer la note de l'etudiant (float) :");
+
+       inputGrade = readFloat();
+
+       finalGrade = inputGrade + bonusPoint;
+
+       if (finalGrade >= 0.0 && finalGrade <= 20.0) {
+           println("Note Valide : ", finalGrade, "/20");
+       } else {
+           println("Erreur : La note ajustee (", finalGrade, ") est hors intervalle [0, 20]");
+       }
+    }
+}
+
+{
+    GradeValidator validator = new GradeValidator();
+    validator.checkGrade();
+}

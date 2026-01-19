@@ -11,6 +11,9 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
+import fr.ensimag.ima.pseudocode.InlinePortion;
+import org.apache.commons.lang.StringEscapeUtils;
+
 /**
  * Assembly language method body.
  *
@@ -56,12 +59,21 @@ public class MethodAsmBody extends AbstractMethodBody {
     @Override
     protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass,
             Type returnType) throws ContextualError {
-        // No verification needed for assembly method body
+        Type type = asmCode.verifyExpr(compiler, localEnv, currentClass);
+        if (!type.isString()) {
+            throw new ContextualError("The asm body must be a string literal", asmCode.getLocation());
+        }
     }
 
     @Override
-    protected void codeGenMethodBody(DecacCompiler compiler) {
+    protected void codeGenMethodBody(DecacCompiler compiler, int nbSavedRegisters) {
         // Generate the assembly code directly
-        
+        String code = StringEscapeUtils.unescapeJava(asmCode.getValue());
+        compiler.add(new InlinePortion(code));
+    }
+
+    @Override
+    protected void codeGenMethodEnd(DecacCompiler compiler) {
+        // Nothing to do for assembly body
     }
 }

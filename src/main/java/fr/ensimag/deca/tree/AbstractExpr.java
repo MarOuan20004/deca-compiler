@@ -11,7 +11,9 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
 
 
@@ -90,6 +92,7 @@ public abstract class AbstractExpr extends AbstractInst {
         if (expectedType.isFloat() && actualType.isInt()) {
             ConvFloat conv = new ConvFloat(this);
             conv.setLocation(getLocation());
+            conv.setLocation(getLocation());
             conv.verifyExpr(compiler, localEnv, currentClass);
             return conv;
         }
@@ -129,21 +132,43 @@ public abstract class AbstractExpr extends AbstractInst {
      * Generate code to print the expression
      *
      * @param compiler
+     * @param printHex if true, floats should be displayed in hexadecimal format
      */
-    protected void codeGenPrint(DecacCompiler compiler) {
-        GPRegister r = Register.R1; // On utilise R1 par convention pour l'affichage
+    protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
+        // Allouer un registre dynamiquement au lieu d'utiliser R1 en dur
+        GPRegister r = compiler.getRegisterManager().allocateRegister();
+        if (r == null) {
+            r = Register.R1; // Fallback sur R1 si aucun registre disponible
+        }
         this.codeGenExpr(compiler, r);
+        compiler.addInstruction(new LOAD(r, Register.R1));
         if (this.getType().isInt()) {
             compiler.addInstruction(new WINT());
         } else {
-            compiler.addInstruction(new WFLOAT());
+            if (printHex) {
+                compiler.addInstruction(new WFLOATX());
+            } else {
+                compiler.addInstruction(new WFLOAT());
+            }
         }
-
+        // Libérer le registre s'il a été alloué
+        if (r != Register.R1) {
+            compiler.getRegisterManager().freeRegister(r);
+        }
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        codeGenExpr(compiler, Register.R0);
+        // Allouer un registre dynamiquement au lieu d'utiliser R0 en dur
+        GPRegister r = compiler.getRegisterManager().allocateRegister();
+        if (r == null) {
+            r = Register.R0; // Fallback sur R0 si aucun registre disponible
+        }
+        codeGenExpr(compiler, r);
+        // Libérer le registre s'il a été alloué
+        if (r != Register.R0) {
+            compiler.getRegisterManager().freeRegister(r);
+        }
     }
     
 
@@ -166,7 +191,13 @@ public abstract class AbstractExpr extends AbstractInst {
 
     protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r){
         // laisser vide, sera redéfini dans les classes filles qui en ont besoin
-        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public int maxTemp() {
+        // Par défaut, une expression n'a pas besoin de temporaire
+        // Les sous-classes qui en ont besoin (comme MethodCall, BinaryExpr) surchargeront cette méthode
+        return 0;
     }
 
     protected void codeGenBool(DecacCompiler compiler,
@@ -175,7 +206,6 @@ public abstract class AbstractExpr extends AbstractInst {
          fr.ensimag.ima.pseudocode.Label labelFalse
     ) {
         // laisser vide, sera redéfini dans les classes filles qui en ont besoin
-
     }
 
 }

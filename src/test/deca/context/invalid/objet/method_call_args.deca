@@ -1,0 +1,20 @@
+// Description:
+//    Appel de méthode avec mauvais type d'argument.
+//
+// Resultats:
+//    Erreur contextuelle attendue : Argument n°1 attendu boolean, reçu int.
+//
+// Historique:
+//    Cree le 17/01/2026
+
+class Calcul {
+    void test(boolean flag) {
+        if (flag) { println("OK"); }
+    }
+}
+
+{
+    Calcul c = new Calcul();
+    // ERREUR
+    c.test(1);
+}

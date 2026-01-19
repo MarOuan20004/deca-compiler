@@ -1,0 +1,18 @@
+// Description:
+//    Champ non defini 105.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class C105 {
+    int x105;
+}
+
+{
+    C105 c;
+    c = new C105();
+    println(c.y105);
+}

@@ -1,0 +1,21 @@
+// Description:
+//    Protected access valide.
+//
+// Resultats:
+//    Passe la verification contextuelle.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Base {
+    protected int value;
+}
+
+class Derived extends Base {
+    int getValue() {
+        return value;
+    }
+}
+
+{
+}

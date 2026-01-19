@@ -1,0 +1,19 @@
+// Description:
+//    Operation mixte int et float.
+//
+// Resultats:
+//    Affiche 12.5.
+//
+// Historique:
+//    cree le 11/01/2026
+
+{
+    int i;
+    float f;
+    float res;
+    i = 5;
+    f = 2.5;
+    res = i * f;
+    println(res);
+}
+

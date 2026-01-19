@@ -1,0 +1,16 @@
+// Description:
+//    Negation logique d'un boolean.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    boolean a;
+    boolean res;
+    a = true;
+    res = !a;
+}
+

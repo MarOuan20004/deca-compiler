@@ -1,0 +1,20 @@
+// Description:
+//    Methode avec parametres 18.
+//
+// Resultats:
+//    Affiche 28.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class C18 {
+    int add(int x) {
+        return x + 10;
+    }
+}
+
+{
+    C18 c;
+    c = new C18();
+    println(c.add(18));
+}

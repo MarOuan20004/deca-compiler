@@ -1,0 +1,19 @@
+// Description:
+//    Classe avec champs et methodes.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Circle {
+    float radius;
+    
+    float area() {
+        return radius;
+    }
+}
+
+{
+}

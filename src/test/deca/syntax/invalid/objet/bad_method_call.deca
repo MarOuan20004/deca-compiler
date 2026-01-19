@@ -1,0 +1,18 @@
+// Description:
+//    Appel de methode avec parenthese ouvrante manquante.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 17/01/2026
+
+class A {
+    void m() { }
+}
+
+{
+    A a;
+    a = new A;
+    a.m 3;
+}

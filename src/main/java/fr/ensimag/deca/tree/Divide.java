@@ -62,7 +62,8 @@ public class Divide extends AbstractOpArith {
             else {
                 compiler.addInstruction(new DIV(r, GPRegister.R0)); // R0 = gauche / droite
             }
-                compiler.addInstruction(new LOAD(GPRegister.R0, r)); // r = résultat
+            compiler.addInstruction(new BOV(new Label("division_by_zero")));
+            compiler.addInstruction(new LOAD(GPRegister.R0, r)); // r = résultat
         }
     }
 }

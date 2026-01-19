@@ -1,0 +1,18 @@
+// Description:
+//      Test interactif de lecture et d'affichage d'un entier.
+//      Simule la saisie de l'âge d'un utilisateur.
+//
+// Resultats:
+//      Affiche l'âge saisi dans une phrase complète.
+//
+// Historique:
+//    cree le 18/01/2026
+
+{
+    int userAge;
+
+    println("Veuillez entrer votre age (entier) :");
+    userAge = readInt();
+
+    println("Vous avez declare avoir ", userAge, " ans.");
+}

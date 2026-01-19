@@ -399,7 +399,9 @@ primary_expr returns[AbstractExpr tree]
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
             assert($m.tree != null);
-            $tree = new MethodCall(new This(), $m.tree, $args.tree);
+            This implicitThis = new This();
+            setLocation(implicitThis, $m.start);
+            $tree = new MethodCall(implicitThis, $m.tree, $args.tree);
             setLocation($tree, $OPARENT);
         }
     | OPARENT expr CPARENT {
@@ -435,8 +437,9 @@ primary_expr returns[AbstractExpr tree]
             assert($e.tree != null);
             assert($t.tree != null);
             $tree=new Cast($t.tree,$e.tree);
+            setLocation($tree, $OPARENT);
     }
-    
+
     ;
 
 type returns[AbstractIdentifier tree]
@@ -628,6 +631,7 @@ decl_method returns[AbstractDeclMethod tree]
             MethodAsmBody body = new MethodAsmBody(asmLiteral);
             setLocation(body, $ASM);
             $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body, $v.tree);
+            setLocation($tree, $type.start);
         }
       ) {
         }
@@ -647,11 +651,13 @@ list_params returns[ListDeclParam tree]
     
 multi_line_string returns[String text, Location location]
     : s=STRING {
-            $text = $s.getText();
+            String str = $s.getText();
+            $text = str.substring(1, str.length()-1);
             $location = tokenLocation($s);
         }
     | s=MULTI_LINE_STRING {
-            $text = $s.getText();
+            String str = $s.getText();
+            $text = str.substring(1, str.length()-1);
             $location = tokenLocation($s);
         }
     ;

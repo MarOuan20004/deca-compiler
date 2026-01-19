@@ -126,10 +126,14 @@ public class DecacCompiler {
     /**
      * The main program. Every instruction generated will eventually end up here.
      */
-    private final IMAProgram program = new IMAProgram();
+    private IMAProgram program = new IMAProgram();
  
     public IMAProgram getProgram() {
         return program;
+    }
+
+    public void setProgram(IMAProgram program) {
+        this.program = program;
     }
 
     /** The global environment for types (and the symbolTable) */

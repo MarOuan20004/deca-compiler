@@ -1,0 +1,12 @@
+// Description:
+//    Modificateur de visibilité inexistant sur un champ.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 17/01/2026
+
+class A {
+    publik int x;
+}

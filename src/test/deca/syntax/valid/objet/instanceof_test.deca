@@ -1,0 +1,18 @@
+// Description:
+//    Instanceof 7.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class T7 {
+}
+
+{
+    T7 t;
+    boolean b;
+    t = new T7();
+    b = t instanceof T7;
+}

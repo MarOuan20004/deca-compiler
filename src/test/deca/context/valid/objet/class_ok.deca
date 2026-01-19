@@ -1,0 +1,16 @@
+// Description:
+//    Classe bien definie.
+//
+// Resultats:
+//    Passe la verification contextuelle.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Point {
+    int x;
+    int y;
+}
+
+{
+}

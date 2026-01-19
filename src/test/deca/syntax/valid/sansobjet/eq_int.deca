@@ -1,0 +1,18 @@
+// Description:
+//    Comparaison egalite entre entiers.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    int a;
+    int b;
+    boolean res;
+    a = 5;
+    b = 5;
+    res = (a == b);
+}
+

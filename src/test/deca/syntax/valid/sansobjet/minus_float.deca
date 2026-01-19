@@ -1,0 +1,16 @@
+// Description:
+//    Moins unaire sur un flottant.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    float x;
+    float y;
+    x = 3.14;
+    y = -x;
+}
+

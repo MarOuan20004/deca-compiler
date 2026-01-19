@@ -1,0 +1,18 @@
+// Description:
+//    Modulo sur float interdit.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    float f;
+    int i;
+    float res;
+    f = 10.5;
+    i = 3;
+    res = f % i;
+}
+

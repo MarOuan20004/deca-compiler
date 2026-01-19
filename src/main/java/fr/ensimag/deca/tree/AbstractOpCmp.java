@@ -38,7 +38,6 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             convFloat.setLocation(getLeftOperand().getLocation());
             setLeftOperand(convFloat);
             convFloat.verifyExpr(compiler, localEnv, currentClass);
-            
             setType(compiler.environmentType.BOOLEAN);
             return compiler.environmentType.BOOLEAN;
         }
@@ -47,13 +46,14 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             convFloat.setLocation(getRightOperand().getLocation());
             setRightOperand(convFloat);
             convFloat.verifyExpr(compiler, localEnv, currentClass);
-            
             setType(compiler.environmentType.BOOLEAN);
             return compiler.environmentType.BOOLEAN;
         }
         if (left.isBoolean() && right.isBoolean()) {
-            setType(compiler.environmentType.BOOLEAN);
-            return compiler.environmentType.BOOLEAN;
+            if (this instanceof AbstractOpExactCmp) {
+                setType(compiler.environmentType.BOOLEAN);
+                return compiler.environmentType.BOOLEAN;
+            }
         }
         if (left.isClassOrNull() && right.isClassOrNull()) {
             if (this instanceof AbstractOpExactCmp) {
@@ -79,17 +79,10 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.CMP(temp, r));
             compiler.getRegisterManager().freeRegister(temp);
         } else {
-            // Empiler le registre r
-            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.PUSH(r));
-            getRightOperand().codeGenExpr(compiler, r);
-            // Dépiler dans un registre temporaire R0
-            fr.ensimag.ima.pseudocode.GPRegister r0 = fr.ensimag.ima.pseudocode.GPRegister.R0;
-            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(r, r0));
-            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.POP(r));
-            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.CMP(r0, r));    
+            getRightOperand().codeGenExpr(compiler, fr.ensimag.ima.pseudocode.GPRegister.R0);
+            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.CMP(fr.ensimag.ima.pseudocode.GPRegister.R0, r));
         }
         this.branchingInstructions(compiler, labelTrue, labelFalse);
-
         
         return;
     }

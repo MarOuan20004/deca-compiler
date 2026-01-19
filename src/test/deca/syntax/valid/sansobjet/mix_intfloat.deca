@@ -1,0 +1,18 @@
+// Description:
+//    Operations avec int et float (conversion implicite).
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    int i;
+    float f;
+    float result;
+    i = 5;
+    f = 2.5;
+    result = i + f;
+}
+

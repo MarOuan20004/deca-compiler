@@ -1,0 +1,14 @@
+// Description:
+//    Heritage sans nom de classe.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Dog extends {
+}
+
+{
+}

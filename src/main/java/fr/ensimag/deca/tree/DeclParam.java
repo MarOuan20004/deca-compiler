@@ -86,7 +86,8 @@ public class DeclParam extends AbstractDeclParam {
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Paramètre déjà défini", paramName.getLocation());
         }
-        
+        paramName.setDefinition(paramDef);
+        paramName.setType(paramType);
     }
     
 }

@@ -1,0 +1,14 @@
+// Description:
+//    Parenthese non fermee dans expression.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    int x;
+    x = (5 + 3;
+}
+

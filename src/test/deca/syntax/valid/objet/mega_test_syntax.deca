@@ -1,0 +1,95 @@
+// Description:
+//    Test exhaustif de la syntaxe Deca.
+//    Couvre : Classes, Héritage, Champs, Méthodes, ASM,
+//    Instuctions de contrôle, Opérateurs, Littéraux.
+//
+// Resultats:
+//    Doit être accepté par l'analyseur syntaxique (test_synt).
+//
+// Historique:
+//    cree le 18/01/2026
+
+
+class GrandParent {
+    protected int heritage = 10;
+    float richesse;
+
+    void dormir() {
+        println("Zzz...");
+    }
+}
+
+class Parent extends GrandParent {
+    int x = 5;
+    float y = 3.14 + 2.0 * 5.0;
+    boolean estVivant = true;
+
+    int calculComplexe(int a, float b) {
+        int res;
+        res = a + (int) (b); // Cast float -> int
+        return res;
+    }
+}
+
+class Enfant extends Parent {
+    int x = 100;
+
+    void crashDuSysteme() asm ("LOAD #null, R0 \n STORE R0, 1(GB) \n RTS");
+
+    void setX(int val) {
+        this.x = val;
+        this.dormir(); // Appel méthode héritée
+    }
+}
+
+{
+    Parent p = new Parent();
+    Enfant e = new Enfant();
+    GrandParent gp;
+    int i = 0;
+    float f = 0x1.Fp2; // Test flottant Hexadécimal
+    boolean flag = false;
+
+    print("Debut du test");
+    println(" avec saut de ligne");
+    print(i, f); // Print multiple
+
+    i = (5 + 2) * 3 % 2;
+    i = -i; // Moins unitaire
+    flag = !flag || (i < 10 && i >= 0);
+    flag = (i == 0) || (i != 5);
+
+    if (flag) {
+        println("Flag est vrai");
+        while (i < 10) {
+            i = i + 1;
+            if (i == 5) {
+                println("Moitie chemin");
+            } else if (i == 9) {
+                println("Presque fini");
+            } else {
+                ; // Instruction vide (No-Op)
+            }
+        }
+    } else {
+        println("Flag est faux");
+    }
+
+    p.x = 42;
+    // Appel de méthode imbriqué dans une expression
+    i = p.calculComplexe(10, 5.5);
+
+    gp = (GrandParent) (e); // Cast explicite
+
+    if (gp instanceof Enfant) {
+        println("C'est bien un enfant !");
+        // Appel en chaine (si supporté par la grammaire, sinon faire en 2 temps)
+        // ((Enfant) gp).setX(20);
+    }
+
+    // 7. Lecture utilisateur
+    x = readInt();
+    f = readFloat();
+
+    println("Fin du test syntaxique.");
+}

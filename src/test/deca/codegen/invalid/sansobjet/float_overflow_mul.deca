@@ -1,0 +1,16 @@
+// Description:
+//    Multiplication de flottants provoquant un overflow.
+//
+// Resultats:
+//    Erreur d'execution attendue pour overflow float.
+//
+// Historique:
+//    cree le 16/01/2026
+
+{
+    float a;
+    float b;
+    a = 1.0E20;
+    b = 1.0E20;
+    println(a * b);
+}

@@ -1,0 +1,20 @@
+// Description:
+//    Arguments incorrects 106.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class C106 {
+    int m(int x) {
+        return x;
+    }
+}
+
+{
+    C106 c;
+    c = new C106();
+    c.m();
+}

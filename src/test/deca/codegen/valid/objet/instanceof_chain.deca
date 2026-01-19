@@ -1,0 +1,25 @@
+//    Tests instanceof sur chaine d'heritage.
+// Description:
+//    Tests instanceof sur chaine d'heritage.
+//
+// Resultats:
+//    Affiche true puis true puis false.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class A { }
+class B extends A { }
+class C extends B { }
+
+{
+    C c;
+    A a;
+    B b;
+    c = new C();
+    a = c;
+    b = c;
+    c instanceof B;
+    a instanceof A;
+    a instanceof C;
+}

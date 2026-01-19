@@ -1,6 +1,6 @@
 #! /bin/sh
 cd "$(dirname "$0")"/../../.. || exit 1
-PATH=./src/test/script/launchers:./bin:"$PATH"
+PATH=./src/test/script/launchers:./src/main/bin:"$PATH"
 for src in ./src/test/deca/codegen/valid/objet/*.deca; do
     asm="${src%.deca}.ass"
     rm -f "$asm"

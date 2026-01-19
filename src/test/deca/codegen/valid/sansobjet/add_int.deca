@@ -1,0 +1,19 @@
+// Description:
+//    Addition de deux entiers.
+//
+// Resultats:
+//    Affiche 30.
+//
+// Historique:
+//    cree le 11/01/2026
+
+{
+    int a;
+    int b;
+    int c;
+    a = 10;
+    b = 20;
+    c = a + b;
+    println(c);
+}
+

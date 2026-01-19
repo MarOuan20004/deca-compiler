@@ -1,0 +1,17 @@
+// Description:
+//    Super sans classe parente.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Test {
+    int getValue() {
+        return super.getValue();
+    }
+}
+
+{
+}

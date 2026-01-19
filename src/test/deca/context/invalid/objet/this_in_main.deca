@@ -1,0 +1,12 @@
+// Description:
+//    Utilisation de this dans le programme principal.
+//
+// Resultats:
+//    Erreur contextuelle attendue (this interdit hors classe).
+//
+// Historique:
+//    cree le 15/01/2026
+
+{
+    println(this);
+}

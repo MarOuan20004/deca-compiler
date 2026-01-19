@@ -1,0 +1,22 @@
+//    Combinaison NOT/AND/OR sur booleens.
+// Description:
+//    Combinaison NOT/AND/OR sur booleens.
+//
+// Resultats:
+//    Affiche true puis false.
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    boolean a;
+    boolean b;
+    boolean c;
+    boolean r1;
+    boolean r2;
+    a = true;
+    b = false;
+    c = true;
+    r1 = !(a && b) || c;
+    r2 = !(a || c) && b;
+}

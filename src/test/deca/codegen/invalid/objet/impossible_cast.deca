@@ -1,0 +1,22 @@
+// Description:
+//    Cast entre classes incompatibles puis appel de methode.
+//
+// Resultats:
+//    Erreur d'execution attendue (conversion impossible).
+//
+// Historique:
+//    cree le 17/01/2026
+
+class A {
+    void hello() { println("A"); }
+}
+
+class B {
+    void hello() { println("B"); }
+}
+
+{
+    A a;
+    a = new A();
+    ((B)(a)).hello();
+}

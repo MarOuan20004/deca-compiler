@@ -40,21 +40,36 @@ public class MethodBody extends AbstractMethodBody {
     }
 
     public void codeGenMethodBody(DecacCompiler compiler) {
+        codeGenMethodBody(compiler, 0);
+    }
+
+    public void codeGenMethodBody(DecacCompiler compiler, int nbSavedRegisters) {
+        codeGenMethodBody(compiler, nbSavedRegisters, true);
+    }
+
+    public void codeGenMethodBody(DecacCompiler compiler, int nbSavedRegisters, boolean genTsto) {
         int nbVar = declarations.getList().size();
         int maxTemps = instructions.maxTemp();
-        int d = nbVar + maxTemps;
+        // TSTO doit compter: variables + temporaires + registres sauvegardés
+        int d = nbVar + maxTemps + nbSavedRegisters + 1; // +1 for LB
 
-        compiler.addInstruction(new TSTO(d));
-        compiler.addInstruction(new BOV(new fr.ensimag.ima.pseudocode.Label("stack_overflow_error")));
+        if (genTsto) {
+             compiler.addInstruction(new TSTO(d));
+             compiler.addInstruction(new BOV(new fr.ensimag.ima.pseudocode.Label("stack_overflow_error")));
+        }
         compiler.addInstruction(new ADDSP(nbVar));
         compiler.addComment("Variables Declarations ");
         // Gestion des variables locales avec offset
-        int offset = 1; // début par rapport à LB
+        int offset = 1 + nbSavedRegisters; // début par rapport à LB
         for (AbstractDeclVar decl : declarations.getList()) {
             offset = ((DeclVar) decl).codeGenDeclVar(compiler, offset, fr.ensimag.ima.pseudocode.Register.LB);
         }
         // traiter les instructions
         instructions.codeGenListInst(compiler);
+    }
+
+    public void codeGenMethodEnd(DecacCompiler compiler) {
+        int nbVar = declarations.getList().size();
         // libérer l'espace des variables locales
         compiler.addInstruction(new SUBSP(nbVar));
     }

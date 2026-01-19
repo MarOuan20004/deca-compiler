@@ -1,0 +1,23 @@
+// Description:
+//    Override signature 101.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class A101 {
+    int m(int x) {
+        return x;
+    }
+}
+
+class B101 extends A101 {
+    int m(int x, int y) {
+        return x + y;
+    }
+}
+
+{
+}

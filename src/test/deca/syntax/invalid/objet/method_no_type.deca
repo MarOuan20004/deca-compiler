@@ -1,0 +1,17 @@
+// Description:
+//    Methode sans type de retour.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Calc {
+    add(int a, int b) {
+        return a + b;
+    }
+}
+
+{
+}

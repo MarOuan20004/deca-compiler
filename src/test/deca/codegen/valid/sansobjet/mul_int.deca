@@ -1,0 +1,19 @@
+// Description:
+//    Multiplication de deux entiers.
+//
+// Resultats:
+//    Affiche 42.
+//
+// Historique:
+//    cree le 11/01/2026
+
+{
+    int a;
+    int b;
+    int c;
+    a = 6;
+    b = 7;
+    c = a * b;
+    println(c);
+}
+

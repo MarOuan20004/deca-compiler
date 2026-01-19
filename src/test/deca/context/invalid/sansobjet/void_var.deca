@@ -1,0 +1,13 @@
+// Description:
+//    Declaration de variable de type void interdite.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    void x;
+}
+

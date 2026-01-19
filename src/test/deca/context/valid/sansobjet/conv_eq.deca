@@ -1,0 +1,18 @@
+// Description:
+//    Conversion implicite int->float dans comparaison egalite.
+//
+// Resultats:
+//    Passe la verification contextuelle.
+//
+// Historique:
+//    cree le 10/01/2026
+
+{
+    int i;
+    float f;
+    boolean res;
+    i = 5;
+    f = 5.0;
+    res = (i == f);
+}
+

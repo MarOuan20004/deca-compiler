@@ -1,0 +1,18 @@
+// Description:
+//    Addition de deux flottants.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    float x;
+    float y;
+    float z;
+    x = 3.5;
+    y = 2.5;
+    z = x + y;
+}
+

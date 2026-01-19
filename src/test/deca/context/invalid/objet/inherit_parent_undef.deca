@@ -1,0 +1,15 @@
+// Description:
+//    Heritage d'une classe non definie.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Dog extends Animal {
+    int age;
+}
+
+{
+}

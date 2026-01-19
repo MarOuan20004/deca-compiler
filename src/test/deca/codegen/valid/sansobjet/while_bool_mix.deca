@@ -1,0 +1,20 @@
+//    Boucle while avec condition booleenne mixte.
+// Description:
+//    Boucle while avec condition booleenne mixte.
+//
+// Resultats:
+//    Affiche 1 puis 2 puis 3.
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    int i;
+    boolean ok;
+    i = 0;
+    ok = true;
+    while (ok && i < 3) {
+        i = i + 1;
+        println(i);
+    }
+}

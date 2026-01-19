@@ -1,0 +1,23 @@
+// Description:
+//    Operation ET logique.
+//
+// Resultats:
+//    Affiche 0 (false).
+//
+// Historique:
+//    cree le 11/01/2026
+
+{
+    boolean a;
+    boolean b;
+    boolean res;
+    a = true;
+    b = false;
+    res = a && b;
+    if (res) {
+        println(1);
+    } else {
+        println(0);
+    }
+}
+

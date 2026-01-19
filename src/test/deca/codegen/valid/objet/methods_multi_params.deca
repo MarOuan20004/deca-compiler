@@ -1,0 +1,21 @@
+//    Methode avec plusieurs parametres et calcul combine.
+// Description:
+//    Methode avec plusieurs parametres et calcul combine.
+//
+// Resultats:
+//    Affiche 42.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class Calc {
+    int mix(int a, int b, int c, int d) {
+        return a + b * c - d;
+    }
+}
+
+{
+    Calc c;
+    c = new Calc();
+    println(c.mix(10, 4, 9, 4));
+}

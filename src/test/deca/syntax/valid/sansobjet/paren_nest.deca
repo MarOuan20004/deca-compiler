@@ -1,0 +1,15 @@
+// Description:
+//    Expression avec parentheses imbriquees.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    int x;
+    int y;
+    x = ((5 + 3) * (2 - 1)) + ((4 / 2) * 3);
+}
+

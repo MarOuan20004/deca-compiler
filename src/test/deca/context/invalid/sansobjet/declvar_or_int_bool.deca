@@ -1,0 +1,15 @@
+// Description:
+//    Utilisation d'un int dans une operation OR booleenne.
+//
+// Resultats:
+//    Erreur contextuelle attendue (int incompatible avec ||).
+//
+// Historique:
+//    cree le 16/01/2026
+
+{
+    int a;
+    boolean b;
+    boolean r;
+    r = a || b;
+}

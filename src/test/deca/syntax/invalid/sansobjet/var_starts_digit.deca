@@ -1,0 +1,13 @@
+// Description:
+//    Nom de variable commencant par un chiffre.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    int 123var;
+}
+

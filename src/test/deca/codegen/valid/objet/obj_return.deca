@@ -1,0 +1,20 @@
+// Description:
+//    Return dans methode.
+//
+// Resultats:
+//    Affiche 99.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class Test {
+    int compute() {
+        return 99;
+    }
+}
+
+{
+    Test t;
+    t = new Test();
+    println(t.compute());
+}

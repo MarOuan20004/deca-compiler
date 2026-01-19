@@ -1,0 +1,18 @@
+// Description:
+//    Modulo de deux entiers.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    int a;
+    int b;
+    int rem;
+    a = 17;
+    b = 5;
+    rem = a % b;
+}
+

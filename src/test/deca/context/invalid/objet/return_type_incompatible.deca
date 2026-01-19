@@ -1,0 +1,17 @@
+// Description:
+//    Type retour incompatible 102.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class C102 {
+    int m102() {
+        return true;
+    }
+}
+
+{
+}

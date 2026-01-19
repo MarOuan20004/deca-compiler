@@ -1,0 +1,16 @@
+// Description:
+//    Erreur syntaxe cast 14.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class C14 {
+}
+
+{
+    C14 c;
+    c = (C14;
+}

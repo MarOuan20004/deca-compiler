@@ -1,0 +1,29 @@
+// Description:
+//    Champ protected.
+//
+// Resultats:
+//    Affiche 42.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class Base {
+    protected int value;
+}
+
+class Derived extends Base {
+    int getValue() {
+        return value;
+    }
+    
+    void setValue(int v) {
+        value = v;
+    }
+}
+
+{
+    Derived d;
+    d = new Derived();
+    d.setValue(42);
+    println(d.getValue());
+}

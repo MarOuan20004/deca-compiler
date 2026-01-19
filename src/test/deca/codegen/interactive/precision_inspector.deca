@@ -1,0 +1,19 @@
+// Description:
+//      Test interactif d'affichage hexadécimal de flottants.
+//      Simule un outil d'inspection pour voir la représentation machine exacte.
+//
+// Resultats:
+//      Affiche la valeur saisie en notation hexadécimale (ex: 0x1.Cp+3).
+//
+// Historique:
+//    cree le 18/01/2026
+
+{
+    float rawValue;
+
+    println("Entrez une valeur flottante a analyser :");
+    rawValue = readFloat();
+
+    print("Representation machine (Hex) : ");
+    printlnx(rawValue);
+}

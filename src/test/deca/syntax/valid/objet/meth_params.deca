@@ -1,0 +1,17 @@
+// Description:
+//    Methode avec plusieurs parametres.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Calc {
+    int compute(int a, int b, int c) {
+        return a + b + c;
+    }
+}
+
+{
+}

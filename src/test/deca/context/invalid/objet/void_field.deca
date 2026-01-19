@@ -1,0 +1,12 @@
+// Description:
+//    Champ declare avec le type void.
+//
+// Resultats:
+//    Erreur contextuelle attendue (type de champ invalide).
+//
+// Historique:
+//    cree le 16/01/2026
+
+class A {
+    void f;
+}

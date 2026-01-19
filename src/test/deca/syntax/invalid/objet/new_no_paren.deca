@@ -1,0 +1,16 @@
+// Description:
+//    New sans parentheses.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Point {
+}
+
+{
+    Point p;
+    p = new Point;
+}

@@ -1,0 +1,19 @@
+// Description:
+//    Execution du else (condition fausse).
+//
+// Resultats:
+//    Affiche 99.
+//
+// Historique:
+//    cree le 11/01/2026
+
+{
+    int x;
+    x = 2;
+    if (x > 5) {
+        println(42);
+    } else {
+        println(99);
+    }
+}
+

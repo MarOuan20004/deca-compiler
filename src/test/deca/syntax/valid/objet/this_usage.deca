@@ -1,0 +1,19 @@
+// Description:
+//    Utilisation de this 3.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Obj3 {
+    int x3;
+    
+    int get() {
+        return this.x3;
+    }
+}
+
+{
+}

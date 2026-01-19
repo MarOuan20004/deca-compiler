@@ -1,0 +1,23 @@
+//    Override et appel apres cast explicite.
+// Description:
+//    Override et appel apres cast explicite.
+//
+// Resultats:
+//    Affiche 200.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class P {
+    int val() { return 100; }
+}
+
+class D extends P {
+    int val() { return 200; }
+}
+
+{
+    P p;
+    p = new D();
+    println(((D)(p)).val());
+}

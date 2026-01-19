@@ -1,0 +1,14 @@
+// Description:
+//    Boucle while sans condition (parentheses vides).
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    while () {
+        println(1);
+    }
+}

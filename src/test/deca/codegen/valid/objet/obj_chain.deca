@@ -1,0 +1,29 @@
+// Description:
+//    Chaine d'heritage.
+//
+// Resultats:
+//    Affiche 3.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class A {
+    int x;
+}
+
+class B extends A {
+    int y;
+}
+
+class C extends B {
+    int z;
+}
+
+{
+    C c;
+    c = new C();
+    c.x = 1;
+    c.y = 1;
+    c.z = 1;
+    println(c.x + c.y + c.z);
+}

@@ -1,0 +1,15 @@
+// Description:
+//    Modulo entre un entier et un flottant.
+//
+// Resultats:
+//    Erreur contextuelle attendue (operandes de types incompatibles pour %).
+//
+// Historique:
+//    cree le 16/01/2026
+
+{
+    int a;
+    float b;
+    int r;
+    r = a % b;
+}

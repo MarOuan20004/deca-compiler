@@ -20,6 +20,11 @@ import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.deca.context.ParamDefinition;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.POP;
 
 /**
  * Declaration of a class method.
@@ -175,7 +180,7 @@ public class DeclMethod extends AbstractDeclMethod {
             AbstractDeclParam p = params.getList().get(i);
             DeclParam dp = (DeclParam) p;
             ParamDefinition pDef = (ParamDefinition) envParams.get(dp.getParamName().getName());
-            pDef.setOperand(new RegisterOffset(-(n - i + 2), Register.LB));
+            pDef.setOperand(new RegisterOffset(-(i + 3), Register.LB));
         }
         
         body.verifyMethodBody(compiler,envParams,currentClass,def.getType());
@@ -188,7 +193,7 @@ public class DeclMethod extends AbstractDeclMethod {
         // Create end label
         String className = currentClass.getType().getName().getName();
         String methodLabelName = methodName.getName().getName();
-        fr.ensimag.ima.pseudocode.Label endLabel = new fr.ensimag.ima.pseudocode.Label("fin." + className + "." + methodLabelName);
+        Label endLabel = new Label("fin." + className + "." + methodLabelName);
         compiler.setCurrentMethodEndLabel(endLabel);
 
         // On génère d'abord le corps de la méthode pour savoir quels registres sont utilisés.
@@ -201,11 +206,24 @@ public class DeclMethod extends AbstractDeclMethod {
         //sauvegarder les registres utilisés
         compiler.addComment("Sauvegarde des registres");
         Set<GPRegister> usedRegisters = compiler.getRegisterManager().getUsedInCurrentMethod();
+        int nbSavedRegisters = usedRegisters.size();
+        
+        // On génère le corps de nouveau avec le bon nombre de registres sauvegardés
+        tempCompiler = new DecacCompiler(compiler.getCompilerOptions(), compiler.getSource());
+        tempCompiler.setRegisterManager(compiler.getRegisterManager());
+        tempCompiler.setCurrentMethodEndLabel(endLabel);
+        body.codeGenMethodBody(tempCompiler, nbSavedRegisters);
+        
         for (GPRegister reg : usedRegisters) {
-            compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.PUSH(reg));
+            compiler.addInstruction(new PUSH(reg));
         }   
         // On ajoute le corps de la méthode au programme principal
         compiler.append(tempCompiler.getProgram());
+
+        if (!returnType.getDefinition().getType().isVoid()) {
+            compiler.addInstruction(new BRA(new Label("no_return_error")));
+        }
+
         // Étiquette de fin
         compiler.addLabel(endLabel);
         // restaurer les registres
@@ -213,9 +231,9 @@ public class DeclMethod extends AbstractDeclMethod {
         // On utilise un stream pour inverser l'ordre facilement pour POP
         usedRegisters.stream()
             .sorted((r1, r2) -> Integer.compare(r2.getNumber(), r1.getNumber()))
-            .forEach(reg -> compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.POP(reg)));
+            .forEach(reg -> compiler.addInstruction(new POP(reg)));
         
-        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.RTS());
+        compiler.addInstruction(new RTS());
         
         compiler.setCurrentMethodEndLabel(null);
     }

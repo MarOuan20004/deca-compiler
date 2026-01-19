@@ -1,0 +1,17 @@
+// Description:
+//    Creation d'objet avec new.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Point {
+    int x;
+}
+
+{
+    Point p;
+    p = new Point();
+}

@@ -1,0 +1,17 @@
+// Description:
+//    Comparaison >= entre int et float dans une expression booleenne.
+//
+// Resultats:
+//    Passe la verification contextuelle (promotion implicite int->float).
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    int a;
+    float b;
+    boolean res;
+    a = 4;
+    b = 3.5;
+    res = a >= b;
+}

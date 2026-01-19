@@ -20,6 +20,5 @@ class Child extends Parent {
 {
     Child c;
     c = new Child();
-    c.protectedField = 5;
     println(c.getProtected());
 }

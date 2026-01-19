@@ -1,0 +1,14 @@
+// Description:
+//    Test de precedence des operateurs.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    int res;
+    res = 2 + 3 * 4 - 5 / 1;
+}
+

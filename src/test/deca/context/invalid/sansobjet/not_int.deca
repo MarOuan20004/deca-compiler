@@ -1,0 +1,16 @@
+// Description:
+//    Negation logique sur entier interdite.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    int x;
+    boolean res;
+    x = 5;
+    res = !x;
+}
+

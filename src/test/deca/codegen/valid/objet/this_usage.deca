@@ -1,0 +1,23 @@
+// Description:
+//    Utilisation this 22.
+//
+// Resultats:
+//    Affiche 22.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class C22 {
+    int x22;
+    
+    int get() {
+        return this.x22;
+    }
+}
+
+{
+    C22 c;
+    c = new C22();
+    c.x22 = 22;
+    println(c.get());
+}

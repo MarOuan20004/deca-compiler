@@ -1,0 +1,15 @@
+// Description:
+//    Sequence de plusieurs println simples.
+//
+// Resultats:
+//    test_synt accepte .
+//
+// Historique:
+//    cree le 16/01/2026
+
+{
+    println("start");
+    println("step one");
+    println("step two");
+    println("step three");
+}

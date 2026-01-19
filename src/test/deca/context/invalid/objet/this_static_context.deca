@@ -1,0 +1,13 @@
+// Description:
+//    This dans contexte non objet.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+{
+    int x;
+    x = this.x;
+}

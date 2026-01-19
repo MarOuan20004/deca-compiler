@@ -1,0 +1,23 @@
+// Description:
+//    Acces protected hors heritage.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Base {
+    protected int value;
+}
+
+class Other {
+}
+
+{
+    Base b;
+    Other o;
+    int x;
+    b = new Base();
+    x = b.value;
+}

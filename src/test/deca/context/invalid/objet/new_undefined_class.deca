@@ -1,0 +1,13 @@
+// Description:
+//    New avec classe non definie.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+{
+    Point p;
+    p = new Point();
+}

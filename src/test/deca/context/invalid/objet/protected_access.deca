@@ -1,0 +1,18 @@
+// Description:
+//    Accès illégal à un champ protégé depuis le Main.
+//
+// Resultats:
+//    Erreur contextuelle attendue : Le champ 'x' est protégé.
+//
+// Historique:
+//    Cree le 17/01/2026
+
+class A {
+    protected int x;
+}
+
+{
+    A a = new A();
+    // ERREUR
+    println(a.x);
+}

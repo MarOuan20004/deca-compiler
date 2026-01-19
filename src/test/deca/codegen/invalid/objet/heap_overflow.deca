@@ -1,0 +1,21 @@
+// Description:
+//    Allocation infinie d'objets pour saturer le tas (Heap).
+//    Utilisez l'option -n de ima pour limiter la mémoire si nécessaire.
+//
+// Resultats:
+//    Compilation : OK
+//    Execution : Erreur runtime
+//    Message attendu : "Error: Heap overflow"
+// Historique:
+//    cree le 18/01/2026
+
+class GrosObjet {
+    int x, y, z, a, b, c;
+}
+
+{
+    GrosObjet g;
+    while (true) {
+        g = new GrosObjet();
+    }
+}

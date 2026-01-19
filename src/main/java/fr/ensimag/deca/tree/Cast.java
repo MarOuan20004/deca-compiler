@@ -16,11 +16,13 @@ import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.FLOAT;
+import fr.ensimag.ima.pseudocode.instructions.INT;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import fr.ensimag.ima.pseudocode.instructions.ERROR;
 
@@ -57,13 +59,14 @@ public class Cast extends AbstractExpr {
             this.setType(targetType);
             return targetType;
         }
-
         if (exprType.isInt() && targetType.isFloat()) {
             this.setType(targetType);
             return targetType;
         }
-        
-
+        if (exprType.isFloat() && targetType.isInt()) {
+            this.setType(targetType);
+            return targetType;
+        }
         if (exprType.isClass() && targetType.isClass()) {
             ClassType exprClassType = ((ClassType)exprType).asClassType("", getLocation());
             ClassType targetClassType = ((ClassType)targetType).asClassType("", getLocation());
@@ -78,7 +81,6 @@ public class Cast extends AbstractExpr {
                 return targetType;
             }
         }
-        
         if (exprType.isNull() && targetType.isClass()) {
             this.setType(targetType);
             return targetType;
@@ -95,49 +97,49 @@ public class Cast extends AbstractExpr {
         if (exprType.isInt() && targetType.isFloat()) {
             expr.codeGenExpr(compiler, r);
             compiler.addInstruction(new FLOAT(r, r));
-        } else if (exprType.isClassOrNull() && targetType.isClass()) {
+        }else if (exprType.isFloat() && targetType.isInt()) {
             expr.codeGenExpr(compiler, r);
-            
+            compiler.addInstruction(new INT(r, r));
+            compiler.addInstruction(new BOV(new Label("float_arithmetic_overflow")));
+        } 
+        else if (exprType.isClassOrNull() && targetType.isClass()) {
+            expr.codeGenExpr(compiler, r);
+ 
             // Check if upcast
             if (exprType.isNull() || ((ClassType)exprType).isSubClassOf((ClassType)targetType)) {
                 // Nothing to do
                 return;
-            }
-            
-            // Downcast: need runtime check
+            }       
             int id = compiler.getLabelCounter();
             Label loopLabel = new Label("cast_loop_" + id);
             Label trueLabel = new Label("cast_true_" + id);
             Label endLabel = new Label("cast_end_" + id);
-
-            // Check if null
-            compiler.addInstruction(new CMP(new NullOperand(), r));
+            GPRegister rtmp = compiler.getRegisterManager().allocateRegister();
+            // Save the object reference
+            compiler.addInstruction(new LOAD(r, rtmp));
+            compiler.addInstruction(new CMP(new NullOperand(), rtmp));
             compiler.addInstruction(new BEQ(endLabel));
-
             GPRegister r1 = compiler.getRegisterManager().allocateRegister();
             // Get method table address of the object
-            compiler.addInstruction(new LOAD(new RegisterOffset(0, r), r1));
-
+            compiler.addInstruction(new LOAD(new RegisterOffset(0, rtmp), r1));
             compiler.addLabel(loopLabel);
             // Get method table address of the target class
-            compiler.addInstruction(new LEA(type.getClassDefinition().getAdrTable(), Register.R0));
-            compiler.addInstruction(new CMP(Register.R0, r1));
+            compiler.addInstruction(new LEA(type.getClassDefinition().getAdrTable(), r));
+            compiler.addInstruction(new CMP(r, r1));
             compiler.addInstruction(new BEQ(trueLabel));
-
-            // Get parent method table
             compiler.addInstruction(new LOAD(new RegisterOffset(0, r1), r1));
             compiler.addInstruction(new CMP(new NullOperand(), r1));
             compiler.addInstruction(new BNE(loopLabel));
-
-            // Error
             compiler.addInstruction(new WSTR("Error: Invalid cast"));
             compiler.addInstruction(new ERROR());
 
             compiler.addLabel(trueLabel);
-            compiler.getRegisterManager().freeRegister(r1);
             compiler.addLabel(endLabel);
+            // Restore the object reference to the result register
+            compiler.addInstruction(new LOAD(rtmp, r));
+            compiler.getRegisterManager().freeRegister(r1);
+            compiler.getRegisterManager().freeRegister(rtmp);
         } else {
-            // Same type or other handled by verifyExpr
             expr.codeGenExpr(compiler, r);
         }
     }

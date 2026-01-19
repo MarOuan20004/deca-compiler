@@ -1,0 +1,21 @@
+// Description:
+//    Classe avec plusieurs methodes.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Math {
+    int add(int a, int b) {
+        return a + b;
+    }
+    
+    int sub(int a, int b) {
+        return a - b;
+    }
+}
+
+{
+}

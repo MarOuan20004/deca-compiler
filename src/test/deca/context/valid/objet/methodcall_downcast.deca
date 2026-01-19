@@ -1,0 +1,22 @@
+// Description:
+//    Appel de methode apres downcast d'une reference.
+//
+// Resultats:
+//    Passe la verification contextuelle (cast valide et methode accessible).
+//
+// Historique:
+//    cree le 17/01/2026
+
+class Base {
+    void ping() { }
+}
+
+class Child extends Base {
+    void pong() { }
+}
+
+{
+    Base b;
+    b = new Child();
+    ((Child)(b)).pong();
+}

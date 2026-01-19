@@ -1,0 +1,25 @@
+// Description:
+//    Polymorphisme valide.
+//
+// Resultats:
+//    Passe la verification contextuelle.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Animal {
+    int getAge() {
+        return 0;
+    }
+}
+
+class Dog extends Animal {
+    int getAge() {
+        return 5;
+    }
+}
+
+{
+    Animal a;
+    a = new Dog();
+}

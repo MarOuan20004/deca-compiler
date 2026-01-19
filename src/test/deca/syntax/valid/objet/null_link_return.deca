@@ -1,0 +1,24 @@
+// Description:
+//    Methode chainant un maillon et retournant la reference.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 18/01/2026
+
+class Node {
+    Node next;
+    Node link(Node n) {
+        next = n;
+        return next;
+    }
+}
+
+{
+    Node head;
+    Node tail;
+    head = new Node();
+    tail = head.link(new Node());
+    println(tail == null);
+}

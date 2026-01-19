@@ -1,0 +1,20 @@
+// Description:
+//    Recursion infinie provoquant un depassement de pile.
+//
+// Resultats:
+//    Erreur d'execution attendue : Stack overflow
+//
+// Historique:
+//    cree le 16/01/2026
+
+class A {
+    void boom() {
+        // Appel récursif infini
+        this.boom();
+    }
+}
+
+{
+    A a = new A();
+    a.boom();
+}

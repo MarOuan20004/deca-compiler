@@ -1,0 +1,19 @@
+// Description:
+//    Creation et utilisation d'objet.
+//
+// Resultats:
+//    Affiche 42.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class Counter {
+    int value;
+}
+
+{
+    Counter c;
+    c = new Counter();
+    c.value = 42;
+    println(c.value);
+}

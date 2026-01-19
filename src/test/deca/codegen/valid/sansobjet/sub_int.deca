@@ -1,0 +1,19 @@
+// Description:
+//    Soustraction de deux entiers.
+//
+// Resultats:
+//    Affiche 15.
+//
+// Historique:
+//    cree le 11/01/2026
+
+{
+    int a;
+    int b;
+    int c;
+    a = 20;
+    b = 5;
+    c = a - b;
+    println(c);
+}
+

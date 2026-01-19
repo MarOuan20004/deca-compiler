@@ -1,0 +1,17 @@
+// Description:
+//    Condition if sans parentheses.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    int x;
+    x = 5;
+    if x > 0 {
+        println(x);
+    }
+}
+

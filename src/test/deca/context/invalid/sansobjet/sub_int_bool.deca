@@ -1,0 +1,18 @@
+// Description:
+//    Soustraction entre int et boolean interdite.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    int x;
+    boolean b;
+    int res;
+    x = 10;
+    b = false;
+    res = x - b;
+}
+

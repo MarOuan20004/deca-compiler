@@ -1,0 +1,14 @@
+// Description:
+//    Declarations multiples de type void interdites.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    void a;
+    void b;
+}
+

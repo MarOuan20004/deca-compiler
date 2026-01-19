@@ -1,0 +1,20 @@
+// Description:
+//    Structure if / else if / else avec comparaisons entieres.
+//
+// Resultats:
+//    test_synt accepte .
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    int x;
+    x = 5;
+    if (x > 7) {
+        println("gt");
+    } else if (x == 5) {
+        println("eq");
+    } else {
+        println("lt");
+    }
+}

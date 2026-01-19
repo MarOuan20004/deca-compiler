@@ -1,0 +1,17 @@
+// Description:
+//    Heritage circulaire.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class A extends B {
+}
+
+class B extends A {
+}
+
+{
+}

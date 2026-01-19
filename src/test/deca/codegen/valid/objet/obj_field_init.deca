@@ -1,0 +1,21 @@
+// Description:
+//    Initialisation de champs.
+//
+// Resultats:
+//    Affiche 100.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class Point {
+    int x;
+    int y;
+}
+
+{
+    Point p;
+    p = new Point();
+    p.x = 50;
+    p.y = 50;
+    println(p.x + p.y);
+}

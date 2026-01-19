@@ -1,0 +1,21 @@
+// Description:
+//    Operateur instanceof.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Animal {
+}
+
+class Dog extends Animal {
+}
+
+{
+    Animal a;
+    boolean b;
+    a = new Dog();
+    b = a instanceof Dog;
+}

@@ -1,0 +1,22 @@
+// Description:
+//    Acces champ via downcast puis affectation.
+//
+// Resultats:
+//    Passe la verification contextuelle (cast explicite puis selection).
+//
+// Historique:
+//    cree le 17/01/2026
+
+class A {
+    int x;
+}
+
+class B extends A {
+    int y;
+}
+
+{
+    A a;
+    a = new B();
+    ((B)(a)).y = 5;
+}

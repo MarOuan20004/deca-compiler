@@ -1,0 +1,24 @@
+// Description:
+//    Définition de classe imbriquée dans le bloc principal.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    Cree le 19/01/2026
+
+class A {
+    int i;
+}
+
+{
+    A a = new A();
+    println("Debut");
+
+    // ERREUR
+    class B extends A {
+        int j;
+    }
+
+    B b = new B();
+}

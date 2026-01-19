@@ -1,0 +1,22 @@
+// Description:
+//    Heritage simple.
+//
+// Resultats:
+//    Affiche 5.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class Animal {
+    int age;
+}
+
+class Dog extends Animal {
+}
+
+{
+    Dog d;
+    d = new Dog();
+    d.age = 5;
+    println(d.age);
+}

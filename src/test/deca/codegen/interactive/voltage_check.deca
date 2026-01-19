@@ -1,0 +1,22 @@
+// Description:
+//      Test interactif de vérification d'intervalle sur un flottant.
+//      Simule un test de sécurité sur un circuit électronique (0V - 5V).
+//
+// Resultats:
+//      Voltage is safe (0V-5V)      OU      WARNING: Voltage out of range!
+//
+// Historique:
+//    cree le 18/01/2026
+
+{
+    float inputVoltage;
+
+    println("Veuillez entrer la tension mesuree en Volts (float) :");
+    inputVoltage = readFloat();
+
+    if (inputVoltage >= 0.0 && inputVoltage <= 5.0) {
+        println("Voltage stable : ", inputVoltage, "V est dans la plage de fonctionnement [0V, 5V].");
+    } else {
+        println("ALERTE : ", inputVoltage, "V est hors des limites de securite !");
+    }
+}

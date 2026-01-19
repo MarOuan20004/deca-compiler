@@ -1,0 +1,13 @@
+// Description:
+//    Cast sans parenthese fermante.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    int a;
+    a = (int 3.0;
+}

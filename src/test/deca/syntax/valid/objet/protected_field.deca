@@ -1,0 +1,21 @@
+// Description:
+//    Protected field 5.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class P5 {
+    protected int val5;
+}
+
+class C5 extends P5 {
+    int get() {
+        return val5;
+    }
+}
+
+{
+}

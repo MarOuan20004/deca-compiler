@@ -1,0 +1,18 @@
+// Description:
+//    Comparaison superieur strict entre entiers.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    int a;
+    int b;
+    boolean res;
+    a = 20;
+    b = 10;
+    res = (a > b);
+}
+

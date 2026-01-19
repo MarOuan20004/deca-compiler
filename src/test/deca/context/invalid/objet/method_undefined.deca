@@ -1,0 +1,17 @@
+// Description:
+//    Methode non definie 104.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class C104 {
+}
+
+{
+    C104 c;
+    c = new C104();
+    c.undef104();
+}

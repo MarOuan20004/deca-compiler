@@ -1,0 +1,26 @@
+// Description:
+//    Override et polymorphisme 19.
+//
+// Resultats:
+//    Affiche 57.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class A19 {
+    int m() {
+        return 19;
+    }
+}
+
+class B19 extends A19 {
+    int m() {
+        return 19 * 3;
+    }
+}
+
+{
+    A19 a;
+    a = new B19();
+    println(a.m());
+}

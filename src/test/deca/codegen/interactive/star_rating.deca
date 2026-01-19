@@ -1,0 +1,30 @@
+// Description:
+//      Test interactif vérifiant la validité d'une note utilisateur.
+//      Simule un système de notation de 0 à 5 étoiles.
+//      Utilise une classe pour encapsuler la logique de vérification.
+//
+// Resultats:
+//      Valid Rating: X stars.       OU       Invalid Rating: Must be between 0 and 5.
+//
+// Historique:
+//    cree le 18/01/2026
+
+class StarRating {
+
+    int adjustment = 0;
+
+    void verifyScore() {
+       int userScore = readInt();
+           if ((adjustment + userScore) >= 0 && (adjustment + userScore) <= 5) {
+               println("Valid Rating: ", adjustment + userScore, " stars.");
+           } else {
+               println("Invalid Rating: Must be between 0 and 5.");
+           }
+    }
+}
+
+{
+    StarRating r = new StarRating();
+    println("Please enter a rating (integer 0-5):");
+    r.verifyScore();
+}

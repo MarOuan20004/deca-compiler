@@ -1,0 +1,12 @@
+// Description:
+//    Classe etendant un type primitif.
+//
+// Resultats:
+//    Erreur contextuelle attendue (seules les classes peuvent etre etendues).
+//
+// Historique:
+//    cree le 15/01/2026
+
+class B extends int {
+    int x;
+}

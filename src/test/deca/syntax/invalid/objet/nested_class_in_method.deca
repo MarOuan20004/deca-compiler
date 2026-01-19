@@ -1,0 +1,14 @@
+// Description:
+//    Declaration de classe a l'interieur d'une methode.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 17/01/2026
+
+class A {
+    void foo() {
+        class B { int y; }
+    }
+}

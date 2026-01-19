@@ -1,0 +1,20 @@
+// Description:
+//    Methode declaree avec un type de retour sans chemin de retour.
+//
+// Resultats:
+//    Erreur d'execution attendue (chemin sans return).
+//
+// Historique:
+//    cree le 17/01/2026
+
+class A {
+    int f() {
+        // pas de return sur tous les chemins
+    }
+}
+
+{
+    A a;
+    a = new A();
+    println(a.f());
+}

@@ -7,6 +7,7 @@ import org.apache.commons.lang.Validate;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.ExpDefinition;
@@ -19,6 +20,8 @@ import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
 
 /**
  * Declaration of a class field.
@@ -116,8 +119,14 @@ public class DeclField extends AbstractDeclField {
         Symbol fieldNom  = fieldName.getName() ;
         EnvironmentExp envExp = currentClass.getMembers();
         ExpDefinition expDef = envExp.get(fieldNom) ;
-        if(expDef !=null ){
-            throw new ContextualError("field deja existant", currentClass.getLocation());
+        // Allow shadowing: only reject if the field is declared in the current class
+        if(expDef != null){
+            FieldDefinition existingField = (FieldDefinition) expDef;
+            // Only error if the field is owned by the current class (not inherited)
+            if(existingField.getContainingClass() == currentClass){
+                throw new ContextualError("field deja existant dans la classe "+((Definition) currentClass).getType().getName().getName(), currentClass.getLocation());
+            }
+            // If it's inherited, allow shadowing - continue
         }
         int i  = currentClass.getNumberOfFields() ;
         currentClass.incNumberOfFields() ; 
@@ -148,7 +157,13 @@ public class DeclField extends AbstractDeclField {
     void codeGenDeclField(DecacCompiler compiler, int index) {
         if (getInitialization() instanceof NoInitialization) {
             // Pas d'initialisation, donc on met la valeur par défaut
-            compiler.addInstruction(new LOAD(0, Register.R0));
+             if (fieldName.getDefinition().getType().isClass()) {
+                 compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
+            } else if (fieldName.getDefinition().getType().isFloat()) {
+                 compiler.addInstruction(new LOAD(new ImmediateFloat(0.0f), Register.R0));
+            } else {
+                 compiler.addInstruction(new LOAD(0, Register.R0));
+            }
         } else {
             // Générer le code pour l'initialisation
             getInitialization().codeGenInitialization(compiler, Register.R0);

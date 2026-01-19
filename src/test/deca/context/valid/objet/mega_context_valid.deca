@@ -1,0 +1,90 @@
+// Description:
+//    Test exhaustif de VALIDATION CONTEXTUELLE.
+//    Ce fichier doit passer l'étape B sans erreur.
+//    Il couvre toutes les règles de typage de l'extension Objet.
+//
+// Resultats:
+//    Succès attendu (pas d'erreur contextuelle).
+//
+// Historique:
+//    cree le 16/01/2026
+
+class Animal {
+    protected int age;
+    float poids = 5.5;
+
+    void setAge(int a) {
+        this.age = a;
+    }
+
+    int getAge() {
+        return this.age;
+    }
+
+    void crier() {
+        println("...");
+    }
+
+    void anniversaire() {
+        this.age = age + 1;
+    }
+}
+
+class Chien extends Animal {
+    // Redéfinition de méthode (Override)
+    void crier() {
+        println("Waf Waf");
+    }
+
+    void rapporterBalle() {
+        println("Balle rapportee !");
+    }
+
+    void manger() {
+        this.poids = this.poids + 0.5; // Float + Float = Float (OK)
+    }
+}
+
+class Maitre {
+    protected Chien compagnon;
+
+    void adopter(Chien c) {
+        this.compagnon = c;
+    }
+
+    // Retourne un type Objet (Animal) alors qu'on a un Chien (Sous-type)
+    Animal getAnimal() {
+            return this.compagnon;
+        }
+    }
+{
+    Animal a;
+    Chien medor = new Chien();
+    Maitre maitre = new Maitre();
+    int x;
+    float f;
+    boolean check;
+
+    medor.setAge(5);
+
+    a = medor;
+
+    a.crier();
+
+
+    if (a instanceof Chien) {
+        ((Chien) (a)).rapporterBalle();
+    }
+
+    maitre.adopter(medor);
+
+
+    f = medor.getAge();
+
+
+    check = (a == medor) && (a != null);
+
+    if (check) {
+        println("Tout va bien.");
+    }
+}

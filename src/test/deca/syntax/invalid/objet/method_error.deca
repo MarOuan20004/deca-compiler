@@ -1,0 +1,17 @@
+// Description:
+//    Erreur syntaxe methode 11.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class C11 {
+    int m11(int x {
+        return x;
+    }
+}
+
+{
+}

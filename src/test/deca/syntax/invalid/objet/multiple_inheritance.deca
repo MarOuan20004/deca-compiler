@@ -1,0 +1,27 @@
+// Description:
+//    Tentative d'héritage multiple.
+//
+// Resultats:
+//    Erreur syntaxique attendue (la virgule n'est pas acceptée après extends).
+//
+// Historique:
+//    Cree le 19/01/2026
+
+class Moteur {
+    void vroom() { println("Vroom"); }
+}
+
+class Roues {
+    int nombre = 4;
+}
+
+// ERREUR
+class Voiture extends Moteur, Roues {
+    void rouler() {
+        this.vroom();
+    }
+}
+
+{
+    Voiture v = new Voiture();
+}

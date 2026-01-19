@@ -1,0 +1,16 @@
+// Description:
+//    Cast sans parentheses.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class A {
+}
+
+{
+    A a;
+    a = A new A();
+}

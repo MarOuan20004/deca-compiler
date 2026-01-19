@@ -1,0 +1,18 @@
+// Description:
+//    Dereferencement d'une reference nulle.
+//
+// Resultats:
+//    Erreur d'execution attendue (NullPointer).
+//
+// Historique:
+//    cree le 17/01/2026
+
+class C {
+    int x;
+}
+
+{
+    C c;
+    c = null;
+    println(c.x);
+}

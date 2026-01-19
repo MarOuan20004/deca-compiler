@@ -1,4 +1,4 @@
-// Generated from /home/ensimag/FACTORYGIT/gl10/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
+// Generated from /home/ensimag/FACTORYGIT/gl10_me/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
 
     import fr.ensimag.deca.tree.*;
     import java.io.PrintStream;
@@ -1961,7 +1961,7 @@ public class DecaParser extends AbstractDecaParser {
 
 				            assert(((Unary_exprContext)_localctx).select_expr.tree != null);
 				            ((Unary_exprContext)_localctx).tree = ((Unary_exprContext)_localctx).select_expr.tree;
-				            setLocation(_localctx.tree, (((Unary_exprContext)_localctx).select_expr!=null?(((Unary_exprContext)_localctx).select_expr.start):null))
+				            setLocation(_localctx.tree, (((Unary_exprContext)_localctx).select_expr!=null?(((Unary_exprContext)_localctx).select_expr.start):null));
 				        
 				}
 				break;
@@ -2262,13 +2262,13 @@ public class DecaParser extends AbstractDecaParser {
 				enterOuterAlt(_localctx, 9);
 				{
 				setState(426);
-				match(OPARENT);
+				((Primary_exprContext)_localctx).OPARENT = match(OPARENT);
 				setState(427);
 				((Primary_exprContext)_localctx).t = type();
 				setState(428);
 				match(CPARENT);
 				setState(429);
-				match(OPARENT);
+				((Primary_exprContext)_localctx).OPARENT = match(OPARENT);
 				setState(430);
 				((Primary_exprContext)_localctx).e = expr();
 				setState(431);
@@ -2277,6 +2277,7 @@ public class DecaParser extends AbstractDecaParser {
 				            assert(((Primary_exprContext)_localctx).e.tree != null);
 				            assert(((Primary_exprContext)_localctx).t.tree != null);
 				            ((Primary_exprContext)_localctx).tree = new Cast(((Primary_exprContext)_localctx).t.tree,((Primary_exprContext)_localctx).e.tree);
+				            setLocation(_localctx.tree, ((Primary_exprContext)_localctx).OPARENT);
 				    
 				}
 				break;
@@ -3178,6 +3179,7 @@ public class DecaParser extends AbstractDecaParser {
 				            MethodAsmBody body = new MethodAsmBody(asmLiteral);
 				            setLocation(body, ((Decl_methodContext)_localctx).ASM);
 				            ((Decl_methodContext)_localctx).tree =  new DeclMethod(((Decl_methodContext)_localctx).type.tree, ((Decl_methodContext)_localctx).ident.tree, ((Decl_methodContext)_localctx).params.tree, body, ((Decl_methodContext)_localctx).v.tree);
+				            setLocation(_localctx.tree, (((Decl_methodContext)_localctx).type!=null?(((Decl_methodContext)_localctx).type.start):null));
 				        
 				}
 				break;
@@ -3301,7 +3303,8 @@ public class DecaParser extends AbstractDecaParser {
 				setState(566);
 				((Multi_line_stringContext)_localctx).s = match(STRING);
 
-				            ((Multi_line_stringContext)_localctx).text =  ((Multi_line_stringContext)_localctx).s.getText();
+				            String str = ((Multi_line_stringContext)_localctx).s.getText();
+				            ((Multi_line_stringContext)_localctx).text =  str.substring(1, str.length()-1);
 				            ((Multi_line_stringContext)_localctx).location =  tokenLocation(((Multi_line_stringContext)_localctx).s);
 				        
 				}
@@ -3312,7 +3315,8 @@ public class DecaParser extends AbstractDecaParser {
 				setState(568);
 				((Multi_line_stringContext)_localctx).s = match(MULTI_LINE_STRING);
 
-				            ((Multi_line_stringContext)_localctx).text =  ((Multi_line_stringContext)_localctx).s.getText();
+				            String str = ((Multi_line_stringContext)_localctx).s.getText();
+				            ((Multi_line_stringContext)_localctx).text =  str.substring(1, str.length()-1);
 				            ((Multi_line_stringContext)_localctx).location =  tokenLocation(((Multi_line_stringContext)_localctx).s);
 				        
 				}

@@ -1,0 +1,17 @@
+// Description:
+//    Classe avec plusieurs champs.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Rectangle {
+    int width;
+    int height;
+    float area;
+}
+
+{
+}

@@ -1,0 +1,16 @@
+// Description:
+//    Erreur syntaxe new 13.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class C13 {
+}
+
+{
+    C13 c;
+    c = new;
+}

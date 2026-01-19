@@ -1,0 +1,21 @@
+// Description:
+//    Affectation classes incompatibles 103.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class A103 {
+}
+
+class B103 {
+}
+
+{
+    A103 a;
+    B103 b;
+    b = new B103();
+    a = b;
+}

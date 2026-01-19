@@ -1,0 +1,21 @@
+//    Comparaisons mixtes et impressions.
+// Description:
+//    Comparaisons mixtes int/float et affichage booleen.
+//
+// Resultats:
+//    Affiche true puis false puis true.
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    int a;
+    float b;
+    boolean r1;
+    boolean r2;
+    a = 3;
+    b = 3.5;
+    r1 = a < b;
+    r2 = a > b;
+
+}

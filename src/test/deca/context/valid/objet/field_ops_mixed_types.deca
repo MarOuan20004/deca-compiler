@@ -1,0 +1,25 @@
+// Description:
+//    Operations arithmetiques et comparaisons sur champs int/float.
+//
+// Resultats:
+//    Passe la verification contextuelle (promotions implicites sur champs).
+//
+// Historique:
+//    cree le 17/01/2026
+
+class Pair {
+    int a;
+    float b;
+    float sum() {
+        return a + b;
+    }
+    boolean ge() {
+        return a >= b;
+    }
+}
+
+{
+    Pair p;
+    p = new Pair();
+    println(p.sum());
+}

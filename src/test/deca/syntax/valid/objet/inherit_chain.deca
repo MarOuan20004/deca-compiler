@@ -1,0 +1,23 @@
+// Description:
+//    Chaine d'heritage.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class A {
+    int x;
+}
+
+class B extends A {
+    int y;
+}
+
+class C extends B {
+    int z;
+}
+
+{
+}

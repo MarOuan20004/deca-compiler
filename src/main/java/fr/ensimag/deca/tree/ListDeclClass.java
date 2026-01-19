@@ -13,6 +13,7 @@ import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
@@ -84,7 +85,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
             // Comparer les deux références d'objet
             compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R0));
             compiler.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB), Register.R1));
-            compiler.addInstruction(new SUB(Register.R0, Register.R1));
+            compiler.addInstruction(new CMP(Register.R0, Register.R1));
             // Comparaison
             Label trueLabel = new Label("equals_true");
             Label endLabel = new Label("equals_end");

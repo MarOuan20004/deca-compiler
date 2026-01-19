@@ -1,0 +1,16 @@
+// Description:
+//    Condition manquante dans if.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    int x;
+    if () {
+        println(x);
+    }
+}
+

@@ -1,0 +1,17 @@
+// Description:
+//    Execution du if (condition vraie).
+//
+// Resultats:
+//    Affiche 42.
+//
+// Historique:
+//    cree le 11/01/2026
+
+{
+    int x;
+    x = 10;
+    if (x > 5) {
+        println(42);
+    }
+}
+

@@ -1,0 +1,21 @@
+// Description:
+//    Methode dupliquee dans une classe.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Calc {
+    int add(int a, int b) {
+        return a + b;
+    }
+    
+    int add(int a, int b) {
+        return a - b;
+    }
+}
+
+{
+}

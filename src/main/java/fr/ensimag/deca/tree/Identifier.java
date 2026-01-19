@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import java.io.PrintStream;
+import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 
@@ -258,7 +259,8 @@ public class Identifier extends AbstractIdentifier {
             compiler.addInstruction(new LOAD(varDef.getOperand(), r));
         }
         else if (def.isParam()) {
-            compiler.addInstruction(new LOAD(((fr.ensimag.deca.context.ExpDefinition)def).getOperand(), r));
+            fr.ensimag.ima.pseudocode.DAddr paramOperand = ((fr.ensimag.deca.context.ExpDefinition)def).getOperand();
+            compiler.addInstruction(new LOAD(paramOperand, r));
         }
         else{
             throw new UnsupportedOperationException("Not supported yet.");

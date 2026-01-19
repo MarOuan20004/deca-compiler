@@ -83,8 +83,8 @@ FLOAT_LITERAL
     ;
 
 fragment STRING_CAR: ~('"' | '\\' | '\n' | '\r' ) ;
-STRING : '"' ( STRING_CAR | '\\"' | '\\\\' )* '"' ;
-MULTI_LINE_STRING :  '"' ( STRING_CAR | '\n' | '\r' | '\\"' | '\\\\' )* '"' ;
+STRING : '"' ( STRING_CAR | '\\' [btnrf"'\\] )* '"' ;
+MULTI_LINE_STRING :  '"' ( STRING_CAR | '\n' | '\r' | '\\' [btnrf"'\\] )* '"' ;
 
 
 fragment LETTER : 'a'..'z' | 'A'..'Z';
@@ -116,7 +116,7 @@ CBRACE :'}';
 
 // inclusion de fichiers
 fragment FILENAME : (LETTER | DIGIT | '.' | '_' | '-')+ ;
-INCLUDE : '#include' (' ')* '"' FILENAME '"' ;
+INCLUDE : '#include' (' ')* '"' FILENAME '"' { doInclude(getText()); } ;
 
 
 

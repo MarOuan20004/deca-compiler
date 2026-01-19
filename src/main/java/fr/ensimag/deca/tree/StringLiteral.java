@@ -8,6 +8,8 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
+import fr.ensimag.ima.pseudocode.instructions.WNL;
+import org.apache.commons.lang.StringEscapeUtils;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -39,8 +41,17 @@ public class StringLiteral extends AbstractStringLiteral {
     }
 
     @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new WSTR(new ImmediateString(value)));
+    protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
+        String unescapedValue = StringEscapeUtils.unescapeJava(value);
+        String[] lines = unescapedValue.split("\n", -1);
+        for (int i = 0; i < lines.length; i++) {
+            if (!lines[i].isEmpty()) {
+                compiler.addInstruction(new WSTR(new ImmediateString(lines[i])));
+            }
+            if (i < lines.length - 1) {
+                compiler.addInstruction(new WNL());
+            }
+        }
     }
 
     @Override
@@ -65,6 +76,6 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, fr.ensimag.ima.pseudocode.GPRegister r) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        codeGenPrint(compiler, false);
     }
 }

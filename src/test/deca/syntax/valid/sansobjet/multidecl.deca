@@ -1,0 +1,24 @@
+// Description:
+//    Declarations multiples de variables.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    int a;
+    int b;
+    int c;
+    float x;
+    float y;
+    boolean flag;
+    a = 1;
+    b = 2;
+    c = 3;
+    x = 1.5;
+    y = 2.5;
+    flag = true;
+}
+

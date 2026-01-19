@@ -1,0 +1,22 @@
+// Description:
+//      Test interactif de validation d'un entier.
+//      Simule une enquête de satisfaction client (score de 0 à 5).
+//
+// Resultats:
+//      Feedback enregistré ou Message d'erreur.
+//
+// Historique:
+//    cree le 19/01/2026
+
+{
+    int satisfactionScore;
+
+    println("Veuillez noter votre experience (entier de 0 a 5) :");
+    satisfactionScore = readInt();
+
+    if (satisfactionScore >= 0 && satisfactionScore <= 5) {
+        println("Merci pour votre retour ! Note enregistree : ", satisfactionScore);
+    } else {
+        println("Erreur : La note ", satisfactionScore, " n'est pas valide (doit etre entre 0 et 5).");
+    }
+}

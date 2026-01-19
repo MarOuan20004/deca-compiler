@@ -1,0 +1,26 @@
+// Description:
+//    Override de methode.
+//
+// Resultats:
+//    Affiche 20.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class Base {
+    int getValue() {
+        return 10;
+    }
+}
+
+class Derived extends Base {
+    int getValue() {
+        return 20;
+    }
+}
+
+{
+    Derived d;
+    d = new Derived();
+    println(d.getValue());
+}

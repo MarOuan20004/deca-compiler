@@ -1,0 +1,21 @@
+// Description:
+//    Test null.
+//
+// Resultats:
+//    Affiche 1.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class Point {
+}
+
+{
+    Point p;
+    p = null;
+    if (p == null) {
+        println(1);
+    } else {
+        println(0);
+    }
+}

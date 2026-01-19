@@ -1,0 +1,17 @@
+// Description:
+//    Conversions int/float sur declarations et affectations.
+//
+// Resultats:
+//    test_synt accepte .
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    int a;
+    float b;
+    a = (int)(3.7);
+    b = (float)(a + 2);
+    print(a);
+    println(b);
+}

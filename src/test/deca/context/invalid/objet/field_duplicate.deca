@@ -1,0 +1,16 @@
+// Description:
+//    Champ duplique 100.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class C100 {
+    int field100;
+    int field100;
+}
+
+{
+}

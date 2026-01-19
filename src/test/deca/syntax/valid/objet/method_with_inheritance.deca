@@ -1,0 +1,21 @@
+// Description:
+//    Heritage avec methode 1.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Base1 {
+    int val1;
+}
+
+class Der1 extends Base1 {
+    int get1() {
+        return val1;
+    }
+}
+
+{
+}

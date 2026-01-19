@@ -1,0 +1,33 @@
+// Description:
+//    Déclaration entrelacée de champs et de méthodes.
+//    Selon la grammaire : class_body -> (decl_method | decl_field)*
+//    L'ordre n'est pas imposé syntaxiquement.
+//
+// Resultats:
+//    Succès syntax attendu.
+
+//
+// Historique:
+//    Cree le 17/01/2026
+
+class A {
+    // 1. Un champ
+    int x;
+
+    // 2. Une méthode
+    void setX(int val) {
+        this.x = val;
+    }
+
+
+    int y;
+
+    void setY(int val) {
+        this.y = val;
+    }
+}
+
+{
+    A a = new A();
+    println("Si ce message s'affiche, le parsing a réussi.");
+}

@@ -1,0 +1,23 @@
+// Description:
+//    Syntaxe de cast invalide .
+//
+// Resultats:
+//    Erreur syntaxique attendue sur le mot clé 'int'.
+//
+// Historique:
+//    Cree le 17/01/2026
+
+class A {
+    float f = 5.6;
+
+    int getInt() {
+        // Correct : return (int) (f);
+        // ERREUR ICI :
+        return int(f);
+    }
+}
+
+{
+    A a = new A();
+    println(a.getInt());
+}

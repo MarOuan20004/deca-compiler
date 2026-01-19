@@ -1,8 +1,0 @@
-; start main program
-; Main program
-; Variables declarations:
-; Beginning of main instructions:
-	WSTR "unique"
-	WNL
-	HALT
-; end main program

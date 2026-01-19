@@ -1,0 +1,21 @@
+// Description:
+//    Tentative de cast invalide (Chat -> Chien).
+//    Contextuellement valide car ce sont deux animaux, mais faux à l'exécution.
+//
+// Resultats:
+//    Compilation : OK
+//    Execution : Error: Invalid cast
+//
+// Historique:
+//    cree le 18/01/2026
+
+class Animal {}
+class Chien extends Animal {}
+class Chat extends Animal {}
+
+{
+    Animal a = new Chat();
+    Chien c;
+
+    c = (Chien) (a);
+}

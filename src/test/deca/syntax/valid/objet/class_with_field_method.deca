@@ -1,0 +1,19 @@
+// Description:
+//    Classe avec champ et methode 8.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class C8 {
+    int field8;
+    
+    int meth8() {
+        return field8;
+    }
+}
+
+{
+}

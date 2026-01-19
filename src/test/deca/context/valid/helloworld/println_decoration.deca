@@ -1,0 +1,12 @@
+// Description:
+//    Impression avec decoration simple et echappement valide.
+//
+// Resultats:
+//    Passe la verification contextuelle.
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    println("*** ok ***");
+}

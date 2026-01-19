@@ -19,7 +19,15 @@ public class InlinePortion extends AbstractLine {
     
     @Override
     void display(PrintStream s) {
-        s.println(asmCode);
+        for (String line : asmCode.split("\n")) {
+            if (line.trim().isEmpty()) {
+                s.println();
+            } else if (line.startsWith(" ") || line.startsWith("\t")) {
+                s.println(line);
+            } else {
+                s.println("\t" + line);
+            }
+        }
     }
 
 }

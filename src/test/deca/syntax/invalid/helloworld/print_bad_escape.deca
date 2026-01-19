@@ -1,0 +1,12 @@
+// Description:
+//    println avec sequence d'echappement invalide.
+//
+// Resultats:
+//    Erreur syntaxique attendue (escape inconnue).
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    println("bad\q");
+}

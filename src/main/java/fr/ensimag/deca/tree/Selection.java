@@ -54,18 +54,41 @@ public class Selection extends AbstractLValue {
         FieldDefinition fieldDef = (FieldDefinition) definition;
 
         if (fieldDef.getVisibility() == Visibility.PROTECTED) {
-            if (currentClass == null) {
-                throw new ContextualError("Protected field isn't accessible ",field.getLocation());
-            }
+            // Règle 3.66
+            // Check accessibility: protected field can be accessed if:
+            // Check if currentClass is field's class or subclass
+            // Check if the operand's type is the field's class or a subclass
             boolean accessible = false;
-            ClassDefinition c = currentClass;
-            while (c != null) {
-                if (c == fieldDef.getContainingClass()) {
-                    accessible = true;
-                    break;
+            
+            // Check if we're inside the class hierarchy
+            if (currentClass != null) {
+                ClassDefinition c = currentClass;
+                while (c != null) {
+                    if (c == fieldDef.getContainingClass()) {
+                        accessible = true;
+                        break;
+                    }
+                    c = c.getSuperClass();
                 }
-                c = c.getSuperClass();
             }
+            accessible = false;
+            
+            // Check if the operand's type is a subclass of the field's containing class
+            if (!accessible && operandType.isClass()) {
+                ClassType operandClassType = (ClassType) operandType;
+                ClassDefinition operandClass = operandClassType.getDefinition();
+                
+                // Check if operandClass is fieldClass or a subclass of fieldClass
+                ClassDefinition c = operandClass;
+                while (c != null) {
+                    if (c == currentClass) {
+                        accessible = true;
+                        break;
+                    }
+                    c = c.getSuperClass();
+                }
+            }
+            
             if (!accessible) {
                 throw new ContextualError("Protected field isn't accessible ",field.getLocation());
             }
@@ -99,35 +122,26 @@ public class Selection extends AbstractLValue {
     }
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {
-        // 1. Évaluer l'opérande (l'objet)
-        operand.codeGenExpr(compiler, r);
-        
+        //  Évaluer l'opérande
+        operand.codeGenExpr(compiler, r);        
         // Check if null
         compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.CMP(new fr.ensimag.ima.pseudocode.NullOperand(), r));
         compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BEQ(new fr.ensimag.ima.pseudocode.Label("dereference_null")));
-
-        // 2. Récupérer la définition du champ pour avoir son offset
+        // Charger la valeur du champ
         FieldDefinition fieldDef = (FieldDefinition) field.getDefinition();
-        int offset = fieldDef.getIndex();
-        
-        // 3. Charger la valeur du champ
+        int offset = fieldDef.getIndex();        
         compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.LOAD(new fr.ensimag.ima.pseudocode.RegisterOffset(offset, r), r));
     }
 
     protected void codeGenAssign(DecacCompiler compiler, GPRegister valueReg) {
-        // 1. Évaluer l'opérande (l'objet)
+        //  Évaluer l'opérande 
         GPRegister objectReg = compiler.getRegisterManager().allocateRegister();
         operand.codeGenExpr(compiler, objectReg);
-        
-        // Check if null
         compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.CMP(new fr.ensimag.ima.pseudocode.NullOperand(), objectReg));
         compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.BEQ(new fr.ensimag.ima.pseudocode.Label("dereference_null")));
-
-        // 2. Récupérer la définition du champ pour avoir son offset
+        //  Stocker la valeur dans le champ
         FieldDefinition fieldDef = (FieldDefinition) field.getDefinition();
-        int offset = fieldDef.getIndex();
-        
-        // 3. Stocker la valeur dans le champ : Mem[obj + offset] = valueReg
+        int offset = fieldDef.getIndex();       
         compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.STORE(valueReg, new fr.ensimag.ima.pseudocode.RegisterOffset(offset, objectReg)));
         
         compiler.getRegisterManager().freeRegister(objectReg);

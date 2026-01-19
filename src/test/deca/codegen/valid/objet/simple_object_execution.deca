@@ -1,0 +1,23 @@
+// Description:
+//    Test execution objet 16.
+//
+// Resultats:
+//    Affiche 16.
+//
+// Historique:
+//    cree le 16/01/2026
+
+class T16 {
+    int val16;
+    
+    int get() {
+        return val16;
+    }
+}
+
+{
+    T16 t;
+    t = new T16();
+    t.val16 = 16;
+    println(t.get());
+}

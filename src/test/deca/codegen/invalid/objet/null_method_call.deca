@@ -1,0 +1,21 @@
+// Description:
+//    Appel d'une méthode sur un objet null.
+//
+// Resultats:
+//    Compilation : OK
+//    Execution : Erreur runtime (Déréférencement de null)
+//    Message attendu : "Error: null dereference"
+//
+// Historique:
+//    cree le 18/01/2026
+
+class A {
+    void m() {
+        println("Je ne devrais pas m'afficher");
+    }
+}
+
+{
+    A a;
+    a.m();
+}

@@ -1,0 +1,13 @@
+// Description:
+//    Affichage d'une chaine de caracteres.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    println("Hello World");
+}
+

@@ -1,0 +1,13 @@
+// Description:
+//    Null affecte a type primitif.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+{
+    int x;
+    x = null;
+}

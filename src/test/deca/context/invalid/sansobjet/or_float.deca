@@ -1,0 +1,18 @@
+// Description:
+//    Operateur OR sur flottants interdit.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    float a;
+    float b;
+    boolean res;
+    a = 3.5;
+    b = 2.5;
+    res = a || b;
+}
+

@@ -1,0 +1,15 @@
+// Description:
+//    Champ sans point-virgule.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Point {
+    int x
+}
+
+{
+}

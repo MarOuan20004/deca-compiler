@@ -1,0 +1,13 @@
+// Description:
+//    Chaine de caracteres non fermee.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    println("Hello);
+}
+

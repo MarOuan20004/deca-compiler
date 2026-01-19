@@ -1,0 +1,12 @@
+// Description:
+//    println avec guillemets mal equilibres apres une citation interne.
+//
+// Resultats:
+//    Erreur syntaxique attendue (chaine non terminee).
+//
+// Historique:
+//    cree le 17/01/2026
+
+{
+    println("début "fin");
+}

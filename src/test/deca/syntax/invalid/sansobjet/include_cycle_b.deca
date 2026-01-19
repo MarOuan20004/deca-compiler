@@ -1,0 +1,11 @@
+// Description:
+//    Second fichier d'un cycle d'includes.
+//
+// Resultats:
+//    Erreur d'inclusion circulaire attendue.
+//
+// Historique:
+//    cree le 06/01/2026
+
+#include "inca.deca"
+

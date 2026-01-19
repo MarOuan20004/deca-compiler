@@ -1,0 +1,18 @@
+// Description:
+//    Division par zero.
+//
+// Resultats:
+//    Erreur a l'execution attendue.
+//
+// Historique:
+//    cree le 13/01/2026
+
+{
+    int a;
+    int b;
+    int c;
+    a = 10;
+    b = 0;
+    c = a / b;
+}
+

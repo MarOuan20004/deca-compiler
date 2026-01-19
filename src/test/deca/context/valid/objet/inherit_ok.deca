@@ -1,0 +1,19 @@
+// Description:
+//    Heritage valide.
+//
+// Resultats:
+//    Passe la verification contextuelle.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Animal {
+    int age;
+}
+
+class Dog extends Animal {
+    float weight;
+}
+
+{
+}

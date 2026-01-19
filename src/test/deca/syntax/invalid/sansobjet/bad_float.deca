@@ -1,0 +1,14 @@
+// Description:
+//    Litteral flottant mal forme.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    float x;
+    x = 3..14;
+}
+

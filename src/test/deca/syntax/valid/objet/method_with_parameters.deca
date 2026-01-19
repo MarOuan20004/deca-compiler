@@ -1,0 +1,17 @@
+// Description:
+//    Methode avec parametres 2.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Comp2 {
+    int calc2(int a, int b) {
+        return a + b;
+    }
+}
+
+{
+}

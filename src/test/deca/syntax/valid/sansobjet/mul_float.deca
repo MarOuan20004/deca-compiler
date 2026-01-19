@@ -1,0 +1,18 @@
+// Description:
+//    Multiplication de deux flottants.
+//
+// Resultats:
+//    test_synt accepte; aucune erreur.
+//
+// Historique:
+//    cree le 07/01/2026
+
+{
+    float x;
+    float y;
+    float prod;
+    x = 2.5;
+    y = 4.0;
+    prod = x * y;
+}
+

@@ -51,54 +51,38 @@ public class Assign extends AbstractBinaryExpr {
     }
 
     @Override
-public void codeGenInst(DecacCompiler compiler) {
-    // 1. Générer le code de l'expression de droite (RHS)
-    GPRegister rightReg = compiler.getRegisterManager().allocateRegister();
-    getRightOperand().codeGenExpr(compiler, rightReg);
-
-    // 2. Identifier le type de l'opérande de gauche (LHS)
-    if (getLeftOperand() instanceof AbstractIdentifier) {
-        AbstractIdentifier ident = (AbstractIdentifier) getLeftOperand();
-        Definition def = ident.getDefinition();
-
-        if (def.isField()) {
-            // Cas : x = ... (implicitement this.x = ...) dans une méthode
-            FieldDefinition fieldDef = (FieldDefinition) def;
-            GPRegister objectReg = compiler.getRegisterManager().allocateRegister();
-
-            // On charge 'this' (toujours en -2(LB))
-            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), objectReg));
-
-            // On stocke la valeur dans le champ : Mem[this + index] = val
-            compiler.addInstruction(new STORE(rightReg, new RegisterOffset(fieldDef.getIndex(), objectReg)));
-
-            compiler.getRegisterManager().freeRegister(objectReg);
-        } else {
-            // Cas : Variable locale ou Paramètre ou Variable Globale
-            // getOperand() renvoie l'adresse (ex: -3(LB), 1(GB)...)
-            // Note: definition doit être VariableDefinition ou ParamDefinition
-            if (def instanceof ParamDefinition){
-                ParamDefinition paramDef = (ParamDefinition) def;
-                DAddr addr = paramDef.getOperand(); 
-                compiler.addInstruction(new STORE(rightReg, addr));
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister r) {
+        getRightOperand().codeGenExpr(compiler, r);
+        if (getLeftOperand() instanceof AbstractIdentifier) {
+            AbstractIdentifier ident = (AbstractIdentifier) getLeftOperand();
+            Definition def = ident.getDefinition();
+            if (def.isField()) {
+                FieldDefinition fieldDef = (FieldDefinition) def;
+                GPRegister objectReg = compiler.getRegisterManager().allocateRegister();
+                if (objectReg != null) {
+                    // On charge this
+                    compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), objectReg));
+                    // On stocke la valeur dans le champ : Mem[this + index] = val
+                    compiler.addInstruction(new STORE(r, new RegisterOffset(fieldDef.getIndex(), objectReg)));
+                    compiler.getRegisterManager().freeRegister(objectReg);
                 }
-            else if (def instanceof fr.ensimag.deca.context.VariableDefinition){
-                fr.ensimag.deca.context.VariableDefinition varDef = (fr.ensimag.deca.context.VariableDefinition) def;
-                DAddr addr = varDef.getOperand(); 
-                compiler.addInstruction(new STORE(rightReg, addr));
+            } else {
+                if (def instanceof ParamDefinition){
+                    ParamDefinition paramDef = (ParamDefinition) def;
+                    DAddr addr = paramDef.getOperand(); 
+                    compiler.addInstruction(new STORE(r, addr));
+                }
+                else if (def instanceof fr.ensimag.deca.context.VariableDefinition){
+                    fr.ensimag.deca.context.VariableDefinition varDef = (fr.ensimag.deca.context.VariableDefinition) def;
+                    DAddr addr = varDef.getOperand(); 
+                    compiler.addInstruction(new STORE(r, addr));
+                }
             }
-            
+
+        } else if (getLeftOperand() instanceof Selection) {
+            ((Selection) getLeftOperand()).codeGenAssign(compiler, r);
         }
 
-    } else if (getLeftOperand() instanceof Selection) {
-        // Cas : obj.x = ...
-        // Tu dois appeler une méthode spécifique dans Selection pour gérer l'assignation
-        // car il faut évaluer 'obj', vérifier qu'il n'est pas null, puis faire le STORE.
-        ((Selection) getLeftOperand()).codeGenAssign(compiler, rightReg);
     }
-
-    // 3. Libération
-    compiler.getRegisterManager().freeRegister(rightReg);
-}
 
 }

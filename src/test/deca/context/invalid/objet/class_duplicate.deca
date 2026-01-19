@@ -1,0 +1,19 @@
+// Description:
+//    Declaration de classe en double.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Point {
+    int x;
+}
+
+class Point {
+    int y;
+}
+
+{
+}

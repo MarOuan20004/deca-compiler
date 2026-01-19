@@ -1,0 +1,23 @@
+// Description:
+//    Override valide.
+//
+// Resultats:
+//    Passe la verification contextuelle.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Base {
+    int getValue() {
+        return 10;
+    }
+}
+
+class Derived extends Base {
+    int getValue() {
+        return 20;
+    }
+}
+
+{
+}

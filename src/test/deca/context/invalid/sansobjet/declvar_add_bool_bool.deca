@@ -1,0 +1,15 @@
+// Description:
+//    Addition de booleens dans une declaration.
+//
+// Resultats:
+//    Erreur contextuelle attendue (types booleens dans une addition).
+//
+// Historique:
+//    cree le 16/01/2026
+
+{
+    boolean a;
+    boolean b;
+    int x;
+    x = a + b;
+}

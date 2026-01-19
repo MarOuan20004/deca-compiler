@@ -1,0 +1,16 @@
+// Description:
+//    Conversion implicite int->float dans affectation.
+//
+// Resultats:
+//    Passe la verification contextuelle.
+//
+// Historique:
+//    cree le 10/01/2026
+
+{
+    int i;
+    float f;
+    i = 5;
+    f = i;
+}
+

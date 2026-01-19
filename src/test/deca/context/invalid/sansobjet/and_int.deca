@@ -1,0 +1,18 @@
+// Description:
+//    Operateur AND sur entiers interdit.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//
+// Historique:
+//    cree le 09/01/2026
+
+{
+    int a;
+    int b;
+    boolean res;
+    a = 5;
+    b = 10;
+    res = a && b;
+}
+

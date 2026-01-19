@@ -1,0 +1,21 @@
+// Description:
+//    Appel de methode avec this.
+//
+// Resultats:
+//    test_synt accepte.
+//
+// Historique:
+//    cree le 14/01/2026
+
+class Counter {
+    int inc(int x) {
+        return this.next(x);
+    }
+    
+    int next(int x) {
+        return x + 1;
+    }
+}
+
+{
+}

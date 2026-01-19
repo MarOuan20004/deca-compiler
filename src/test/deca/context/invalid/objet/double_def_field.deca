@@ -1,0 +1,27 @@
+// Description:
+//    Tentative de double déclaration d'un champ dans la même classe.
+//
+// Resultats:
+//    Erreur contextuelle attendue.
+//    Ligne 15 : L'identifiant 'x' est déjà défini dans l'environnement de la classe A.
+//
+// Historique:
+//    cree le 15/01/2026
+
+
+class A {
+    // Première définition : OK
+    int x;
+
+    void uneMethode() {
+    }
+
+    // ERREUR ICI : 'x' existe déjà dans la classe A.
+    // Le changement de type (boolean vs int) ou de visibilité ne change rien :
+    // le nom est pris.
+    boolean x;
+}
+
+{
+    A a = new A();
+}

@@ -1,0 +1,16 @@
+// Description:
+//    Boucle while sans accolades.
+//
+// Resultats:
+//    Erreur syntaxique attendue.
+//
+// Historique:
+//    cree le 08/01/2026
+
+{
+    int i;
+    i = 0;
+    while (i < 5)
+        i = i + 1;
+}
+

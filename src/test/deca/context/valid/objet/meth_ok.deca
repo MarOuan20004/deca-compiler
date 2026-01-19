@@ -1,0 +1,17 @@
+// Description:
+//    Methode bien definie.
+//
+// Resultats:
+//    Passe la verification contextuelle.
+//
+// Historique:
+//    cree le 15/01/2026
+
+class Calc {
+    int add(int a, int b) {
+        return a + b;
+    }
+}
+
+{
+}

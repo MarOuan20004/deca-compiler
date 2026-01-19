@@ -5,6 +5,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 
 /**
@@ -61,7 +63,8 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
             if (field.getInitialization() != null) {
                 field.codeGenDeclField(compiler, field.getFieldName().getFieldDefinition().getIndex());
             }
-        }
+/*             compiler.addInstruction(new BOV(new Label("heap_overflow")));
+ */        }
         compiler.addInstruction(new RTS());
     }
 
