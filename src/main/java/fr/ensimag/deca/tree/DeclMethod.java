@@ -98,6 +98,9 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     public void decompile(IndentPrintStream s) {
+        if (visibility == Visibility.PROTECTED) {
+            s.print("protected ");
+        }
         returnType.decompile(s);
         s.print(" ");
         methodName.decompile(s);

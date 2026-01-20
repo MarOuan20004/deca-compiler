@@ -1,0 +1,16 @@
+#include "Math.decah"
+
+void main() {
+    int[][] m = _unite(3);
+    int i = 0;
+    while (i < 3) {
+        int j = 0;
+        while (j < 3) {
+            print(getElem(m, i, j));
+            print(" ");
+            j = j + 1;
+        }
+        println();
+        i = i + 1;
+    }
+}

@@ -1,0 +1,49 @@
+#include "Math.decah"
+
+{
+    int[][] m1 = _unite(3);
+    int[][] m2 = _matriceConstante(3, 3, 2);
+    int[][] m3 = _addition(m1, m2);
+    int[][] A;
+    int[][] B;
+    int[][] C;
+    int[][] T;
+    
+    int val = getElem(m3, 0, 0); // should be 1 + 2 = 3
+    if (val == 3) {
+        println("Matrix addition test passed");
+    } else {
+        println("Matrix addition test failed: ", val);
+    }
+
+    // Test product
+    A = new int[2][3];
+    B = new int[3][2];
+    setElem(A, 0, 0, 1); setElem(A, 0, 1, 2); setElem(A, 0, 2, 3);
+    setElem(A, 1, 0, 4); setElem(A, 1, 1, 5); setElem(A, 1, 2, 6);
+    
+    setElem(B, 0, 0, 7); setElem(B, 0, 1, 8);
+    setElem(B, 1, 0, 9); setElem(B, 1, 1, 10);
+    setElem(B, 2, 0, 11); setElem(B, 2, 1, 12);
+    
+    C = _produit(A, B);
+    // C[0][0] = 1*7 + 2*9 + 3*11 = 7 + 18 + 33 = 58
+    val = getElem(C, 0, 0);
+    if (val == 58) {
+        println("Matrix product test passed");
+    } else {
+        println("Matrix product test failed: ", val);
+    }
+
+    // Test transpose
+    A = new int[2][3];
+    setElem(A, 0, 0, 1); setElem(A, 0, 1, 2); setElem(A, 0, 2, 3);
+    setElem(A, 1, 0, 4); setElem(A, 1, 1, 5); setElem(A, 1, 2, 6);
+    
+    T = _transposee(A);
+    if (getNLines(T) == 3 && getNCols(T) == 2 && getElem(T, 2, 1) == 6) {
+        println("Matrix transpose test passed");
+    } else {
+        println("Matrix transpose test failed");
+    }
+}

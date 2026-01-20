@@ -20,8 +20,9 @@ import fr.ensimag.ima.pseudocode.RegisterOffset;
  * @date 01/01/2026
  */
 public class EnvironmentType {
+    private final DecacCompiler compiler;
     public EnvironmentType(DecacCompiler compiler) {
-        
+        this.compiler = compiler;
         envTypes = new HashMap<Symbol, TypeDefinition>();
         
         Symbol intSymb = compiler.createSymbol("int");
@@ -81,7 +82,20 @@ public class EnvironmentType {
     private final Map<Symbol, TypeDefinition> envTypes;
 
     public TypeDefinition defOfType(Symbol s) {
-        return envTypes.get(s);
+        TypeDefinition def = envTypes.get(s);
+        if (def == null && s.getName().endsWith("[]")) {
+            String name = s.getName();
+            String elementTypeName = name.substring(0, name.length() - 2);
+            Symbol elementSymbol = compiler.createSymbol(elementTypeName);
+            TypeDefinition elemDef = defOfType(elementSymbol);
+            if (elemDef != null) {
+                TabType tabType = new TabType(s, elemDef.getType());
+                def = new TypeDefinition(tabType, Location.BUILTIN);
+                envTypes.put(s, def);
+                return def;
+            }
+        }
+        return def;
     }
 
     public final VoidType    VOID;

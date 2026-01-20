@@ -176,7 +176,12 @@ public class Identifier extends AbstractIdentifier {
         ExpDefinition def = localEnv.get(this.getName());
 
         if (def == null) {
-            // Pas dans l'environnement local, on cherche dans les champs de la classe
+            // Pas dans l'environnement local, on cherche dans l'environnement global (fonctions)
+            def = compiler.globalEnvExp.get(this.getName());
+        }
+
+        if (def == null) {
+            // Pas dans l'environnement global, on cherche dans les champs de la classe
             if (currentClass == null) {
                 throw new ContextualError("Variable '" + this.getName().getName() + "' non déclarée",
                                            this.getLocation());
@@ -200,8 +205,8 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
         TypeDefinition def = compiler.environmentType.defOfType(name);
-        if (def.getType() == null) {
-            throw new ContextualError("Unknown type", getLocation());
+        if (def == null || def.getType() == null) {
+            throw new ContextualError("Unknown type: " + name.getName(), getLocation());
         }
         setDefinition(def);
         setType(def.getType());

@@ -29,11 +29,11 @@ public class Return extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType) throws ContextualError {
         
-        // Verifier que nous ne sommes pas dans le Main 
-        if (currentClass == null) {
-             throw new ContextualError("Return can't be used in main program.", getLocation());
+        // Verifier que nous ne sommes pas dans le Main ou une fonction void
+        if (returnType == null || returnType.isVoid()) {
+             throw new ContextualError("Return with value can't be used in main program or void function.", getLocation());
         }
-        exp.verifyRValue(compiler, localEnv, currentClass, returnType);
+        this.exp = exp.verifyRValue(compiler, localEnv, currentClass, returnType);
     }
 
     @Override

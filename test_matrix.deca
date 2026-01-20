@@ -1,0 +1,6 @@
+#include "Math.decah"
+{
+    int[][] M = _unite(3);
+    int val = getElem(M, 1, 1);
+    println(val);
+}

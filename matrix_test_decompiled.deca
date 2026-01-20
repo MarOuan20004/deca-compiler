@@ -1,0 +1,128 @@
+#include "Math.decah"
+
+{
+    Math m = new Math();
+    int[][] A;
+    int[][] B;
+    int[][] C;
+    int[] diag;
+    int res;
+    boolean b;
+
+    println("--- Full Test Math Class (15 functions) ---");
+
+    // 1. matriceNulle
+    println("1. matriceNulle(2, 2):");
+    A = m.matriceNulle(2, 2);
+    m.printMatrice(A);
+
+    // 2. matriceUn
+    println("2. matriceUn(2, 2):");
+    B = m.matriceUn(2, 2);
+    m.printMatrice(B);
+
+    // 3. matriceConstante
+    println("3. matriceConstante(2, 2, 5):");
+    C = m.matriceConstante(2, 2, 5);
+    m.printMatrice(C);
+
+    // 4. unite
+    println("4. unite(3):");
+    A = m.unite(3);
+    m.printMatrice(A);
+
+    // 5. transposee
+    println("5. transposee of 3x2 constant matrix:");
+    B = m.matriceConstante(3, 2, 7);
+    setElem(B, 0, 1, 9);
+    m.printMatrice(B);
+    println("Transposee:");
+    C = m.transposee(B);
+    m.printMatrice(C);
+
+    // 6. addition
+    println("6. addition of two 2x2 ones matrices (should be 2 everywhere):");
+    A = m.matriceUn(2, 2);
+    B = m.matriceUn(2, 2);
+    C = m.addition(A, B);
+    m.printMatrice(C);
+
+    // 7. scalaire
+    println("7. scalaire (2 * ones(2,2)):");
+    C = m.scalaire(A, 2);
+    m.printMatrice(C);
+
+    // 8. produit
+    println("8. produit (unite(3) * [[1,2],[3,4],[5,6]]):");
+    A = m.unite(3);
+    B = m.matriceNulle(3, 2);
+    setElem(B, 0, 0, 1); setElem(B, 0, 1, 2);
+    setElem(B, 1, 0, 3); setElem(B, 1, 1, 4);
+    setElem(B, 2, 0, 5); setElem(B, 2, 1, 6);
+    C = m.produit(A, B);
+    m.printMatrice(C);
+
+    // 9. matriceDiagonale
+    println("9. matriceDiagonale([1, 2, 3]):");
+    diag = new int[3];
+    setElem(diag, 0, 0, 1);
+    setElem(diag, 1, 0, 2);
+    setElem(diag, 2, 0, 3);
+    A = m.matriceDiagonale(diag);
+    m.printMatrice(A);
+
+    // 10. egale
+    println("10. egale:");
+    A = m.matriceUn(2, 2);
+    B = m.matriceUn(2, 2);
+    if (m.egale(A, B)) { println("  egale(ones, ones) is true (OK)"); }
+    setElem(B, 0, 0, 0);
+    if (!m.egale(A, B)) { println("  egale(ones, modified) is false (OK)"); }
+
+    // 11. estSymetrique
+    println("11. estSymetrique:");
+    A = m.unite(3);
+    m.printMatrice(A);
+    if (m.estSymetrique(A)) { println("  is symmetric (OK)"); }
+    setElem(A, 0, 1, 5);
+    m.printMatrice(A);
+    if (!m.estSymetrique(A)) { println("  is not symmetric (OK)"); }
+
+    // 12. estAntisymetrique
+    println("12. estAntisymetrique:");
+    A = m.matriceNulle(2, 2);
+    setElem(A, 0, 1, 1);
+    setElem(A, 1, 0, -1);
+    m.printMatrice(A);
+    if (m.estAntisymetrique(A)) { println("  is antisym (OK)"); }
+
+    // 13. trace
+    println("13. trace(unite(3)):");
+    A = m.unite(3);
+    m.printMatrice(A);
+    res = m.trace(A);
+    println("  Trace: ", res, " (Expected 3)");
+
+    // 14. estNilpotente
+    println("14. estNilpotente:");
+    A = m.matriceNulle(2, 2);
+    setElem(A, 0, 1, 1); // [[0, 1], [0, 0]]^2 = 0
+    m.printMatrice(A);
+    if (m.estNilpotente(A, 2)) { println("  is nilpotent index 2 (OK)"); }
+
+    // 16. triangulaireSup
+    println("16. triangulaireSup(ones(3,3)):");
+    A = m.matriceUn(3, 3);
+    C = m.triangulaireSup(A);
+    m.printMatrice(C);
+
+    // 17. triangulaireInf
+    println("17. triangulaireInf(ones(3,3)):");
+    C = m.triangulaireInf(A);
+    m.printMatrice(C);
+
+    // 15. printMatrice
+    println("15. printMatrice already tested above (OK)");
+
+    println("--- End of Full Test ---");
+}

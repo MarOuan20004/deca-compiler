@@ -1,0 +1,74 @@
+; start main program
+; Construction of methods tables
+method_table_object:
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD Code.Object.equals, R0
+	STORE R0, 2(GB)
+; Main program
+	TSTO #5
+	BOV stack_overflow_error
+	ADDSP #3
+; Variables Declarations 
+	STORE R0, 3(GB)
+; Beginning of main instructions:
+	WSTR "Veuillez entrer votre age (entier) :"
+	WNL
+	RINT
+	BOV io_error
+	LOAD R1, R2
+	STORE R2, 3(GB)
+	WSTR "Vous avez declare avoir "
+	LOAD 3(GB), R2
+	LOAD R2, R1
+	WINT
+	WSTR " ans."
+	WNL
+	HALT
+; Global functions code generation
+; Gestion des erreurs
+stack_overflow_error:
+	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+division_by_zero:
+	WSTR "Error: Division by zero"
+	WNL
+	ERROR
+heap_overflow:
+	WSTR "Error: Heap Overflow"
+	WNL
+	ERROR
+dereference_null:
+	WSTR "Error: Dereference null"
+	WNL
+	ERROR
+float_arithmetic_overflow:
+	WSTR "Error: float_Arithmetic overflow"
+	WNL
+	ERROR
+no_return_error:
+	WSTR "Error: No return value "
+	WNL
+	ERROR
+index_out_of_bounds:
+	WSTR "Error: Index out of bounds"
+	WNL
+	ERROR
+; Classes code generation
+Code.Object.equals:
+	LOAD -2(LB), R0
+	LOAD -3(LB), R1
+	CMP R0, R1
+	BEQ equals_true
+	LOAD #0, R0
+	BRA equals_end
+equals_true:
+	LOAD #1, R0
+equals_end:
+	RTS
+; end main program

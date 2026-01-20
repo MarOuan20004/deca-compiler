@@ -18,6 +18,7 @@ public class ManualTestInitialGencode {
         ListInst linst = new ListInst();
         AbstractProgram source =
             new Program(
+                new ListDeclFunction(),
                 new ListDeclClass(),
                 new Main(new ListDeclVar(),linst));
         ListExpr lexp1 = new ListExpr(), lexp2 = new ListExpr();

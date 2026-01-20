@@ -60,6 +60,10 @@ public abstract class Definition {
         return false;
     }
 
+    public boolean isFunction() {
+        return false;
+    }
+
     /**
      * Return the same object, as type MethodDefinition, if possible. Throws
      * ContextualError(errorMessage, l) otherwise.

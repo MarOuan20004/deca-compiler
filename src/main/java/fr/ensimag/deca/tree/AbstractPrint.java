@@ -46,6 +46,13 @@ public abstract class AbstractPrint extends AbstractInst {
             a.setType(t);
         }
     }
+    public int maxTemp() {
+        int max = 0;
+        for (AbstractExpr a : getArguments().getList()) {
+            max = Math.max(max, a.maxTemp());
+        }
+        return max;
+    }
 
 
     @Override

@@ -44,11 +44,16 @@ public class CompilerOptions {
         return Collections.unmodifiableList(sourceFiles);
     }
 
+    public boolean getNoCheck() {
+        return noCheck;
+    }
+
     private int debug = 0;
     private boolean parallel = false;
     private boolean printBanner = false;
     private boolean parseOnly = false;
     private boolean verification = false;
+    private boolean noCheck = false;
     private List<File> sourceFiles = new ArrayList<File>();
 
     
@@ -66,6 +71,8 @@ public class CompilerOptions {
                 parallel = true;
             } else if ("-b".equals(arg)) {
                 printBanner = true;
+            } else if ("-n".equals(arg)) {
+                noCheck = true;
             } else if ("-r".equals(arg)) {
                 if (i + 1 >= args.length) {
                     throw new CLIException("Option -r nécessite un argument");

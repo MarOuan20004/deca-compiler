@@ -1,0 +1,6 @@
+#include "Math.decah"
+{
+    Math m = new Math();
+    int[][] A = m.matriceNulle(2, 2);
+    m.printMatrice(A);
+}

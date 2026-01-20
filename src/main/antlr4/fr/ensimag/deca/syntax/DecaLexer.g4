@@ -17,6 +17,9 @@ DUMMY_TOKEN: .; // A FAIRE : Règle bidon qui reconnait tous les caractères.
  */
 
 
+// inclusion de fichiers
+INCLUDE : '#include' (' ')* '"' ( 'a'..'z' | 'A'..'Z' | '0'..'9' | '.' | '_' | '-' )+ '"' { doInclude(getText()); } ;
+
 //Mots-clés :
 TRUE : 'true';
 FALSE : 'false';
@@ -113,10 +116,8 @@ OPARENT: '(';
 CPARENT: ')';
 SEMI : ';';
 CBRACE :'}';
-
-// inclusion de fichiers
-fragment FILENAME : (LETTER | DIGIT | '.' | '_' | '-')+ ;
-INCLUDE : '#include' (' ')* '"' FILENAME '"' { doInclude(getText()); } ;
+LBRACKET : '[';
+RBRACKET : ']';
 
 
 

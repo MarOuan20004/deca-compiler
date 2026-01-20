@@ -1,0 +1,6026 @@
+; start main program
+; Construction of methods tables
+method_table_object:
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD Code.Object.equals, R0
+	STORE R0, 2(GB)
+; Code de la table des méthodes de la classe Math
+	LEA 1(GB), R0
+	STORE R0, 3(GB)
+	LOAD Code.Object.equals, R0
+	STORE R0, 4(GB)
+	LOAD Code.Math.abs, R0
+	STORE R0, 5(GB)
+	LOAD Code.Math.sqrt, R0
+	STORE R0, 6(GB)
+	LOAD Code.Math.ulp, R0
+	STORE R0, 7(GB)
+	LOAD Code.Math.uniteFloat, R0
+	STORE R0, 8(GB)
+	LOAD Code.Math.matriceNulleFloat, R0
+	STORE R0, 9(GB)
+	LOAD Code.Math.matriceConstanteFloat, R0
+	STORE R0, 10(GB)
+	LOAD Code.Math.matriceUnFloat, R0
+	STORE R0, 11(GB)
+	LOAD Code.Math.transposeeFloat, R0
+	STORE R0, 12(GB)
+	LOAD Code.Math.additionFloat, R0
+	STORE R0, 13(GB)
+	LOAD Code.Math.scalaireFloat, R0
+	STORE R0, 14(GB)
+	LOAD Code.Math.produitFloat, R0
+	STORE R0, 15(GB)
+	LOAD Code.Math.matriceDiagonaleFloat, R0
+	STORE R0, 16(GB)
+	LOAD Code.Math.egaleFloat, R0
+	STORE R0, 17(GB)
+	LOAD Code.Math.estSymetriqueFloat, R0
+	STORE R0, 18(GB)
+	LOAD Code.Math.estAntisymetriqueFloat, R0
+	STORE R0, 19(GB)
+	LOAD Code.Math.traceFloat, R0
+	STORE R0, 20(GB)
+	LOAD Code.Math.estNilpotenteFloat, R0
+	STORE R0, 21(GB)
+	LOAD Code.Math.triangulaireSupFloat, R0
+	STORE R0, 22(GB)
+	LOAD Code.Math.triangulaireInfFloat, R0
+	STORE R0, 23(GB)
+	LOAD Code.Math.copieFloat, R0
+	STORE R0, 24(GB)
+	LOAD Code.Math.determinant, R0
+	STORE R0, 25(GB)
+	LOAD Code.Math.inverse, R0
+	STORE R0, 26(GB)
+	LOAD Code.Math.printMatriceFloat, R0
+	STORE R0, 27(GB)
+; Main program
+	TSTO #30
+	BOV stack_overflow_error
+	ADDSP #29
+; Variables Declarations 
+	ADDSP #1
+	LOAD #3, R0
+	STORE R0, 0(SP)
+	BSR function._unite
+	SUBSP #1
+	LOAD R0, R0
+	STORE R0, 28(GB)
+	LOAD 28(GB), R0
+	CMP #null, R0
+	BEQ dereference_null
+	LOAD #1, R2
+	LOAD #1, R3
+	LOAD 0(R0), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R0), R4
+	CMP R4, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R0), R4
+	MUL R4, R2
+	ADD R3, R2
+	ADD #2, R2
+	LOAD 0(R0, R2), R0
+	STORE R0, 29(GB)
+; Beginning of main instructions:
+	LOAD 29(GB), R4
+	LOAD R4, R1
+	WINT
+	WNL
+	HALT
+; Global functions code generation
+function._unite:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #3
+; Variables Declarations 
+	LOAD -2(LB), R0
+	LOAD -2(LB), R4
+	PUSH R0
+	PUSH R4
+	MUL R4, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R4
+	POP R1
+	STORE R1, 0(R0)
+	STORE R4, 1(R0)
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	STORE R0, 8(LB)
+while_2050019814:
+	LOAD 7(LB), R4
+	LOAD -2(LB), R3
+	CMP R3, R4
+	BLT E_True6
+	LOAD #0, R4
+	BRA E_End7
+E_True6:
+	LOAD #1, R4
+E_End7:
+	BEQ while_end_2050019814
+	LOAD #0, R4
+	STORE R4, 8(LB)
+while_212921632:
+	LOAD 8(LB), R4
+	LOAD -2(LB), R3
+	CMP R3, R4
+	BLT E_True8
+	LOAD #0, R4
+	BRA E_End9
+E_True8:
+	LOAD #1, R4
+E_End9:
+	BEQ while_end_212921632
+	LOAD 7(LB), R4
+	LOAD 8(LB), R3
+	CMP R3, R4
+	BEQ E_True10
+	LOAD #0, R4
+	BRA E_End11
+E_True10:
+	LOAD #1, R4
+E_End11:
+	BEQ else_149047107
+	LOAD 6(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R3
+	LOAD 8(LB), R2
+	LOAD #1, R5
+	LOAD 0(R4), R6
+	CMP R6, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	CMP R6, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	MUL R6, R3
+	ADD R2, R3
+	ADD #2, R3
+	STORE R5, 0(R4, R3)
+	BRA end_if_149047107
+else_149047107:
+	LOAD 6(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD #0, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+end_if_149047107:
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_212921632
+while_end_212921632:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_2050019814
+while_end_2050019814:
+	LOAD 6(LB), R4
+	LOAD R4, R0
+	BRA fin.function._unite
+	BRA no_return_error
+fin.function._unite:
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._matriceNulle:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #3
+; Variables Declarations 
+	LOAD -2(LB), R0
+	LOAD -3(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	STORE R0, 8(LB)
+while_2114874018:
+	LOAD 7(LB), R6
+	LOAD -2(LB), R5
+	CMP R5, R6
+	BLT E_True16
+	LOAD #0, R6
+	BRA E_End17
+E_True16:
+	LOAD #1, R6
+E_End17:
+	BEQ while_end_2114874018
+	LOAD #0, R6
+	STORE R6, 8(LB)
+while_911312317:
+	LOAD 8(LB), R6
+	LOAD -3(LB), R5
+	CMP R5, R6
+	BLT E_True18
+	LOAD #0, R6
+	BRA E_End19
+E_True18:
+	LOAD #1, R6
+E_End19:
+	BEQ while_end_911312317
+	LOAD 6(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD #0, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_911312317
+while_end_911312317:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_2114874018
+while_end_2114874018:
+	LOAD 6(LB), R4
+	LOAD R4, R0
+	BRA fin.function._matriceNulle
+	BRA no_return_error
+fin.function._matriceNulle:
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._matriceConstante:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #3
+; Variables Declarations 
+	LOAD -2(LB), R0
+	LOAD -3(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	STORE R0, 8(LB)
+while_282828951:
+	LOAD 7(LB), R6
+	LOAD -2(LB), R5
+	CMP R5, R6
+	BLT E_True24
+	LOAD #0, R6
+	BRA E_End25
+E_True24:
+	LOAD #1, R6
+E_End25:
+	BEQ while_end_282828951
+	LOAD #0, R6
+	STORE R6, 8(LB)
+while_394721749:
+	LOAD 8(LB), R6
+	LOAD -3(LB), R5
+	CMP R5, R6
+	BLT E_True26
+	LOAD #0, R6
+	BRA E_End27
+E_True26:
+	LOAD #1, R6
+E_End27:
+	BEQ while_end_394721749
+	LOAD 6(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD -4(LB), R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_394721749
+while_end_394721749:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_282828951
+while_end_282828951:
+	LOAD 6(LB), R4
+	LOAD R4, R0
+	BRA fin.function._matriceConstante
+	BRA no_return_error
+fin.function._matriceConstante:
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._matriceUn:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #3
+; Variables Declarations 
+	LOAD -2(LB), R0
+	LOAD -3(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	STORE R0, 8(LB)
+while_1896294051:
+	LOAD 7(LB), R6
+	LOAD -2(LB), R5
+	CMP R5, R6
+	BLT E_True32
+	LOAD #0, R6
+	BRA E_End33
+E_True32:
+	LOAD #1, R6
+E_End33:
+	BEQ while_end_1896294051
+	LOAD #0, R6
+	STORE R6, 8(LB)
+while_1684015092:
+	LOAD 8(LB), R6
+	LOAD -3(LB), R5
+	CMP R5, R6
+	BLT E_True34
+	LOAD #0, R6
+	BRA E_End35
+E_True34:
+	LOAD #1, R6
+E_End35:
+	BEQ while_end_1684015092
+	LOAD 6(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD #1, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_1684015092
+while_end_1684015092:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_1896294051
+while_end_1896294051:
+	LOAD 6(LB), R4
+	LOAD R4, R0
+	BRA fin.function._matriceUn
+	BRA no_return_error
+fin.function._matriceUn:
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._transposee:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #12
+	BOV stack_overflow_error
+	ADDSP #6
+; Variables Declarations 
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 0(R6), R0
+	STORE R0, 6(LB)
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 7(LB)
+	LOAD 7(LB), R0
+	LOAD 6(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 8(LB)
+	LOAD #0, R0
+	STORE R0, 9(LB)
+	STORE R0, 10(LB)
+	STORE R0, 11(LB)
+while_789219251:
+	LOAD 9(LB), R6
+	LOAD 6(LB), R3
+	CMP R3, R6
+	BLT E_True40
+	LOAD #0, R6
+	BRA E_End41
+E_True40:
+	LOAD #1, R6
+E_End41:
+	BEQ while_end_789219251
+	LOAD #0, R6
+	STORE R6, 10(LB)
+while_832279283:
+	LOAD 10(LB), R6
+	LOAD 7(LB), R3
+	CMP R3, R6
+	BLT E_True42
+	LOAD #0, R6
+	BRA E_End43
+E_True42:
+	LOAD #1, R6
+E_End43:
+	BEQ while_end_832279283
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 9(LB), R3
+	LOAD 10(LB), R2
+	LOAD 0(R6), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R6, R3), R6
+	STORE R6, 11(LB)
+	LOAD 8(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 9(LB), R2
+	LOAD 11(LB), R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 10(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 10(LB)
+	BRA while_832279283
+while_end_832279283:
+	LOAD 9(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 9(LB)
+	BRA while_789219251
+while_end_789219251:
+	LOAD 8(LB), R4
+	LOAD R4, R0
+	BRA fin.function._transposee
+	BRA no_return_error
+fin.function._transposee:
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._addition:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R7
+	PUSH R6
+	TSTO #14
+	BOV stack_overflow_error
+	ADDSP #7
+; Variables Declarations 
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 0(R6), R0
+	STORE R0, 7(LB)
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 8(LB)
+	LOAD 7(LB), R0
+	LOAD 8(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 9(LB)
+	LOAD #0, R0
+	STORE R0, 10(LB)
+	STORE R0, 11(LB)
+	STORE R0, 12(LB)
+	STORE R0, 13(LB)
+while_282432134:
+	LOAD 10(LB), R6
+	LOAD 7(LB), R5
+	CMP R5, R6
+	BLT E_True48
+	LOAD #0, R6
+	BRA E_End49
+E_True48:
+	LOAD #1, R6
+E_End49:
+	BEQ while_end_282432134
+	LOAD #0, R6
+	STORE R6, 11(LB)
+while_266437232:
+	LOAD 11(LB), R6
+	LOAD 8(LB), R5
+	CMP R5, R6
+	BLT E_True50
+	LOAD #0, R6
+	BRA E_End51
+E_True50:
+	LOAD #1, R6
+E_End51:
+	BEQ while_end_266437232
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 11(LB), R2
+	LOAD 0(R6), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R6, R5), R6
+	STORE R6, 12(LB)
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R3
+	LOAD 11(LB), R2
+	LOAD 0(R6), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R6, R3), R6
+	STORE R6, 13(LB)
+	LOAD 9(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 11(LB), R2
+	LOAD 12(LB), R3
+	LOAD 13(LB), R7
+	ADD R7, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 11(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 11(LB)
+	BRA while_266437232
+while_end_266437232:
+	LOAD 10(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 10(LB)
+	BRA while_282432134
+while_end_282432134:
+	LOAD 9(LB), R4
+	LOAD R4, R0
+	BRA fin.function._addition
+	BRA no_return_error
+fin.function._addition:
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._scalaire:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R7
+	PUSH R6
+	TSTO #13
+	BOV stack_overflow_error
+	ADDSP #6
+; Variables Declarations 
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 0(R6), R0
+	STORE R0, 7(LB)
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 8(LB)
+	LOAD 7(LB), R0
+	LOAD 8(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 9(LB)
+	LOAD #0, R0
+	STORE R0, 10(LB)
+	STORE R0, 11(LB)
+	STORE R0, 12(LB)
+while_1832580921:
+	LOAD 10(LB), R6
+	LOAD 7(LB), R3
+	CMP R3, R6
+	BLT E_True56
+	LOAD #0, R6
+	BRA E_End57
+E_True56:
+	LOAD #1, R6
+E_End57:
+	BEQ while_end_1832580921
+	LOAD #0, R6
+	STORE R6, 11(LB)
+while_497359413:
+	LOAD 11(LB), R6
+	LOAD 8(LB), R3
+	CMP R3, R6
+	BLT E_True58
+	LOAD #0, R6
+	BRA E_End59
+E_True58:
+	LOAD #1, R6
+E_End59:
+	BEQ while_end_497359413
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R3
+	LOAD 11(LB), R2
+	LOAD 0(R6), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R6, R3), R6
+	STORE R6, 12(LB)
+	LOAD 9(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 11(LB), R2
+	LOAD 12(LB), R3
+	LOAD -3(LB), R7
+	MUL R7, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 11(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 11(LB)
+	BRA while_497359413
+while_end_497359413:
+	LOAD 10(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 10(LB)
+	BRA while_1832580921
+while_end_1832580921:
+	LOAD 9(LB), R4
+	LOAD R4, R0
+	BRA fin.function._scalaire
+	BRA no_return_error
+fin.function._scalaire:
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._produit:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #16
+	BOV stack_overflow_error
+	ADDSP #10
+; Variables Declarations 
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 0(R6), R0
+	STORE R0, 6(LB)
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 7(LB)
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 8(LB)
+	LOAD 6(LB), R0
+	LOAD 7(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 9(LB)
+	LOAD #0, R0
+	STORE R0, 10(LB)
+	STORE R0, 11(LB)
+	STORE R0, 12(LB)
+	STORE R0, 13(LB)
+	STORE R0, 14(LB)
+	STORE R0, 15(LB)
+while_2109874862:
+	LOAD 10(LB), R6
+	LOAD 6(LB), R5
+	CMP R5, R6
+	BLT E_True66
+	LOAD #0, R6
+	BRA E_End67
+E_True66:
+	LOAD #1, R6
+E_End67:
+	BEQ while_end_2109874862
+	LOAD #0, R6
+	STORE R6, 11(LB)
+while_183284570:
+	LOAD 11(LB), R6
+	LOAD 7(LB), R5
+	CMP R5, R6
+	BLT E_True68
+	LOAD #0, R6
+	BRA E_End69
+E_True68:
+	LOAD #1, R6
+E_End69:
+	BEQ while_end_183284570
+	LOAD #0, R6
+	STORE R6, 13(LB)
+	LOAD #0, R6
+	STORE R6, 12(LB)
+while_1607305514:
+	LOAD 12(LB), R6
+	LOAD 8(LB), R5
+	CMP R5, R6
+	BLT E_True70
+	LOAD #0, R6
+	BRA E_End71
+E_True70:
+	LOAD #1, R6
+E_End71:
+	BEQ while_end_1607305514
+	LOAD -2(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 12(LB), R2
+	LOAD 0(R6), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R6, R5), R6
+	STORE R6, 14(LB)
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 12(LB), R3
+	LOAD 11(LB), R2
+	LOAD 0(R6), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R6, R3), R6
+	STORE R6, 15(LB)
+	LOAD 13(LB), R6
+	LOAD 14(LB), R5
+	LOAD 15(LB), R2
+	MUL R2, R5
+	ADD R5, R6
+	STORE R6, 13(LB)
+	LOAD 12(LB), R6
+	LOAD #1, R5
+	ADD R5, R6
+	STORE R6, 12(LB)
+	BRA while_1607305514
+while_end_1607305514:
+	LOAD 9(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 11(LB), R2
+	LOAD 13(LB), R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 11(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 11(LB)
+	BRA while_183284570
+while_end_183284570:
+	LOAD 10(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 10(LB)
+	BRA while_2109874862
+while_end_2109874862:
+	LOAD 9(LB), R4
+	LOAD R4, R0
+	BRA fin.function._produit
+	BRA no_return_error
+fin.function._produit:
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._matriceDiagonale:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R8
+	PUSH R5
+	PUSH R9
+	PUSH R7
+	PUSH R6
+	TSTO #13
+	BOV stack_overflow_error
+	ADDSP #4
+; Variables Declarations 
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 9(LB)
+	LOAD 9(LB), R0
+	LOAD 9(LB), R4
+	PUSH R0
+	PUSH R4
+	MUL R4, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R4
+	POP R1
+	STORE R1, 0(R0)
+	STORE R4, 1(R0)
+	STORE R0, 10(LB)
+	LOAD #0, R0
+	STORE R0, 11(LB)
+	STORE R0, 12(LB)
+while_1138193439:
+	LOAD 11(LB), R4
+	LOAD 9(LB), R3
+	CMP R3, R4
+	BLT E_True78
+	LOAD #0, R4
+	BRA E_End79
+E_True78:
+	LOAD #1, R4
+E_End79:
+	BEQ while_end_1138193439
+	LOAD #0, R4
+	STORE R4, 12(LB)
+while_398110318:
+	LOAD 12(LB), R4
+	LOAD 9(LB), R3
+	CMP R3, R4
+	BLT E_True80
+	LOAD #0, R4
+	BRA E_End81
+E_True80:
+	LOAD #1, R4
+E_End81:
+	BEQ while_end_398110318
+	LOAD 11(LB), R4
+	LOAD 12(LB), R3
+	CMP R3, R4
+	BEQ E_True82
+	LOAD #0, R4
+	BRA E_End83
+E_True82:
+	LOAD #1, R4
+E_End83:
+	BEQ else_1765250898
+	LOAD 10(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 11(LB), R3
+	LOAD 12(LB), R2
+	LOAD -2(LB), R5
+	CMP #null, R5
+	BEQ dereference_null
+	LOAD 11(LB), R9
+	LOAD #0, R8
+	LOAD 0(R5), R7
+	CMP R7, R9
+	BGE index_out_of_bounds
+	CMP #0, R9
+	BLT index_out_of_bounds
+	LOAD 1(R5), R7
+	CMP R7, R8
+	BGE index_out_of_bounds
+	CMP #0, R8
+	BLT index_out_of_bounds
+	LOAD 1(R5), R7
+	MUL R7, R9
+	ADD R8, R9
+	ADD #2, R9
+	LOAD 0(R5, R9), R5
+	LOAD 0(R4), R6
+	CMP R6, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	CMP R6, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	MUL R6, R3
+	ADD R2, R3
+	ADD #2, R3
+	STORE R5, 0(R4, R3)
+	BRA end_if_1765250898
+else_1765250898:
+	LOAD 10(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 11(LB), R5
+	LOAD 12(LB), R2
+	LOAD #0, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+end_if_1765250898:
+	LOAD 12(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 12(LB)
+	BRA while_398110318
+while_end_398110318:
+	LOAD 11(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 11(LB)
+	BRA while_1138193439
+while_end_1138193439:
+	LOAD 10(LB), R4
+	LOAD R4, R0
+	BRA fin.function._matriceDiagonale
+	BRA no_return_error
+fin.function._matriceDiagonale:
+	POP R9
+	POP R8
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._egale:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	TSTO #11
+	BOV stack_overflow_error
+	ADDSP #6
+; Variables Declarations 
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	STORE R0, 8(LB)
+	STORE R0, 9(LB)
+	STORE R0, 10(LB)
+	LOAD 5(LB), R4
+	LOAD -3(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 0(R2), R3
+	CMP R3, R4
+	BNE E_True94
+	LOAD #0, R4
+	BRA E_End95
+E_True94:
+	LOAD #1, R4
+E_End95:
+	BEQ else_1615039080
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.function._egale
+	BRA end_if_1615039080
+else_1615039080:
+end_if_1615039080:
+	LOAD 6(LB), R4
+	LOAD -3(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 1(R2), R3
+	CMP R3, R4
+	BNE E_True96
+	LOAD #0, R4
+	BRA E_End97
+E_True96:
+	LOAD #1, R4
+E_End97:
+	BEQ else_876213901
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.function._egale
+	BRA end_if_876213901
+else_876213901:
+end_if_876213901:
+while_230528013:
+	LOAD 7(LB), R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BLT E_True98
+	LOAD #0, R4
+	BRA E_End99
+E_True98:
+	LOAD #1, R4
+E_End99:
+	BEQ while_end_230528013
+	LOAD #0, R4
+	STORE R4, 8(LB)
+while_1909546776:
+	LOAD 8(LB), R4
+	LOAD 6(LB), R3
+	CMP R3, R4
+	BLT E_True100
+	LOAD #0, R4
+	BRA E_End101
+E_True100:
+	LOAD #1, R4
+E_End101:
+	BEQ while_end_1909546776
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R3
+	LOAD 8(LB), R2
+	LOAD 0(R4), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R4, R3), R4
+	STORE R4, 9(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD 0(R4), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 10(LB)
+	LOAD 9(LB), R4
+	LOAD 10(LB), R3
+	CMP R3, R4
+	BEQ E_True102
+	LOAD #1, R4
+	BRA E_End103
+E_True102:
+	LOAD #0, R4
+E_End103:
+	BEQ else_392781299
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.function._egale
+	BRA end_if_392781299
+else_392781299:
+end_if_392781299:
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_1909546776
+while_end_1909546776:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_230528013
+while_end_230528013:
+	LOAD #1, R4
+	LOAD R4, R0
+	BRA fin.function._egale
+	BRA no_return_error
+fin.function._egale:
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._estSymetrique:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	TSTO #11
+	BOV stack_overflow_error
+	ADDSP #6
+; Variables Declarations 
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	STORE R0, 8(LB)
+	STORE R0, 9(LB)
+	STORE R0, 10(LB)
+	LOAD 5(LB), R4
+	LOAD 6(LB), R3
+	CMP R3, R4
+	BEQ E_True112
+	LOAD #1, R4
+	BRA E_End113
+E_True112:
+	LOAD #0, R4
+E_End113:
+	BEQ else_294184992
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.function._estSymetrique
+	BRA end_if_294184992
+else_294184992:
+end_if_294184992:
+while_793315160:
+	LOAD 7(LB), R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BLT E_True114
+	LOAD #0, R4
+	BRA E_End115
+E_True114:
+	LOAD #1, R4
+E_End115:
+	BEQ while_end_793315160
+	LOAD #0, R4
+	STORE R4, 8(LB)
+while_270397815:
+	LOAD 8(LB), R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BLT E_True116
+	LOAD #0, R4
+	BRA E_End117
+E_True116:
+	LOAD #1, R4
+E_End117:
+	BEQ while_end_270397815
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R3
+	LOAD 8(LB), R2
+	LOAD 0(R4), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R4, R3), R4
+	STORE R4, 9(LB)
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 8(LB), R5
+	LOAD 7(LB), R2
+	LOAD 0(R4), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 10(LB)
+	LOAD 9(LB), R4
+	LOAD 10(LB), R3
+	CMP R3, R4
+	BEQ E_True118
+	LOAD #1, R4
+	BRA E_End119
+E_True118:
+	LOAD #0, R4
+E_End119:
+	BEQ else_376416077
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.function._estSymetrique
+	BRA end_if_376416077
+else_376416077:
+end_if_376416077:
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_270397815
+while_end_270397815:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_793315160
+while_end_793315160:
+	LOAD #1, R4
+	LOAD R4, R0
+	BRA fin.function._estSymetrique
+	BRA no_return_error
+fin.function._estSymetrique:
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._estAntisymetrique:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	TSTO #11
+	BOV stack_overflow_error
+	ADDSP #6
+; Variables Declarations 
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	STORE R0, 8(LB)
+	STORE R0, 9(LB)
+	STORE R0, 10(LB)
+	LOAD 5(LB), R4
+	LOAD 6(LB), R3
+	CMP R3, R4
+	BEQ E_True128
+	LOAD #1, R4
+	BRA E_End129
+E_True128:
+	LOAD #0, R4
+E_End129:
+	BEQ else_85445963
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.function._estAntisymetrique
+	BRA end_if_85445963
+else_85445963:
+end_if_85445963:
+while_1825027294:
+	LOAD 7(LB), R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BLT E_True130
+	LOAD #0, R4
+	BRA E_End131
+E_True130:
+	LOAD #1, R4
+E_End131:
+	BEQ while_end_1825027294
+	LOAD #0, R4
+	STORE R4, 8(LB)
+while_852445367:
+	LOAD 8(LB), R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BLT E_True132
+	LOAD #0, R4
+	BRA E_End133
+E_True132:
+	LOAD #1, R4
+E_End133:
+	BEQ while_end_852445367
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R3
+	LOAD 8(LB), R2
+	LOAD 0(R4), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R4, R3), R4
+	STORE R4, 9(LB)
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 8(LB), R5
+	LOAD 7(LB), R2
+	LOAD 0(R4), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 10(LB)
+	LOAD 9(LB), R4
+	LOAD 10(LB), R3
+	LOAD #0, R2
+	SUB R3, R2
+	LOAD R2, R3
+	CMP R3, R4
+	BEQ E_True134
+	LOAD #1, R4
+	BRA E_End135
+E_True134:
+	LOAD #0, R4
+E_End135:
+	BEQ else_1738236591
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.function._estAntisymetrique
+	BRA end_if_1738236591
+else_1738236591:
+end_if_1738236591:
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_852445367
+while_end_852445367:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_1825027294
+while_end_1825027294:
+	LOAD #1, R4
+	LOAD R4, R0
+	BRA fin.function._estAntisymetrique
+	BRA no_return_error
+fin.function._estAntisymetrique:
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._trace:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #4
+; Variables Declarations 
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD #0, R0
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	STORE R0, 8(LB)
+while_868964689:
+	LOAD 7(LB), R4
+	LOAD 5(LB), R5
+	CMP R5, R4
+	BLT E_True138
+	LOAD #0, R4
+	BRA E_End139
+E_True138:
+	LOAD #1, R4
+E_End139:
+	BEQ while_end_868964689
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 7(LB), R2
+	LOAD 0(R4), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 8(LB)
+	LOAD 6(LB), R4
+	LOAD 8(LB), R3
+	ADD R3, R4
+	STORE R4, 6(LB)
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_868964689
+while_end_868964689:
+	LOAD 6(LB), R4
+	LOAD R4, R0
+	BRA fin.function._trace
+	BRA no_return_error
+fin.function._trace:
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+function._estNilpotente:
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	TSTO #13
+	BOV stack_overflow_error
+	ADDSP #7
+; Variables Declarations 
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD -2(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 6(LB)
+	STORE R0, 7(LB)
+	LOAD #0, R0
+	STORE R0, 8(LB)
+	STORE R0, 9(LB)
+	STORE R0, 10(LB)
+	STORE R0, 11(LB)
+	LOAD 5(LB), R4
+	LOAD 6(LB), R5
+	CMP R5, R4
+	BEQ E_True150
+	LOAD #1, R4
+	BRA E_End151
+E_True150:
+	LOAD #0, R4
+E_End151:
+	BEQ else_1048027629
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.function._estNilpotente
+	BRA end_if_1048027629
+else_1048027629:
+end_if_1048027629:
+	ADDSP #1
+	LOAD 5(LB), R4
+	STORE R4, 0(SP)
+	BSR function._unite
+	SUBSP #1
+	LOAD R0, R4
+	STORE R4, 7(LB)
+	LOAD #0, R4
+	STORE R4, 10(LB)
+while_1073533248:
+	LOAD 10(LB), R4
+	LOAD -3(LB), R5
+	CMP R5, R4
+	BLT E_True152
+	LOAD #0, R4
+	BRA E_End153
+E_True152:
+	LOAD #1, R4
+E_End153:
+	BEQ while_end_1073533248
+	ADDSP #2
+	LOAD 7(LB), R4
+	STORE R4, 0(SP)
+	LOAD -2(LB), R4
+	STORE R4, -1(SP)
+	BSR function._produit
+	SUBSP #2
+	LOAD R0, R4
+	STORE R4, 7(LB)
+	LOAD 10(LB), R4
+	LOAD #1, R5
+	ADD R5, R4
+	STORE R4, 10(LB)
+	BRA while_1073533248
+while_end_1073533248:
+	LOAD #0, R4
+	STORE R4, 8(LB)
+while_599491651:
+	LOAD 8(LB), R4
+	LOAD 5(LB), R5
+	CMP R5, R4
+	BLT E_True154
+	LOAD #0, R4
+	BRA E_End155
+E_True154:
+	LOAD #1, R4
+E_End155:
+	BEQ while_end_599491651
+	LOAD #0, R4
+	STORE R4, 9(LB)
+while_293002476:
+	LOAD 9(LB), R4
+	LOAD 5(LB), R5
+	CMP R5, R4
+	BLT E_True156
+	LOAD #0, R4
+	BRA E_End157
+E_True156:
+	LOAD #1, R4
+E_End157:
+	BEQ while_end_293002476
+	LOAD 7(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 8(LB), R5
+	LOAD 9(LB), R2
+	LOAD 0(R4), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 11(LB)
+	LOAD 11(LB), R4
+	LOAD #0, R3
+	CMP R3, R4
+	BEQ E_True158
+	LOAD #1, R4
+	BRA E_End159
+E_True158:
+	LOAD #0, R4
+E_End159:
+	BEQ else_302870502
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.function._estNilpotente
+	BRA end_if_302870502
+else_302870502:
+end_if_302870502:
+	LOAD 9(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 9(LB)
+	BRA while_293002476
+while_end_293002476:
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_599491651
+while_end_599491651:
+	LOAD #1, R4
+	LOAD R4, R0
+	BRA fin.function._estNilpotente
+	BRA no_return_error
+fin.function._estNilpotente:
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+; Gestion des erreurs
+stack_overflow_error:
+	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+division_by_zero:
+	WSTR "Error: Division by zero"
+	WNL
+	ERROR
+heap_overflow:
+	WSTR "Error: Heap Overflow"
+	WNL
+	ERROR
+dereference_null:
+	WSTR "Error: Dereference null"
+	WNL
+	ERROR
+float_arithmetic_overflow:
+	WSTR "Error: float_Arithmetic overflow"
+	WNL
+	ERROR
+no_return_error:
+	WSTR "Error: No return value "
+	WNL
+	ERROR
+index_out_of_bounds:
+	WSTR "Error: Index out of bounds"
+	WNL
+	ERROR
+; Classes code generation
+Code.Object.equals:
+	LOAD -2(LB), R0
+	LOAD -3(LB), R1
+	CMP R0, R1
+	BEQ equals_true
+	LOAD #0, R0
+	BRA equals_end
+equals_true:
+	LOAD #1, R0
+equals_end:
+	RTS
+init.Math:
+	RTS
+	RTS
+Code.Math.abs:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R3
+	TSTO #3
+	BOV stack_overflow_error
+	ADDSP #0
+; Variables Declarations 
+	LOAD -3(LB), R4
+	LOAD #0x0.0p0, R3
+	CMP R3, R4
+	BLT E_True162
+	LOAD #0, R4
+	BRA E_End163
+E_True162:
+	LOAD #1, R4
+E_End163:
+	BEQ else_1161667116
+	LOAD -3(LB), R4
+	LOAD #0x0.0p0, R3
+	SUB R4, R3
+	LOAD R3, R4
+	LOAD R4, R0
+	BRA fin.Math.abs
+	BRA end_if_1161667116
+else_1161667116:
+end_if_1161667116:
+	LOAD -3(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.abs
+	BRA no_return_error
+fin.Math.abs:
+; Restauration des registres  
+	POP R4
+	POP R3
+	RTS
+Code.Math.sqrt:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R3
+	TSTO #6
+	BOV stack_overflow_error
+	ADDSP #3
+; Variables Declarations 
+	LOAD -3(LB), R0
+	STORE R0, 3(LB)
+	LOAD #0x1.0p0, R0
+	STORE R0, 4(LB)
+	LOAD #0x1.a36e2ep-14, R0
+	STORE R0, 5(LB)
+	LOAD -3(LB), R4
+	LOAD #0x0.0p0, R3
+	CMP R3, R4
+	BLT E_True170
+	LOAD #0, R4
+	BRA E_End171
+E_True170:
+	LOAD #1, R4
+E_End171:
+	BEQ else_513700442
+	WSTR "Erreur : sqrt d un nombre negatif"
+	WNL
+	LOAD #0x0.0p0, R4
+	LOAD R4, R0
+	BRA fin.Math.sqrt
+	BRA end_if_513700442
+else_513700442:
+end_if_513700442:
+	LOAD -3(LB), R4
+	LOAD #0x0.0p0, R3
+	CMP R3, R4
+	BEQ E_True172
+	LOAD #0, R4
+	BRA E_End173
+E_True172:
+	LOAD #1, R4
+E_End173:
+	BEQ else_1889248251
+	LOAD #0x0.0p0, R4
+	LOAD R4, R0
+	BRA fin.Math.sqrt
+	BRA end_if_1889248251
+else_1889248251:
+end_if_1889248251:
+while_1027007693:
+	ADDSP #2
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD 3(LB), R4
+	LOAD 4(LB), R3
+	SUB R3, R4
+	BOV float_arithmetic_overflow
+	STORE R4, -1(SP)
+	LOAD 0(SP), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R3
+	BSR 2(R3)
+	SUBSP #2
+	LOAD R0, R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BGT E_True174
+	LOAD #0, R4
+	BRA E_End175
+E_True174:
+	LOAD #1, R4
+E_End175:
+	BEQ while_end_1027007693
+	LOAD 3(LB), R4
+	LOAD 4(LB), R3
+	ADD R3, R4
+	BOV float_arithmetic_overflow
+	LOAD #0x1.0p1, R3
+	DIV R3, R4
+	BOV division_by_zero
+	STORE R4, 3(LB)
+	LOAD -3(LB), R4
+	LOAD 3(LB), R3
+	DIV R3, R4
+	BOV division_by_zero
+	STORE R4, 4(LB)
+	BRA while_1027007693
+while_end_1027007693:
+	LOAD 3(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.sqrt
+	BRA no_return_error
+fin.Math.sqrt:
+; Restauration des registres  
+	POP R4
+	POP R3
+	RTS
+Code.Math.ulp:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R3
+	TSTO #5
+	BOV stack_overflow_error
+	ADDSP #2
+; Variables Declarations 
+	ADDSP #2
+	LOAD -2(LB), R0
+	STORE R0, 0(SP)
+	LOAD -3(LB), R0
+	STORE R0, -1(SP)
+	LOAD 0(SP), R0
+	CMP #null, R0
+	BEQ dereference_null
+	LOAD 0(R0), R4
+	BSR 2(R4)
+	SUBSP #2
+	STORE R0, 3(LB)
+	LOAD #0x1.0p0, R0
+	STORE R0, 4(LB)
+	LOAD -3(LB), R4
+	LOAD #0x0.0p0, R3
+	CMP R3, R4
+	BEQ E_True184
+	LOAD #0, R4
+	BRA E_End185
+E_True184:
+	LOAD #1, R4
+E_End185:
+	BEQ else_1477657879
+	LOAD #0x0.000002p-126, R4
+	LOAD R4, R0
+	BRA fin.Math.ulp
+	BRA end_if_1477657879
+else_1477657879:
+end_if_1477657879:
+	LOAD 3(LB), R4
+	LOAD #0x1.0p0, R3
+	CMP R3, R4
+	BGE E_True186
+	LOAD #0, R4
+	BRA E_End187
+E_True186:
+	LOAD #1, R4
+E_End187:
+	BEQ else_1146147158
+while_1147258851:
+	LOAD 4(LB), R4
+	LOAD #0x1.0p1, R3
+	MUL R3, R4
+	BOV float_arithmetic_overflow
+	LOAD 3(LB), R3
+	CMP R3, R4
+	BLE E_True188
+	LOAD #0, R4
+	BRA E_End189
+E_True188:
+	LOAD #1, R4
+E_End189:
+	BEQ while_end_1147258851
+	LOAD 4(LB), R4
+	LOAD #0x1.0p1, R3
+	MUL R3, R4
+	BOV float_arithmetic_overflow
+	STORE R4, 4(LB)
+	BRA while_1147258851
+while_end_1147258851:
+	BRA end_if_1146147158
+else_1146147158:
+while_2011482127:
+	LOAD 4(LB), R4
+	LOAD 3(LB), R3
+	CMP R3, R4
+	BGT E_True190
+	LOAD #0, R4
+	BRA E_End191
+E_True190:
+	LOAD #1, R4
+E_End191:
+	BEQ while_end_2011482127
+	LOAD 4(LB), R4
+	LOAD #0x1.0p1, R3
+	DIV R3, R4
+	BOV division_by_zero
+	STORE R4, 4(LB)
+	BRA while_2011482127
+while_end_2011482127:
+end_if_1146147158:
+	LOAD 4(LB), R4
+	LOAD #0x1.0p23, R3
+	DIV R3, R4
+	BOV division_by_zero
+	LOAD R4, R0
+	BRA fin.Math.ulp
+	BRA no_return_error
+fin.Math.ulp:
+; Restauration des registres  
+	POP R4
+	POP R3
+	RTS
+Code.Math.uniteFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #3
+; Variables Declarations 
+	LOAD -3(LB), R0
+	LOAD -3(LB), R4
+	PUSH R0
+	PUSH R4
+	MUL R4, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R4
+	POP R1
+	STORE R1, 0(R0)
+	STORE R4, 1(R0)
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	LOAD #0, R0
+	STORE R0, 8(LB)
+while_1368594774:
+	LOAD 7(LB), R4
+	LOAD -3(LB), R3
+	CMP R3, R4
+	BLT E_True198
+	LOAD #0, R4
+	BRA E_End199
+E_True198:
+	LOAD #1, R4
+E_End199:
+	BEQ while_end_1368594774
+	LOAD #0, R4
+	STORE R4, 8(LB)
+while_726281927:
+	LOAD 8(LB), R4
+	LOAD -3(LB), R3
+	CMP R3, R4
+	BLT E_True200
+	LOAD #0, R4
+	BRA E_End201
+E_True200:
+	LOAD #1, R4
+E_End201:
+	BEQ while_end_726281927
+	LOAD 7(LB), R4
+	LOAD 8(LB), R3
+	CMP R3, R4
+	BEQ E_True202
+	LOAD #0, R4
+	BRA E_End203
+E_True202:
+	LOAD #1, R4
+E_End203:
+	BEQ else_1447499999
+	LOAD 6(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R3
+	LOAD 8(LB), R2
+	LOAD #0x1.0p0, R5
+	LOAD 0(R4), R6
+	CMP R6, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	CMP R6, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	MUL R6, R3
+	ADD R2, R3
+	ADD #2, R3
+	STORE R5, 0(R4, R3)
+	BRA end_if_1447499999
+else_1447499999:
+	LOAD 6(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD #0x0.0p0, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+end_if_1447499999:
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_726281927
+while_end_726281927:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_1368594774
+while_end_1368594774:
+	LOAD 6(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.uniteFloat
+	BRA no_return_error
+fin.Math.uniteFloat:
+; Restauration des registres  
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.matriceNulleFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #3
+; Variables Declarations 
+	LOAD -3(LB), R0
+	LOAD -4(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	LOAD #0, R0
+	STORE R0, 8(LB)
+while_2011791487:
+	LOAD 7(LB), R6
+	LOAD -3(LB), R5
+	CMP R5, R6
+	BLT E_True208
+	LOAD #0, R6
+	BRA E_End209
+E_True208:
+	LOAD #1, R6
+E_End209:
+	BEQ while_end_2011791487
+	LOAD #0, R6
+	STORE R6, 8(LB)
+while_1150284200:
+	LOAD 8(LB), R6
+	LOAD -4(LB), R5
+	CMP R5, R6
+	BLT E_True210
+	LOAD #0, R6
+	BRA E_End211
+E_True210:
+	LOAD #1, R6
+E_End211:
+	BEQ while_end_1150284200
+	LOAD 6(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD #0x0.0p0, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_1150284200
+while_end_1150284200:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_2011791487
+while_end_2011791487:
+	LOAD 6(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.matriceNulleFloat
+	BRA no_return_error
+fin.Math.matriceNulleFloat:
+; Restauration des registres  
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.matriceConstanteFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #3
+; Variables Declarations 
+	LOAD -3(LB), R0
+	LOAD -4(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	LOAD #0, R0
+	STORE R0, 8(LB)
+while_1473611564:
+	LOAD 7(LB), R6
+	LOAD -3(LB), R5
+	CMP R5, R6
+	BLT E_True216
+	LOAD #0, R6
+	BRA E_End217
+E_True216:
+	LOAD #1, R6
+E_End217:
+	BEQ while_end_1473611564
+	LOAD #0, R6
+	STORE R6, 8(LB)
+while_107456312:
+	LOAD 8(LB), R6
+	LOAD -4(LB), R5
+	CMP R5, R6
+	BLT E_True218
+	LOAD #0, R6
+	BRA E_End219
+E_True218:
+	LOAD #1, R6
+E_End219:
+	BEQ while_end_107456312
+	LOAD 6(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD -5(LB), R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_107456312
+while_end_107456312:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_1473611564
+while_end_1473611564:
+	LOAD 6(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.matriceConstanteFloat
+	BRA no_return_error
+fin.Math.matriceConstanteFloat:
+; Restauration des registres  
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.matriceUnFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #3
+; Variables Declarations 
+	LOAD -3(LB), R0
+	LOAD -4(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	LOAD #0, R0
+	STORE R0, 8(LB)
+while_1002191352:
+	LOAD 7(LB), R6
+	LOAD -3(LB), R5
+	CMP R5, R6
+	BLT E_True224
+	LOAD #0, R6
+	BRA E_End225
+E_True224:
+	LOAD #1, R6
+E_End225:
+	BEQ while_end_1002191352
+	LOAD #0, R6
+	STORE R6, 8(LB)
+while_1256440269:
+	LOAD 8(LB), R6
+	LOAD -4(LB), R5
+	CMP R5, R6
+	BLT E_True226
+	LOAD #0, R6
+	BRA E_End227
+E_True226:
+	LOAD #1, R6
+E_End227:
+	BEQ while_end_1256440269
+	LOAD 6(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD #0x1.0p0, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_1256440269
+while_end_1256440269:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_1002191352
+while_end_1002191352:
+	LOAD 6(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.matriceUnFloat
+	BRA no_return_error
+fin.Math.matriceUnFloat:
+; Restauration des registres  
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.transposeeFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #12
+	BOV stack_overflow_error
+	ADDSP #6
+; Variables Declarations 
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 0(R6), R0
+	STORE R0, 6(LB)
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 7(LB)
+	LOAD 7(LB), R0
+	LOAD 6(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 8(LB)
+	LOAD #0, R0
+	STORE R0, 9(LB)
+	LOAD #0, R0
+	STORE R0, 10(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 11(LB)
+while_1088872417:
+	LOAD 9(LB), R6
+	LOAD 6(LB), R3
+	CMP R3, R6
+	BLT E_True232
+	LOAD #0, R6
+	BRA E_End233
+E_True232:
+	LOAD #1, R6
+E_End233:
+	BEQ while_end_1088872417
+	LOAD #0, R6
+	STORE R6, 10(LB)
+while_453523494:
+	LOAD 10(LB), R6
+	LOAD 7(LB), R3
+	CMP R3, R6
+	BLT E_True234
+	LOAD #0, R6
+	BRA E_End235
+E_True234:
+	LOAD #1, R6
+E_End235:
+	BEQ while_end_453523494
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 9(LB), R3
+	LOAD 10(LB), R2
+	LOAD 0(R6), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R6, R3), R6
+	STORE R6, 11(LB)
+	LOAD 8(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 9(LB), R2
+	LOAD 11(LB), R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 10(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 10(LB)
+	BRA while_453523494
+while_end_453523494:
+	LOAD 9(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 9(LB)
+	BRA while_1088872417
+while_end_1088872417:
+	LOAD 8(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.transposeeFloat
+	BRA no_return_error
+fin.Math.transposeeFloat:
+; Restauration des registres  
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.additionFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R7
+	PUSH R6
+	TSTO #14
+	BOV stack_overflow_error
+	ADDSP #7
+; Variables Declarations 
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 0(R6), R0
+	STORE R0, 7(LB)
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 8(LB)
+	LOAD 7(LB), R0
+	LOAD 8(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 9(LB)
+	LOAD #0, R0
+	STORE R0, 10(LB)
+	LOAD #0, R0
+	STORE R0, 11(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 12(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 13(LB)
+while_1439337960:
+	LOAD 10(LB), R6
+	LOAD 7(LB), R5
+	CMP R5, R6
+	BLT E_True240
+	LOAD #0, R6
+	BRA E_End241
+E_True240:
+	LOAD #1, R6
+E_End241:
+	BEQ while_end_1439337960
+	LOAD #0, R6
+	STORE R6, 11(LB)
+while_741669172:
+	LOAD 11(LB), R6
+	LOAD 8(LB), R5
+	CMP R5, R6
+	BLT E_True242
+	LOAD #0, R6
+	BRA E_End243
+E_True242:
+	LOAD #1, R6
+E_End243:
+	BEQ while_end_741669172
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 11(LB), R2
+	LOAD 0(R6), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R6, R5), R6
+	STORE R6, 12(LB)
+	LOAD -4(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R3
+	LOAD 11(LB), R2
+	LOAD 0(R6), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R6, R3), R6
+	STORE R6, 13(LB)
+	LOAD 9(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 11(LB), R2
+	LOAD 12(LB), R3
+	LOAD 13(LB), R7
+	ADD R7, R3
+	BOV float_arithmetic_overflow
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 11(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 11(LB)
+	BRA while_741669172
+while_end_741669172:
+	LOAD 10(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 10(LB)
+	BRA while_1439337960
+while_end_1439337960:
+	LOAD 9(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.additionFloat
+	BRA no_return_error
+fin.Math.additionFloat:
+; Restauration des registres  
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.scalaireFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R7
+	PUSH R6
+	TSTO #13
+	BOV stack_overflow_error
+	ADDSP #6
+; Variables Declarations 
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 0(R6), R0
+	STORE R0, 7(LB)
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 8(LB)
+	LOAD 7(LB), R0
+	LOAD 8(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 9(LB)
+	LOAD #0, R0
+	STORE R0, 10(LB)
+	LOAD #0, R0
+	STORE R0, 11(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 12(LB)
+while_380242442:
+	LOAD 10(LB), R6
+	LOAD 7(LB), R3
+	CMP R3, R6
+	BLT E_True248
+	LOAD #0, R6
+	BRA E_End249
+E_True248:
+	LOAD #1, R6
+E_End249:
+	BEQ while_end_380242442
+	LOAD #0, R6
+	STORE R6, 11(LB)
+while_125881207:
+	LOAD 11(LB), R6
+	LOAD 8(LB), R3
+	CMP R3, R6
+	BLT E_True250
+	LOAD #0, R6
+	BRA E_End251
+E_True250:
+	LOAD #1, R6
+E_End251:
+	BEQ while_end_125881207
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R3
+	LOAD 11(LB), R2
+	LOAD 0(R6), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R6, R3), R6
+	STORE R6, 12(LB)
+	LOAD 9(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 11(LB), R2
+	LOAD 12(LB), R3
+	LOAD -4(LB), R7
+	MUL R7, R3
+	BOV float_arithmetic_overflow
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 11(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 11(LB)
+	BRA while_125881207
+while_end_125881207:
+	LOAD 10(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 10(LB)
+	BRA while_380242442
+while_end_380242442:
+	LOAD 9(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.scalaireFloat
+	BRA no_return_error
+fin.Math.scalaireFloat:
+; Restauration des registres  
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.produitFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	PUSH R6
+	TSTO #17
+	BOV stack_overflow_error
+	ADDSP #10
+; Variables Declarations 
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 0(R6), R0
+	STORE R0, 6(LB)
+	LOAD -4(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 7(LB)
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 8(LB)
+	STORE R0, 9(LB)
+	LOAD #0, R0
+	STORE R0, 10(LB)
+	LOAD #0, R0
+	STORE R0, 11(LB)
+	LOAD #0, R0
+	STORE R0, 12(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 13(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 14(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 15(LB)
+	LOAD 8(LB), R6
+	LOAD -4(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 0(R2), R5
+	CMP R5, R6
+	BNE E_True260
+	LOAD #0, R6
+	BRA E_End261
+E_True260:
+	LOAD #1, R6
+E_End261:
+	BEQ else_589835301
+	WSTR "Erreur : le produit matriciel n est pas possible"
+	WNL
+	LOAD #0, R6
+	LOAD #0, R5
+	PUSH R6
+	PUSH R5
+	MUL R5, R6
+	ADD #2, R6
+	NEW R6, R6
+	BOV heap_overflow
+	POP R5
+	POP R1
+	STORE R1, 0(R6)
+	STORE R5, 1(R6)
+	LOAD R6, R0
+	BRA fin.Math.produitFloat
+	BRA end_if_589835301
+else_589835301:
+end_if_589835301:
+	LOAD 6(LB), R6
+	LOAD 7(LB), R5
+	PUSH R6
+	PUSH R5
+	MUL R5, R6
+	ADD #2, R6
+	NEW R6, R6
+	BOV heap_overflow
+	POP R5
+	POP R1
+	STORE R1, 0(R6)
+	STORE R5, 1(R6)
+	STORE R6, 9(LB)
+while_2032188048:
+	LOAD 10(LB), R6
+	LOAD 6(LB), R5
+	CMP R5, R6
+	BLT E_True262
+	LOAD #0, R6
+	BRA E_End263
+E_True262:
+	LOAD #1, R6
+E_End263:
+	BEQ while_end_2032188048
+	LOAD #0, R6
+	STORE R6, 11(LB)
+while_112466394:
+	LOAD 11(LB), R6
+	LOAD 7(LB), R5
+	CMP R5, R6
+	BLT E_True264
+	LOAD #0, R6
+	BRA E_End265
+E_True264:
+	LOAD #1, R6
+E_End265:
+	BEQ while_end_112466394
+	LOAD #0x0.0p0, R6
+	STORE R6, 13(LB)
+	LOAD #0, R6
+	STORE R6, 12(LB)
+while_992846223:
+	LOAD 12(LB), R6
+	LOAD 8(LB), R5
+	CMP R5, R6
+	BLT E_True266
+	LOAD #0, R6
+	BRA E_End267
+E_True266:
+	LOAD #1, R6
+E_End267:
+	BEQ while_end_992846223
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 12(LB), R2
+	LOAD 0(R6), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R6, R5), R6
+	STORE R6, 14(LB)
+	LOAD -4(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 12(LB), R3
+	LOAD 11(LB), R2
+	LOAD 0(R6), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R6, R3), R6
+	STORE R6, 15(LB)
+	LOAD 13(LB), R6
+	LOAD 14(LB), R5
+	LOAD 15(LB), R2
+	MUL R2, R5
+	BOV float_arithmetic_overflow
+	ADD R5, R6
+	BOV float_arithmetic_overflow
+	STORE R6, 13(LB)
+	LOAD 12(LB), R6
+	LOAD #1, R5
+	ADD R5, R6
+	STORE R6, 12(LB)
+	BRA while_992846223
+while_end_992846223:
+	LOAD 9(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 10(LB), R5
+	LOAD 11(LB), R2
+	LOAD 13(LB), R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 11(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 11(LB)
+	BRA while_112466394
+while_end_112466394:
+	LOAD 10(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 10(LB)
+	BRA while_2032188048
+while_end_2032188048:
+	LOAD 9(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.produitFloat
+	BRA no_return_error
+fin.Math.produitFloat:
+; Restauration des registres  
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.matriceDiagonaleFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R8
+	PUSH R5
+	PUSH R9
+	PUSH R7
+	PUSH R6
+	TSTO #13
+	BOV stack_overflow_error
+	ADDSP #4
+; Variables Declarations 
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 9(LB)
+	LOAD 9(LB), R0
+	LOAD 9(LB), R4
+	PUSH R0
+	PUSH R4
+	MUL R4, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R4
+	POP R1
+	STORE R1, 0(R0)
+	STORE R4, 1(R0)
+	STORE R0, 10(LB)
+	LOAD #0, R0
+	STORE R0, 11(LB)
+	LOAD #0, R0
+	STORE R0, 12(LB)
+while_254749889:
+	LOAD 11(LB), R4
+	LOAD 9(LB), R3
+	CMP R3, R4
+	BLT E_True274
+	LOAD #0, R4
+	BRA E_End275
+E_True274:
+	LOAD #1, R4
+E_End275:
+	BEQ while_end_254749889
+	LOAD #0, R4
+	STORE R4, 12(LB)
+while_973576304:
+	LOAD 12(LB), R4
+	LOAD 9(LB), R3
+	CMP R3, R4
+	BLT E_True276
+	LOAD #0, R4
+	BRA E_End277
+E_True276:
+	LOAD #1, R4
+E_End277:
+	BEQ while_end_973576304
+	LOAD 11(LB), R4
+	LOAD 12(LB), R3
+	CMP R3, R4
+	BEQ E_True278
+	LOAD #0, R4
+	BRA E_End279
+E_True278:
+	LOAD #1, R4
+E_End279:
+	BEQ else_992802731
+	LOAD 10(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 11(LB), R3
+	LOAD 12(LB), R2
+	LOAD -3(LB), R5
+	CMP #null, R5
+	BEQ dereference_null
+	LOAD 11(LB), R9
+	LOAD #0, R8
+	LOAD 0(R5), R7
+	CMP R7, R9
+	BGE index_out_of_bounds
+	CMP #0, R9
+	BLT index_out_of_bounds
+	LOAD 1(R5), R7
+	CMP R7, R8
+	BGE index_out_of_bounds
+	CMP #0, R8
+	BLT index_out_of_bounds
+	LOAD 1(R5), R7
+	MUL R7, R9
+	ADD R8, R9
+	ADD #2, R9
+	LOAD 0(R5, R9), R5
+	LOAD 0(R4), R6
+	CMP R6, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	CMP R6, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	MUL R6, R3
+	ADD R2, R3
+	ADD #2, R3
+	STORE R5, 0(R4, R3)
+	BRA end_if_992802731
+else_992802731:
+	LOAD 10(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 11(LB), R5
+	LOAD 12(LB), R2
+	LOAD #0x0.0p0, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+end_if_992802731:
+	LOAD 12(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 12(LB)
+	BRA while_973576304
+while_end_973576304:
+	LOAD 11(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 11(LB)
+	BRA while_254749889
+while_end_254749889:
+	LOAD 10(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.matriceDiagonaleFloat
+	BRA no_return_error
+fin.Math.matriceDiagonaleFloat:
+; Restauration des registres  
+	POP R9
+	POP R8
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.egaleFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	TSTO #12
+	BOV stack_overflow_error
+	ADDSP #7
+; Variables Declarations 
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	LOAD #0, R0
+	STORE R0, 8(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 9(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 10(LB)
+	LOAD #0x1.4f8b58p-17, R0
+	STORE R0, 11(LB)
+	LOAD 5(LB), R4
+	LOAD -4(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 0(R2), R3
+	CMP R3, R4
+	BNE E_True290
+	LOAD #0, R4
+	BRA E_End291
+E_True290:
+	LOAD #1, R4
+E_End291:
+	BEQ else_1790421142
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.Math.egaleFloat
+	BRA end_if_1790421142
+else_1790421142:
+end_if_1790421142:
+	LOAD 6(LB), R4
+	LOAD -4(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 1(R2), R3
+	CMP R3, R4
+	BNE E_True292
+	LOAD #0, R4
+	BRA E_End293
+E_True292:
+	LOAD #1, R4
+E_End293:
+	BEQ else_846947180
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.Math.egaleFloat
+	BRA end_if_846947180
+else_846947180:
+end_if_846947180:
+while_1172131546:
+	LOAD 7(LB), R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BLT E_True294
+	LOAD #0, R4
+	BRA E_End295
+E_True294:
+	LOAD #1, R4
+E_End295:
+	BEQ while_end_1172131546
+	LOAD #0, R4
+	STORE R4, 8(LB)
+while_1616974404:
+	LOAD 8(LB), R4
+	LOAD 6(LB), R3
+	CMP R3, R4
+	BLT E_True296
+	LOAD #0, R4
+	BRA E_End297
+E_True296:
+	LOAD #1, R4
+E_End297:
+	BEQ while_end_1616974404
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R3
+	LOAD 8(LB), R2
+	LOAD 0(R4), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R4, R3), R4
+	STORE R4, 9(LB)
+	LOAD -4(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD 0(R4), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 10(LB)
+	ADDSP #2
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD 9(LB), R4
+	LOAD 10(LB), R3
+	SUB R3, R4
+	BOV float_arithmetic_overflow
+	STORE R4, -1(SP)
+	LOAD 0(SP), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R3
+	BSR 2(R3)
+	SUBSP #2
+	LOAD R0, R4
+	LOAD 11(LB), R3
+	CMP R3, R4
+	BGT E_True298
+	LOAD #0, R4
+	BRA E_End299
+E_True298:
+	LOAD #1, R4
+E_End299:
+	BEQ else_927327686
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.Math.egaleFloat
+	BRA end_if_927327686
+else_927327686:
+end_if_927327686:
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_1616974404
+while_end_1616974404:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_1172131546
+while_end_1172131546:
+	LOAD #1, R4
+	LOAD R4, R0
+	BRA fin.Math.egaleFloat
+	BRA no_return_error
+fin.Math.egaleFloat:
+; Restauration des registres  
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.estSymetriqueFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	TSTO #12
+	BOV stack_overflow_error
+	ADDSP #7
+; Variables Declarations 
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	LOAD #0, R0
+	STORE R0, 8(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 9(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 10(LB)
+	LOAD #0x1.4f8b58p-17, R0
+	STORE R0, 11(LB)
+	LOAD 5(LB), R4
+	LOAD 6(LB), R3
+	CMP R3, R4
+	BEQ E_True308
+	LOAD #1, R4
+	BRA E_End309
+E_True308:
+	LOAD #0, R4
+E_End309:
+	BEQ else_341878976
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.Math.estSymetriqueFloat
+	BRA end_if_341878976
+else_341878976:
+end_if_341878976:
+while_1331923253:
+	LOAD 7(LB), R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BLT E_True310
+	LOAD #0, R4
+	BRA E_End311
+E_True310:
+	LOAD #1, R4
+E_End311:
+	BEQ while_end_1331923253
+	LOAD #0, R4
+	STORE R4, 8(LB)
+while_1132967838:
+	LOAD 8(LB), R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BLT E_True312
+	LOAD #0, R4
+	BRA E_End313
+E_True312:
+	LOAD #1, R4
+E_End313:
+	BEQ while_end_1132967838
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R3
+	LOAD 8(LB), R2
+	LOAD 0(R4), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R4, R3), R4
+	STORE R4, 9(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 8(LB), R5
+	LOAD 7(LB), R2
+	LOAD 0(R4), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 10(LB)
+	ADDSP #2
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD 9(LB), R4
+	LOAD 10(LB), R3
+	SUB R3, R4
+	BOV float_arithmetic_overflow
+	STORE R4, -1(SP)
+	LOAD 0(SP), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R3
+	BSR 2(R3)
+	SUBSP #2
+	LOAD R0, R4
+	LOAD 11(LB), R3
+	CMP R3, R4
+	BGT E_True314
+	LOAD #0, R4
+	BRA E_End315
+E_True314:
+	LOAD #1, R4
+E_End315:
+	BEQ else_1853205005
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.Math.estSymetriqueFloat
+	BRA end_if_1853205005
+else_1853205005:
+end_if_1853205005:
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_1132967838
+while_end_1132967838:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_1331923253
+while_end_1331923253:
+	LOAD #1, R4
+	LOAD R4, R0
+	BRA fin.Math.estSymetriqueFloat
+	BRA no_return_error
+fin.Math.estSymetriqueFloat:
+; Restauration des registres  
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.estAntisymetriqueFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	TSTO #12
+	BOV stack_overflow_error
+	ADDSP #7
+; Variables Declarations 
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	LOAD #0, R0
+	STORE R0, 8(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 9(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 10(LB)
+	LOAD #0x1.4f8b58p-17, R0
+	STORE R0, 11(LB)
+	LOAD 5(LB), R4
+	LOAD 6(LB), R3
+	CMP R3, R4
+	BEQ E_True324
+	LOAD #1, R4
+	BRA E_End325
+E_True324:
+	LOAD #0, R4
+E_End325:
+	BEQ else_2025269734
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.Math.estAntisymetriqueFloat
+	BRA end_if_2025269734
+else_2025269734:
+end_if_2025269734:
+while_1800031768:
+	LOAD 7(LB), R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BLT E_True326
+	LOAD #0, R4
+	BRA E_End327
+E_True326:
+	LOAD #1, R4
+E_End327:
+	BEQ while_end_1800031768
+	LOAD #0, R4
+	STORE R4, 8(LB)
+while_667447085:
+	LOAD 8(LB), R4
+	LOAD 5(LB), R3
+	CMP R3, R4
+	BLT E_True328
+	LOAD #0, R4
+	BRA E_End329
+E_True328:
+	LOAD #1, R4
+E_End329:
+	BEQ while_end_667447085
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R3
+	LOAD 8(LB), R2
+	LOAD 0(R4), R5
+	CMP R5, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	CMP R5, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R5
+	MUL R5, R3
+	ADD R2, R3
+	ADD #2, R3
+	LOAD 0(R4, R3), R4
+	STORE R4, 9(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 8(LB), R5
+	LOAD 7(LB), R2
+	LOAD 0(R4), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 10(LB)
+	ADDSP #2
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD 9(LB), R4
+	LOAD 10(LB), R3
+	ADD R3, R4
+	BOV float_arithmetic_overflow
+	STORE R4, -1(SP)
+	LOAD 0(SP), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R3
+	BSR 2(R3)
+	SUBSP #2
+	LOAD R0, R4
+	LOAD 11(LB), R3
+	CMP R3, R4
+	BGT E_True330
+	LOAD #0, R4
+	BRA E_End331
+E_True330:
+	LOAD #1, R4
+E_End331:
+	BEQ else_26728049
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.Math.estAntisymetriqueFloat
+	BRA end_if_26728049
+else_26728049:
+end_if_26728049:
+	LOAD 8(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 8(LB)
+	BRA while_667447085
+while_end_667447085:
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_1800031768
+while_end_1800031768:
+	LOAD #1, R4
+	LOAD R4, R0
+	BRA fin.Math.estAntisymetriqueFloat
+	BRA no_return_error
+fin.Math.estAntisymetriqueFloat:
+; Restauration des registres  
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.traceFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #4
+; Variables Declarations 
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 8(LB)
+	LOAD 5(LB), R4
+	LOAD -3(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 1(R2), R5
+	CMP R5, R4
+	BNE E_True336
+	LOAD #0, R4
+	BRA E_End337
+E_True336:
+	LOAD #1, R4
+E_End337:
+	BEQ else_597190999
+	WSTR "Erreur : la trace n est possible que pour une matrice carree"
+	WNL
+	LOAD #0x0.0p0, R4
+	LOAD R4, R0
+	BRA fin.Math.traceFloat
+	BRA end_if_597190999
+else_597190999:
+end_if_597190999:
+while_603443293:
+	LOAD 7(LB), R4
+	LOAD 5(LB), R5
+	CMP R5, R4
+	BLT E_True338
+	LOAD #0, R4
+	BRA E_End339
+E_True338:
+	LOAD #1, R4
+E_End339:
+	BEQ while_end_603443293
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 7(LB), R2
+	LOAD 0(R4), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 8(LB)
+	LOAD 6(LB), R4
+	LOAD 8(LB), R3
+	ADD R3, R4
+	BOV float_arithmetic_overflow
+	STORE R4, 6(LB)
+	LOAD 7(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 7(LB)
+	BRA while_603443293
+while_end_603443293:
+	LOAD 6(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.traceFloat
+	BRA no_return_error
+fin.Math.traceFloat:
+; Restauration des registres  
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.estNilpotenteFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R5
+	TSTO #18
+	BOV stack_overflow_error
+	ADDSP #8
+; Variables Declarations 
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 6(LB)
+	STORE R0, 7(LB)
+	LOAD #0, R0
+	STORE R0, 8(LB)
+	LOAD #0, R0
+	STORE R0, 9(LB)
+	LOAD #0, R0
+	STORE R0, 10(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 11(LB)
+	LOAD #0x1.4f8b58p-17, R0
+	STORE R0, 12(LB)
+	LOAD 5(LB), R4
+	LOAD 6(LB), R5
+	CMP R5, R4
+	BEQ E_True350
+	LOAD #1, R4
+	BRA E_End351
+E_True350:
+	LOAD #0, R4
+E_End351:
+	BEQ else_802600647
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.Math.estNilpotenteFloat
+	BRA end_if_802600647
+else_802600647:
+end_if_802600647:
+	ADDSP #2
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD 5(LB), R4
+	STORE R4, -1(SP)
+	LOAD 0(SP), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R5
+	BSR 5(R5)
+	SUBSP #2
+	LOAD R0, R4
+	STORE R4, 7(LB)
+while_1543148593:
+	LOAD 8(LB), R4
+	LOAD -4(LB), R5
+	CMP R5, R4
+	BLT E_True352
+	LOAD #0, R4
+	BRA E_End353
+E_True352:
+	LOAD #1, R4
+E_End353:
+	BEQ while_end_1543148593
+	ADDSP #3
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD 7(LB), R4
+	STORE R4, -1(SP)
+	LOAD -3(LB), R4
+	STORE R4, -2(SP)
+	LOAD 0(SP), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R5
+	BSR 12(R5)
+	SUBSP #3
+	LOAD R0, R4
+	STORE R4, 7(LB)
+	LOAD 8(LB), R4
+	LOAD #1, R5
+	ADD R5, R4
+	STORE R4, 8(LB)
+	BRA while_1543148593
+while_end_1543148593:
+	LOAD #0, R4
+	STORE R4, 9(LB)
+while_1571967156:
+	LOAD 9(LB), R4
+	LOAD 5(LB), R5
+	CMP R5, R4
+	BLT E_True354
+	LOAD #0, R4
+	BRA E_End355
+E_True354:
+	LOAD #1, R4
+E_End355:
+	BEQ while_end_1571967156
+	LOAD #0, R4
+	STORE R4, 10(LB)
+while_574568002:
+	LOAD 10(LB), R4
+	LOAD 5(LB), R5
+	CMP R5, R4
+	BLT E_True356
+	LOAD #0, R4
+	BRA E_End357
+E_True356:
+	LOAD #1, R4
+E_End357:
+	BEQ while_end_574568002
+	LOAD 7(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 9(LB), R5
+	LOAD 10(LB), R2
+	LOAD 0(R4), R3
+	CMP R3, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	CMP R3, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R3
+	MUL R3, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 11(LB)
+	ADDSP #2
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD 11(LB), R4
+	STORE R4, -1(SP)
+	LOAD 0(SP), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R3
+	BSR 2(R3)
+	SUBSP #2
+	LOAD R0, R4
+	LOAD 12(LB), R3
+	CMP R3, R4
+	BGT E_True358
+	LOAD #0, R4
+	BRA E_End359
+E_True358:
+	LOAD #1, R4
+E_End359:
+	BEQ else_952486988
+	LOAD #0, R4
+	LOAD R4, R0
+	BRA fin.Math.estNilpotenteFloat
+	BRA end_if_952486988
+else_952486988:
+end_if_952486988:
+	LOAD 10(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 10(LB)
+	BRA while_574568002
+while_end_574568002:
+	LOAD 9(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 9(LB)
+	BRA while_1571967156
+while_end_1571967156:
+	LOAD #1, R4
+	LOAD R4, R0
+	BRA fin.Math.estNilpotenteFloat
+	BRA no_return_error
+fin.Math.estNilpotenteFloat:
+; Restauration des registres  
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.triangulaireSupFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R8
+	PUSH R5
+	PUSH R9
+	PUSH R7
+	PUSH R6
+	TSTO #15
+	BOV stack_overflow_error
+	ADDSP #5
+; Variables Declarations 
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 9(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 10(LB)
+	STORE R0, 11(LB)
+	LOAD #0, R0
+	STORE R0, 12(LB)
+	LOAD #0, R0
+	STORE R0, 13(LB)
+	LOAD 9(LB), R4
+	LOAD 10(LB), R3
+	CMP R3, R4
+	BNE E_True368
+	LOAD #0, R4
+	BRA E_End369
+E_True368:
+	LOAD #1, R4
+E_End369:
+	BEQ else_315932542
+	WSTR "Erreur : la matrice doit etre carree"
+	WNL
+	LOAD #0, R4
+	LOAD #0, R3
+	PUSH R4
+	PUSH R3
+	MUL R3, R4
+	ADD #2, R4
+	NEW R4, R4
+	BOV heap_overflow
+	POP R3
+	POP R1
+	STORE R1, 0(R4)
+	STORE R3, 1(R4)
+	LOAD R4, R0
+	BRA fin.Math.triangulaireSupFloat
+	BRA end_if_315932542
+else_315932542:
+end_if_315932542:
+	LOAD 9(LB), R4
+	LOAD 9(LB), R3
+	PUSH R4
+	PUSH R3
+	MUL R3, R4
+	ADD #2, R4
+	NEW R4, R4
+	BOV heap_overflow
+	POP R3
+	POP R1
+	STORE R1, 0(R4)
+	STORE R3, 1(R4)
+	STORE R4, 11(LB)
+while_1277009227:
+	LOAD 12(LB), R4
+	LOAD 9(LB), R3
+	CMP R3, R4
+	BLT E_True370
+	LOAD #0, R4
+	BRA E_End371
+E_True370:
+	LOAD #1, R4
+E_End371:
+	BEQ while_end_1277009227
+	LOAD #0, R4
+	STORE R4, 13(LB)
+while_2065857933:
+	LOAD 13(LB), R4
+	LOAD 9(LB), R3
+	CMP R3, R4
+	BLT E_True372
+	LOAD #0, R4
+	BRA E_End373
+E_True372:
+	LOAD #1, R4
+E_End373:
+	BEQ while_end_2065857933
+	LOAD 12(LB), R4
+	LOAD 13(LB), R3
+	CMP R3, R4
+	BLE E_True374
+	LOAD #0, R4
+	BRA E_End375
+E_True374:
+	LOAD #1, R4
+E_End375:
+	BEQ else_1914301543
+	LOAD 11(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 12(LB), R3
+	LOAD 13(LB), R2
+	LOAD -3(LB), R5
+	CMP #null, R5
+	BEQ dereference_null
+	LOAD 12(LB), R9
+	LOAD 13(LB), R8
+	LOAD 0(R5), R7
+	CMP R7, R9
+	BGE index_out_of_bounds
+	CMP #0, R9
+	BLT index_out_of_bounds
+	LOAD 1(R5), R7
+	CMP R7, R8
+	BGE index_out_of_bounds
+	CMP #0, R8
+	BLT index_out_of_bounds
+	LOAD 1(R5), R7
+	MUL R7, R9
+	ADD R8, R9
+	ADD #2, R9
+	LOAD 0(R5, R9), R5
+	LOAD 0(R4), R6
+	CMP R6, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	CMP R6, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	MUL R6, R3
+	ADD R2, R3
+	ADD #2, R3
+	STORE R5, 0(R4, R3)
+	BRA end_if_1914301543
+else_1914301543:
+	LOAD 11(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 12(LB), R5
+	LOAD 13(LB), R2
+	LOAD #0x0.0p0, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+end_if_1914301543:
+	LOAD 13(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 13(LB)
+	BRA while_2065857933
+while_end_2065857933:
+	LOAD 12(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 12(LB)
+	BRA while_1277009227
+while_end_1277009227:
+	LOAD 11(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.triangulaireSupFloat
+	BRA no_return_error
+fin.Math.triangulaireSupFloat:
+; Restauration des registres  
+	POP R9
+	POP R8
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.triangulaireInfFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R8
+	PUSH R5
+	PUSH R9
+	PUSH R7
+	PUSH R6
+	TSTO #14
+	BOV stack_overflow_error
+	ADDSP #5
+; Variables Declarations 
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 9(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 10(LB)
+	STORE R0, 11(LB)
+	LOAD #0, R0
+	STORE R0, 12(LB)
+	LOAD #0, R0
+	STORE R0, 13(LB)
+	LOAD 9(LB), R4
+	LOAD 10(LB), R3
+	CMP R3, R4
+	BNE E_True384
+	LOAD #0, R4
+	BRA E_End385
+E_True384:
+	LOAD #1, R4
+E_End385:
+	BEQ else_1997963191
+	WSTR "Erreur : la matrice doit etre carree"
+	WNL
+	LOAD #0, R4
+	LOAD #0, R3
+	PUSH R4
+	PUSH R3
+	MUL R3, R4
+	ADD #2, R4
+	NEW R4, R4
+	BOV heap_overflow
+	POP R3
+	POP R1
+	STORE R1, 0(R4)
+	STORE R3, 1(R4)
+	LOAD R4, R0
+	BRA fin.Math.triangulaireInfFloat
+	BRA end_if_1997963191
+else_1997963191:
+end_if_1997963191:
+while_534906248:
+	LOAD 12(LB), R4
+	LOAD 9(LB), R3
+	CMP R3, R4
+	BLT E_True386
+	LOAD #0, R4
+	BRA E_End387
+E_True386:
+	LOAD #1, R4
+E_End387:
+	BEQ while_end_534906248
+	LOAD #0, R4
+	STORE R4, 13(LB)
+while_1826699684:
+	LOAD 13(LB), R4
+	LOAD 9(LB), R3
+	CMP R3, R4
+	BLT E_True388
+	LOAD #0, R4
+	BRA E_End389
+E_True388:
+	LOAD #1, R4
+E_End389:
+	BEQ while_end_1826699684
+	LOAD 12(LB), R4
+	LOAD 13(LB), R3
+	CMP R3, R4
+	BGE E_True390
+	LOAD #0, R4
+	BRA E_End391
+E_True390:
+	LOAD #1, R4
+E_End391:
+	BEQ else_1769193365
+	LOAD 11(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 12(LB), R3
+	LOAD 13(LB), R2
+	LOAD -3(LB), R5
+	CMP #null, R5
+	BEQ dereference_null
+	LOAD 12(LB), R9
+	LOAD 13(LB), R8
+	LOAD 0(R5), R7
+	CMP R7, R9
+	BGE index_out_of_bounds
+	CMP #0, R9
+	BLT index_out_of_bounds
+	LOAD 1(R5), R7
+	CMP R7, R8
+	BGE index_out_of_bounds
+	CMP #0, R8
+	BLT index_out_of_bounds
+	LOAD 1(R5), R7
+	MUL R7, R9
+	ADD R8, R9
+	ADD #2, R9
+	LOAD 0(R5, R9), R5
+	LOAD 0(R4), R6
+	CMP R6, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	CMP R6, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	MUL R6, R3
+	ADD R2, R3
+	ADD #2, R3
+	STORE R5, 0(R4, R3)
+	BRA end_if_1769193365
+else_1769193365:
+	LOAD 11(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 12(LB), R5
+	LOAD 13(LB), R2
+	LOAD #0x0.0p0, R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+end_if_1769193365:
+	LOAD 13(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 13(LB)
+	BRA while_1826699684
+while_end_1826699684:
+	LOAD 12(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 12(LB)
+	BRA while_534906248
+while_end_534906248:
+	LOAD 11(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.triangulaireInfFloat
+	BRA no_return_error
+fin.Math.triangulaireInfFloat:
+; Restauration des registres  
+	POP R9
+	POP R8
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.copieFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R8
+	PUSH R5
+	PUSH R9
+	PUSH R7
+	PUSH R6
+	TSTO #14
+	BOV stack_overflow_error
+	ADDSP #5
+; Variables Declarations 
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 0(R6), R0
+	STORE R0, 9(LB)
+	LOAD -3(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 1(R6), R0
+	STORE R0, 10(LB)
+	LOAD 9(LB), R0
+	LOAD 10(LB), R6
+	PUSH R0
+	PUSH R6
+	MUL R6, R0
+	ADD #2, R0
+	NEW R0, R0
+	BOV heap_overflow
+	POP R6
+	POP R1
+	STORE R1, 0(R0)
+	STORE R6, 1(R0)
+	STORE R0, 11(LB)
+	LOAD #0, R0
+	STORE R0, 12(LB)
+	LOAD #0, R0
+	STORE R0, 13(LB)
+while_1422222071:
+	LOAD 12(LB), R6
+	LOAD 9(LB), R5
+	CMP R5, R6
+	BLT E_True396
+	LOAD #0, R6
+	BRA E_End397
+E_True396:
+	LOAD #1, R6
+E_End397:
+	BEQ while_end_1422222071
+	LOAD #0, R6
+	STORE R6, 13(LB)
+while_831236296:
+	LOAD 13(LB), R6
+	LOAD 10(LB), R5
+	CMP R5, R6
+	BLT E_True398
+	LOAD #0, R6
+	BRA E_End399
+E_True398:
+	LOAD #1, R6
+E_End399:
+	BEQ while_end_831236296
+	LOAD 11(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 12(LB), R5
+	LOAD 13(LB), R2
+	LOAD -3(LB), R3
+	CMP #null, R3
+	BEQ dereference_null
+	LOAD 12(LB), R9
+	LOAD 13(LB), R8
+	LOAD 0(R3), R7
+	CMP R7, R9
+	BGE index_out_of_bounds
+	CMP #0, R9
+	BLT index_out_of_bounds
+	LOAD 1(R3), R7
+	CMP R7, R8
+	BGE index_out_of_bounds
+	CMP #0, R8
+	BLT index_out_of_bounds
+	LOAD 1(R3), R7
+	MUL R7, R9
+	ADD R8, R9
+	ADD #2, R9
+	LOAD 0(R3, R9), R3
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R3, 0(R6, R5)
+	LOAD 13(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 13(LB)
+	BRA while_831236296
+while_end_831236296:
+	LOAD 12(LB), R4
+	LOAD #1, R3
+	ADD R3, R4
+	STORE R4, 12(LB)
+	BRA while_1422222071
+while_end_1422222071:
+	LOAD 11(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.copieFloat
+	BRA no_return_error
+fin.Math.copieFloat:
+; Restauration des registres  
+	POP R9
+	POP R8
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.determinant:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R8
+	PUSH R5
+	PUSH R9
+	PUSH R7
+	PUSH R6
+	TSTO #26
+	BOV stack_overflow_error
+	ADDSP #12
+; Variables Declarations 
+	LOAD -3(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 0(R2), R0
+	STORE R0, 9(LB)
+	STORE R0, 10(LB)
+	LOAD #0x1.0p0, R0
+	STORE R0, 11(LB)
+	LOAD #0x1.0p0, R0
+	STORE R0, 12(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 13(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 14(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 15(LB)
+	LOAD #0, R0
+	STORE R0, 16(LB)
+	LOAD #0, R0
+	STORE R0, 17(LB)
+	LOAD #0, R0
+	STORE R0, 18(LB)
+	LOAD #1, R0
+	LOAD #0, R2
+	SUB R0, R2
+	LOAD R2, R0
+	STORE R0, 19(LB)
+	LOAD #0, R0
+	STORE R0, 20(LB)
+	LOAD 9(LB), R2
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R9
+	CMP R9, R2
+	BNE E_True424
+	LOAD #0, R2
+	BRA E_End425
+E_True424:
+	LOAD #1, R2
+E_End425:
+	BEQ else_1907431275
+	WSTR "Erreur : la matrice doit etre carree"
+	WNL
+	LOAD #0x0.0p0, R2
+	LOAD R2, R0
+	BRA fin.Math.determinant
+	BRA end_if_1907431275
+else_1907431275:
+end_if_1907431275:
+	ADDSP #2
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD -3(LB), R2
+	STORE R2, -1(SP)
+	LOAD 0(SP), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 0(R2), R9
+	BSR 21(R9)
+	SUBSP #2
+	LOAD R0, R2
+	STORE R2, 10(LB)
+while_1637061418:
+	LOAD 16(LB), R2
+	LOAD 9(LB), R9
+	CMP R9, R2
+	BLT E_True426
+	LOAD #0, R2
+	BRA E_End427
+E_True426:
+	LOAD #1, R2
+E_End427:
+	BEQ while_end_1637061418
+	LOAD 10(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 16(LB), R9
+	LOAD 16(LB), R4
+	LOAD 0(R2), R5
+	CMP R5, R9
+	BGE index_out_of_bounds
+	CMP #0, R9
+	BLT index_out_of_bounds
+	LOAD 1(R2), R5
+	CMP R5, R4
+	BGE index_out_of_bounds
+	CMP #0, R4
+	BLT index_out_of_bounds
+	LOAD 1(R2), R5
+	MUL R5, R9
+	ADD R4, R9
+	ADD #2, R9
+	LOAD 0(R2, R9), R2
+	LOAD #0x0.0p0, R5
+	CMP R5, R2
+	BEQ E_True428
+	LOAD #0, R2
+	BRA E_End429
+E_True428:
+	LOAD #1, R2
+E_End429:
+	BEQ else_1686100174
+	LOAD #1, R2
+	LOAD #0, R5
+	SUB R2, R5
+	LOAD R5, R2
+	STORE R2, 19(LB)
+	LOAD 16(LB), R2
+	LOAD #1, R5
+	ADD R5, R2
+	STORE R2, 17(LB)
+	LOAD #0, R2
+	STORE R2, 20(LB)
+while_22671767:
+	LOAD 17(LB), R2
+	LOAD 9(LB), R5
+	CMP R5, R2
+	BLT E_True430
+	LOAD #0, R2
+	BRA E_End431
+E_True430:
+	LOAD #1, R2
+E_End431:
+	BEQ E_False432
+	LOAD 20(LB), R2
+	CMP #0, R2
+	BNE E_True434
+	LOAD #1, R2
+	BRA E_End435
+E_True434:
+	LOAD #0, R2
+E_End435:
+	BEQ E_False432
+	LOAD #1, R2
+	BRA E_End433
+E_False432:
+	LOAD #0, R2
+E_End433:
+	BEQ while_end_22671767
+	LOAD 10(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 17(LB), R5
+	LOAD 16(LB), R4
+	LOAD 0(R2), R9
+	CMP R9, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R2), R9
+	CMP R9, R4
+	BGE index_out_of_bounds
+	CMP #0, R4
+	BLT index_out_of_bounds
+	LOAD 1(R2), R9
+	MUL R9, R5
+	ADD R4, R5
+	ADD #2, R5
+	LOAD 0(R2, R5), R2
+	LOAD #0x0.0p0, R9
+	CMP R9, R2
+	BNE E_True436
+	LOAD #0, R2
+	BRA E_End437
+E_True436:
+	LOAD #1, R2
+E_End437:
+	BEQ else_2024453272
+	LOAD 17(LB), R2
+	STORE R2, 19(LB)
+	LOAD #1, R2
+	STORE R2, 20(LB)
+	BRA end_if_2024453272
+else_2024453272:
+end_if_2024453272:
+	LOAD 17(LB), R2
+	LOAD #1, R9
+	ADD R9, R2
+	STORE R2, 17(LB)
+	BRA while_22671767
+while_end_22671767:
+	LOAD 19(LB), R2
+	LOAD #1, R9
+	LOAD #0, R4
+	SUB R9, R4
+	LOAD R4, R9
+	CMP R9, R2
+	BEQ E_True438
+	LOAD #0, R2
+	BRA E_End439
+E_True438:
+	LOAD #1, R2
+E_End439:
+	BEQ else_98394724
+	LOAD #0x0.0p0, R2
+	LOAD R2, R0
+	BRA fin.Math.determinant
+	BRA end_if_98394724
+else_98394724:
+end_if_98394724:
+	LOAD #0, R2
+	STORE R2, 18(LB)
+while_536765369:
+	LOAD 18(LB), R2
+	LOAD 9(LB), R9
+	CMP R9, R2
+	BLT E_True440
+	LOAD #0, R2
+	BRA E_End441
+E_True440:
+	LOAD #1, R2
+E_End441:
+	BEQ while_end_536765369
+	LOAD 10(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 16(LB), R9
+	LOAD 18(LB), R4
+	LOAD 0(R2), R5
+	CMP R5, R9
+	BGE index_out_of_bounds
+	CMP #0, R9
+	BLT index_out_of_bounds
+	LOAD 1(R2), R5
+	CMP R5, R4
+	BGE index_out_of_bounds
+	CMP #0, R4
+	BLT index_out_of_bounds
+	LOAD 1(R2), R5
+	MUL R5, R9
+	ADD R4, R9
+	ADD #2, R9
+	LOAD 0(R2, R9), R2
+	STORE R2, 15(LB)
+	LOAD 10(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 16(LB), R5
+	LOAD 18(LB), R4
+	LOAD 10(LB), R9
+	CMP #null, R9
+	BEQ dereference_null
+	LOAD 19(LB), R3
+	LOAD 18(LB), R8
+	LOAD 0(R9), R7
+	CMP R7, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R9), R7
+	CMP R7, R8
+	BGE index_out_of_bounds
+	CMP #0, R8
+	BLT index_out_of_bounds
+	LOAD 1(R9), R7
+	MUL R7, R3
+	ADD R8, R3
+	ADD #2, R3
+	LOAD 0(R9, R3), R9
+	LOAD 0(R2), R6
+	CMP R6, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R2), R6
+	CMP R6, R4
+	BGE index_out_of_bounds
+	CMP #0, R4
+	BLT index_out_of_bounds
+	LOAD 1(R2), R6
+	MUL R6, R5
+	ADD R4, R5
+	ADD #2, R5
+	STORE R9, 0(R2, R5)
+	LOAD 10(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 19(LB), R9
+	LOAD 18(LB), R4
+	LOAD 15(LB), R5
+	LOAD 0(R6), R2
+	CMP R2, R9
+	BGE index_out_of_bounds
+	CMP #0, R9
+	BLT index_out_of_bounds
+	LOAD 1(R6), R2
+	CMP R2, R4
+	BGE index_out_of_bounds
+	CMP #0, R4
+	BLT index_out_of_bounds
+	LOAD 1(R6), R2
+	MUL R2, R9
+	ADD R4, R9
+	ADD #2, R9
+	STORE R5, 0(R6, R9)
+	LOAD 18(LB), R2
+	LOAD #1, R5
+	ADD R5, R2
+	STORE R2, 18(LB)
+	BRA while_536765369
+while_end_536765369:
+	LOAD 12(LB), R2
+	LOAD #0x0.0p0, R5
+	SUB R2, R5
+	LOAD R5, R2
+	STORE R2, 12(LB)
+	BRA end_if_1686100174
+else_1686100174:
+end_if_1686100174:
+	LOAD 16(LB), R2
+	LOAD #1, R5
+	ADD R5, R2
+	STORE R2, 17(LB)
+while_1374026904:
+	LOAD 17(LB), R2
+	LOAD 9(LB), R5
+	CMP R5, R2
+	BLT E_True442
+	LOAD #0, R2
+	BRA E_End443
+E_True442:
+	LOAD #1, R2
+E_End443:
+	BEQ while_end_1374026904
+	LOAD 10(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 17(LB), R5
+	LOAD 16(LB), R4
+	LOAD 0(R2), R9
+	CMP R9, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R2), R9
+	CMP R9, R4
+	BGE index_out_of_bounds
+	CMP #0, R4
+	BLT index_out_of_bounds
+	LOAD 1(R2), R9
+	MUL R9, R5
+	ADD R4, R5
+	ADD #2, R5
+	LOAD 0(R2, R5), R2
+	LOAD 10(LB), R9
+	CMP #null, R9
+	BEQ dereference_null
+	LOAD 16(LB), R4
+	LOAD 16(LB), R5
+	LOAD 0(R9), R6
+	CMP R6, R4
+	BGE index_out_of_bounds
+	CMP #0, R4
+	BLT index_out_of_bounds
+	LOAD 1(R9), R6
+	CMP R6, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R9), R6
+	MUL R6, R4
+	ADD R5, R4
+	ADD #2, R4
+	LOAD 0(R9, R4), R9
+	DIV R9, R2
+	BOV division_by_zero
+	STORE R2, 13(LB)
+	LOAD 16(LB), R2
+	STORE R2, 18(LB)
+while_2085002312:
+	LOAD 18(LB), R2
+	LOAD 9(LB), R9
+	CMP R9, R2
+	BLT E_True444
+	LOAD #0, R2
+	BRA E_End445
+E_True444:
+	LOAD #1, R2
+E_End445:
+	BEQ while_end_2085002312
+	LOAD 10(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 17(LB), R9
+	LOAD 18(LB), R6
+	LOAD 0(R2), R5
+	CMP R5, R9
+	BGE index_out_of_bounds
+	CMP #0, R9
+	BLT index_out_of_bounds
+	LOAD 1(R2), R5
+	CMP R5, R6
+	BGE index_out_of_bounds
+	CMP #0, R6
+	BLT index_out_of_bounds
+	LOAD 1(R2), R5
+	MUL R5, R9
+	ADD R6, R9
+	ADD #2, R9
+	LOAD 0(R2, R9), R2
+	LOAD 13(LB), R5
+	LOAD 10(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 16(LB), R9
+	LOAD 18(LB), R4
+	LOAD 0(R6), R7
+	CMP R7, R9
+	BGE index_out_of_bounds
+	CMP #0, R9
+	BLT index_out_of_bounds
+	LOAD 1(R6), R7
+	CMP R7, R4
+	BGE index_out_of_bounds
+	CMP #0, R4
+	BLT index_out_of_bounds
+	LOAD 1(R6), R7
+	MUL R7, R9
+	ADD R4, R9
+	ADD #2, R9
+	LOAD 0(R6, R9), R6
+	MUL R6, R5
+	BOV float_arithmetic_overflow
+	SUB R5, R2
+	BOV float_arithmetic_overflow
+	STORE R2, 14(LB)
+	LOAD 10(LB), R2
+	CMP #null, R2
+	BEQ dereference_null
+	LOAD 17(LB), R5
+	LOAD 18(LB), R6
+	LOAD 14(LB), R7
+	LOAD 0(R2), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R2), R4
+	CMP R4, R6
+	BGE index_out_of_bounds
+	CMP #0, R6
+	BLT index_out_of_bounds
+	LOAD 1(R2), R4
+	MUL R4, R5
+	ADD R6, R5
+	ADD #2, R5
+	STORE R7, 0(R2, R5)
+	LOAD 18(LB), R4
+	LOAD #1, R7
+	ADD R7, R4
+	STORE R4, 18(LB)
+	BRA while_2085002312
+while_end_2085002312:
+	LOAD 17(LB), R4
+	LOAD #1, R7
+	ADD R7, R4
+	STORE R4, 17(LB)
+	BRA while_1374026904
+while_end_1374026904:
+	LOAD 16(LB), R4
+	LOAD #1, R7
+	ADD R7, R4
+	STORE R4, 16(LB)
+	BRA while_1637061418
+while_end_1637061418:
+	LOAD #0, R4
+	STORE R4, 17(LB)
+while_317071334:
+	LOAD 17(LB), R4
+	LOAD 9(LB), R7
+	CMP R7, R4
+	BLT E_True446
+	LOAD #0, R4
+	BRA E_End447
+E_True446:
+	LOAD #1, R4
+E_End447:
+	BEQ while_end_317071334
+	LOAD 11(LB), R4
+	LOAD 10(LB), R7
+	CMP #null, R7
+	BEQ dereference_null
+	LOAD 17(LB), R6
+	LOAD 17(LB), R5
+	LOAD 0(R7), R2
+	CMP R2, R6
+	BGE index_out_of_bounds
+	CMP #0, R6
+	BLT index_out_of_bounds
+	LOAD 1(R7), R2
+	CMP R2, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R7), R2
+	MUL R2, R6
+	ADD R5, R6
+	ADD #2, R6
+	LOAD 0(R7, R6), R7
+	MUL R7, R4
+	BOV float_arithmetic_overflow
+	STORE R4, 11(LB)
+	LOAD 17(LB), R4
+	LOAD #1, R7
+	ADD R7, R4
+	STORE R4, 17(LB)
+	BRA while_317071334
+while_end_317071334:
+	LOAD 12(LB), R4
+	LOAD 11(LB), R7
+	MUL R7, R4
+	BOV float_arithmetic_overflow
+	LOAD R4, R0
+	BRA fin.Math.determinant
+	BRA no_return_error
+fin.Math.determinant:
+; Restauration des registres  
+	POP R9
+	POP R8
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.inverse:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R3
+	PUSH R8
+	PUSH R5
+	PUSH R10
+	PUSH R9
+	PUSH R7
+	PUSH R11
+	PUSH R6
+	TSTO #23
+	BOV stack_overflow_error
+	ADDSP #11
+; Variables Declarations 
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 11(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 12(LB)
+	STORE R0, 13(LB)
+	STORE R0, 14(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 15(LB)
+	LOAD #0x0.0p0, R0
+	STORE R0, 16(LB)
+	LOAD #0, R0
+	STORE R0, 17(LB)
+	LOAD #0, R0
+	STORE R0, 18(LB)
+	LOAD #0, R0
+	STORE R0, 19(LB)
+	LOAD #0, R0
+	STORE R0, 20(LB)
+	LOAD #0, R0
+	STORE R0, 21(LB)
+	LOAD 11(LB), R4
+	LOAD 12(LB), R7
+	CMP R7, R4
+	BNE E_True472
+	LOAD #0, R4
+	BRA E_End473
+E_True472:
+	LOAD #1, R4
+E_End473:
+	BEQ else_521081105
+	WSTR "Erreur : la matrice doit etre carree"
+	WNL
+	LOAD #0, R4
+	LOAD #0, R7
+	PUSH R4
+	PUSH R7
+	MUL R7, R4
+	ADD #2, R4
+	NEW R4, R4
+	BOV heap_overflow
+	POP R7
+	POP R1
+	STORE R1, 0(R4)
+	STORE R7, 1(R4)
+	LOAD R4, R0
+	BRA fin.Math.inverse
+	BRA end_if_521081105
+else_521081105:
+end_if_521081105:
+	LOAD 11(LB), R4
+	LOAD #2, R7
+	LOAD 11(LB), R2
+	MUL R2, R7
+	PUSH R4
+	PUSH R7
+	MUL R7, R4
+	ADD #2, R4
+	NEW R4, R4
+	BOV heap_overflow
+	POP R7
+	POP R1
+	STORE R1, 0(R4)
+	STORE R7, 1(R4)
+	STORE R4, 13(LB)
+	LOAD #0, R4
+	STORE R4, 17(LB)
+while_1237550792:
+	LOAD 17(LB), R4
+	LOAD 11(LB), R7
+	CMP R7, R4
+	BLT E_True474
+	LOAD #0, R4
+	BRA E_End475
+E_True474:
+	LOAD #1, R4
+E_End475:
+	BEQ while_end_1237550792
+	LOAD #0, R4
+	STORE R4, 18(LB)
+while_1448247698:
+	LOAD 18(LB), R4
+	LOAD 11(LB), R7
+	CMP R7, R4
+	BLT E_True476
+	LOAD #0, R4
+	BRA E_End477
+E_True476:
+	LOAD #1, R4
+E_End477:
+	BEQ while_end_1448247698
+	LOAD 13(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 17(LB), R7
+	LOAD 18(LB), R2
+	LOAD -3(LB), R5
+	CMP #null, R5
+	BEQ dereference_null
+	LOAD 17(LB), R11
+	LOAD 18(LB), R8
+	LOAD 0(R5), R3
+	CMP R3, R11
+	BGE index_out_of_bounds
+	CMP #0, R11
+	BLT index_out_of_bounds
+	LOAD 1(R5), R3
+	CMP R3, R8
+	BGE index_out_of_bounds
+	CMP #0, R8
+	BLT index_out_of_bounds
+	LOAD 1(R5), R3
+	MUL R3, R11
+	ADD R8, R11
+	ADD #2, R11
+	LOAD 0(R5, R11), R5
+	LOAD 0(R4), R6
+	CMP R6, R7
+	BGE index_out_of_bounds
+	CMP #0, R7
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	CMP R6, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	MUL R6, R7
+	ADD R2, R7
+	ADD #2, R7
+	STORE R5, 0(R4, R7)
+	LOAD 17(LB), R6
+	LOAD 18(LB), R5
+	CMP R5, R6
+	BEQ E_True478
+	LOAD #0, R6
+	BRA E_End479
+E_True478:
+	LOAD #1, R6
+E_End479:
+	BEQ else_1846406218
+	LOAD 13(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 17(LB), R5
+	LOAD 18(LB), R2
+	LOAD 11(LB), R3
+	ADD R3, R2
+	LOAD #0x1.0p0, R7
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R7, 0(R6, R5)
+	BRA end_if_1846406218
+else_1846406218:
+	LOAD 13(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 17(LB), R7
+	LOAD 18(LB), R2
+	LOAD 11(LB), R3
+	ADD R3, R2
+	LOAD #0x0.0p0, R5
+	LOAD 0(R4), R6
+	CMP R6, R7
+	BGE index_out_of_bounds
+	CMP #0, R7
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	CMP R6, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	MUL R6, R7
+	ADD R2, R7
+	ADD #2, R7
+	STORE R5, 0(R4, R7)
+end_if_1846406218:
+	LOAD 18(LB), R6
+	LOAD #1, R5
+	ADD R5, R6
+	STORE R6, 18(LB)
+	BRA while_1448247698
+while_end_1448247698:
+	LOAD 17(LB), R6
+	LOAD #1, R5
+	ADD R5, R6
+	STORE R6, 17(LB)
+	BRA while_1237550792
+while_end_1237550792:
+	LOAD #0, R6
+	STORE R6, 19(LB)
+while_158199555:
+	LOAD 19(LB), R6
+	LOAD 11(LB), R5
+	CMP R5, R6
+	BLT E_True480
+	LOAD #0, R6
+	BRA E_End481
+E_True480:
+	LOAD #1, R6
+E_End481:
+	BEQ while_end_158199555
+	LOAD 13(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 19(LB), R5
+	LOAD 19(LB), R2
+	LOAD 0(R6), R7
+	CMP R7, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R7
+	CMP R7, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R7
+	MUL R7, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R6, R5), R6
+	STORE R6, 15(LB)
+	LOAD 15(LB), R6
+	LOAD #0x0.0p0, R7
+	CMP R7, R6
+	BEQ E_True482
+	LOAD #0, R6
+	BRA E_End483
+E_True482:
+	LOAD #1, R6
+E_End483:
+	BEQ else_1556995360
+	WSTR "Erreur : la matrice n est pas inversible"
+	WNL
+	LOAD #0, R6
+	LOAD #0, R7
+	PUSH R6
+	PUSH R7
+	MUL R7, R6
+	ADD #2, R6
+	NEW R6, R6
+	BOV heap_overflow
+	POP R7
+	POP R1
+	STORE R1, 0(R6)
+	STORE R7, 1(R6)
+	LOAD R6, R0
+	BRA fin.Math.inverse
+	BRA end_if_1556995360
+else_1556995360:
+end_if_1556995360:
+	LOAD #0, R6
+	STORE R6, 18(LB)
+while_517052730:
+	LOAD 18(LB), R6
+	LOAD #2, R7
+	LOAD 11(LB), R2
+	MUL R2, R7
+	CMP R7, R6
+	BLT E_True484
+	LOAD #0, R6
+	BRA E_End485
+E_True484:
+	LOAD #1, R6
+E_End485:
+	BEQ while_end_517052730
+	LOAD 13(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 19(LB), R7
+	LOAD 18(LB), R2
+	LOAD 13(LB), R5
+	CMP #null, R5
+	BEQ dereference_null
+	LOAD 19(LB), R3
+	LOAD 18(LB), R8
+	LOAD 0(R5), R11
+	CMP R11, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R5), R11
+	CMP R11, R8
+	BGE index_out_of_bounds
+	CMP #0, R8
+	BLT index_out_of_bounds
+	LOAD 1(R5), R11
+	MUL R11, R3
+	ADD R8, R3
+	ADD #2, R3
+	LOAD 0(R5, R3), R5
+	LOAD 15(LB), R11
+	DIV R11, R5
+	BOV division_by_zero
+	LOAD 0(R6), R4
+	CMP R4, R7
+	BGE index_out_of_bounds
+	CMP #0, R7
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R7
+	ADD R2, R7
+	ADD #2, R7
+	STORE R5, 0(R6, R7)
+	LOAD 18(LB), R4
+	LOAD #1, R5
+	ADD R5, R4
+	STORE R4, 18(LB)
+	BRA while_517052730
+while_end_517052730:
+	LOAD #0, R4
+	STORE R4, 20(LB)
+while_524241174:
+	LOAD 20(LB), R4
+	LOAD 11(LB), R5
+	CMP R5, R4
+	BLT E_True486
+	LOAD #0, R4
+	BRA E_End487
+E_True486:
+	LOAD #1, R4
+E_End487:
+	BEQ while_end_524241174
+	LOAD 20(LB), R4
+	LOAD 19(LB), R5
+	CMP R5, R4
+	BNE E_True488
+	LOAD #0, R4
+	BRA E_End489
+E_True488:
+	LOAD #1, R4
+E_End489:
+	BEQ else_2035070981
+	LOAD 13(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 20(LB), R5
+	LOAD 19(LB), R2
+	LOAD 0(R4), R7
+	CMP R7, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R7
+	CMP R7, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R7
+	MUL R7, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	STORE R4, 16(LB)
+	LOAD #0, R4
+	STORE R4, 18(LB)
+while_1264213713:
+	LOAD 18(LB), R4
+	LOAD #2, R7
+	LOAD 11(LB), R2
+	MUL R2, R7
+	CMP R7, R4
+	BLT E_True490
+	LOAD #0, R4
+	BRA E_End491
+E_True490:
+	LOAD #1, R4
+E_End491:
+	BEQ while_end_1264213713
+	LOAD 13(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 20(LB), R7
+	LOAD 18(LB), R2
+	LOAD 13(LB), R5
+	CMP #null, R5
+	BEQ dereference_null
+	LOAD 20(LB), R11
+	LOAD 18(LB), R8
+	LOAD 0(R5), R3
+	CMP R3, R11
+	BGE index_out_of_bounds
+	CMP #0, R11
+	BLT index_out_of_bounds
+	LOAD 1(R5), R3
+	CMP R3, R8
+	BGE index_out_of_bounds
+	CMP #0, R8
+	BLT index_out_of_bounds
+	LOAD 1(R5), R3
+	MUL R3, R11
+	ADD R8, R11
+	ADD #2, R11
+	LOAD 0(R5, R11), R5
+	LOAD 16(LB), R3
+	LOAD 13(LB), R8
+	CMP #null, R8
+	BEQ dereference_null
+	LOAD 19(LB), R11
+	LOAD 18(LB), R10
+	LOAD 0(R8), R9
+	CMP R9, R11
+	BGE index_out_of_bounds
+	CMP #0, R11
+	BLT index_out_of_bounds
+	LOAD 1(R8), R9
+	CMP R9, R10
+	BGE index_out_of_bounds
+	CMP #0, R10
+	BLT index_out_of_bounds
+	LOAD 1(R8), R9
+	MUL R9, R11
+	ADD R10, R11
+	ADD #2, R11
+	LOAD 0(R8, R11), R8
+	MUL R8, R3
+	BOV float_arithmetic_overflow
+	SUB R3, R5
+	BOV float_arithmetic_overflow
+	LOAD 0(R4), R6
+	CMP R6, R7
+	BGE index_out_of_bounds
+	CMP #0, R7
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	CMP R6, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R6
+	MUL R6, R7
+	ADD R2, R7
+	ADD #2, R7
+	STORE R5, 0(R4, R7)
+	LOAD 18(LB), R6
+	LOAD #1, R5
+	ADD R5, R6
+	STORE R6, 18(LB)
+	BRA while_1264213713
+while_end_1264213713:
+	BRA end_if_2035070981
+else_2035070981:
+end_if_2035070981:
+	LOAD 20(LB), R6
+	LOAD #1, R5
+	ADD R5, R6
+	STORE R6, 20(LB)
+	BRA while_524241174
+while_end_524241174:
+	LOAD 19(LB), R6
+	LOAD #1, R5
+	ADD R5, R6
+	STORE R6, 19(LB)
+	BRA while_158199555
+while_end_158199555:
+	LOAD 11(LB), R6
+	LOAD 11(LB), R5
+	PUSH R6
+	PUSH R5
+	MUL R5, R6
+	ADD #2, R6
+	NEW R6, R6
+	BOV heap_overflow
+	POP R5
+	POP R1
+	STORE R1, 0(R6)
+	STORE R5, 1(R6)
+	STORE R6, 14(LB)
+	LOAD #0, R6
+	STORE R6, 17(LB)
+while_550668305:
+	LOAD 17(LB), R6
+	LOAD 11(LB), R5
+	CMP R5, R6
+	BLT E_True492
+	LOAD #0, R6
+	BRA E_End493
+E_True492:
+	LOAD #1, R6
+E_End493:
+	BEQ while_end_550668305
+	LOAD #0, R6
+	STORE R6, 21(LB)
+while_963110412:
+	LOAD 21(LB), R6
+	LOAD 11(LB), R5
+	CMP R5, R6
+	BLT E_True494
+	LOAD #0, R6
+	BRA E_End495
+E_True494:
+	LOAD #1, R6
+E_End495:
+	BEQ while_end_963110412
+	LOAD 14(LB), R6
+	CMP #null, R6
+	BEQ dereference_null
+	LOAD 17(LB), R5
+	LOAD 21(LB), R2
+	LOAD 13(LB), R7
+	CMP #null, R7
+	BEQ dereference_null
+	LOAD 17(LB), R3
+	LOAD 21(LB), R8
+	LOAD 11(LB), R10
+	ADD R10, R8
+	LOAD 0(R7), R9
+	CMP R9, R3
+	BGE index_out_of_bounds
+	CMP #0, R3
+	BLT index_out_of_bounds
+	LOAD 1(R7), R9
+	CMP R9, R8
+	BGE index_out_of_bounds
+	CMP #0, R8
+	BLT index_out_of_bounds
+	LOAD 1(R7), R9
+	MUL R9, R3
+	ADD R8, R3
+	ADD #2, R3
+	LOAD 0(R7, R3), R7
+	LOAD 0(R6), R4
+	CMP R4, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	CMP R4, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R6), R4
+	MUL R4, R5
+	ADD R2, R5
+	ADD #2, R5
+	STORE R7, 0(R6, R5)
+	LOAD 21(LB), R4
+	LOAD #1, R7
+	ADD R7, R4
+	STORE R4, 21(LB)
+	BRA while_963110412
+while_end_963110412:
+	LOAD 17(LB), R4
+	LOAD #1, R7
+	ADD R7, R4
+	STORE R4, 17(LB)
+	BRA while_550668305
+while_end_550668305:
+	LOAD 14(LB), R4
+	LOAD R4, R0
+	BRA fin.Math.inverse
+	BRA no_return_error
+fin.Math.inverse:
+; Restauration des registres  
+	POP R11
+	POP R10
+	POP R9
+	POP R8
+	POP R7
+	POP R6
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+Code.Math.printMatriceFloat:
+; Sauvegarde des registres
+	PUSH R4
+	PUSH R2
+	PUSH R5
+	PUSH R7
+	TSTO #9
+	BOV stack_overflow_error
+	ADDSP #4
+; Variables Declarations 
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 0(R4), R0
+	STORE R0, 5(LB)
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 1(R4), R0
+	STORE R0, 6(LB)
+	LOAD #0, R0
+	STORE R0, 7(LB)
+	LOAD #0, R0
+	STORE R0, 8(LB)
+while_910091170:
+	LOAD 7(LB), R4
+	LOAD 5(LB), R5
+	CMP R5, R4
+	BLT E_True502
+	LOAD #0, R4
+	BRA E_End503
+E_True502:
+	LOAD #1, R4
+E_End503:
+	BEQ while_end_910091170
+	WSTR "["
+	LOAD #0, R4
+	STORE R4, 8(LB)
+while_1183888521:
+	LOAD 8(LB), R4
+	LOAD 6(LB), R5
+	CMP R5, R4
+	BLT E_True504
+	LOAD #0, R4
+	BRA E_End505
+E_True504:
+	LOAD #1, R4
+E_End505:
+	BEQ while_end_1183888521
+	LOAD -3(LB), R4
+	CMP #null, R4
+	BEQ dereference_null
+	LOAD 7(LB), R5
+	LOAD 8(LB), R2
+	LOAD 0(R4), R7
+	CMP R7, R5
+	BGE index_out_of_bounds
+	CMP #0, R5
+	BLT index_out_of_bounds
+	LOAD 1(R4), R7
+	CMP R7, R2
+	BGE index_out_of_bounds
+	CMP #0, R2
+	BLT index_out_of_bounds
+	LOAD 1(R4), R7
+	MUL R7, R5
+	ADD R2, R5
+	ADD #2, R5
+	LOAD 0(R4, R5), R4
+	LOAD R4, R1
+	WFLOAT
+	LOAD 8(LB), R4
+	LOAD 6(LB), R7
+	LOAD #1, R2
+	SUB R2, R7
+	CMP R7, R4
+	BLT E_True506
+	LOAD #0, R4
+	BRA E_End507
+E_True506:
+	LOAD #1, R4
+E_End507:
+	BEQ else_1052245076
+	WSTR ", "
+	BRA end_if_1052245076
+else_1052245076:
+end_if_1052245076:
+	LOAD 8(LB), R4
+	LOAD #1, R7
+	ADD R7, R4
+	STORE R4, 8(LB)
+	BRA while_1183888521
+while_end_1183888521:
+	WSTR "]"
+	WNL
+	LOAD 7(LB), R4
+	LOAD #1, R7
+	ADD R7, R4
+	STORE R4, 7(LB)
+	BRA while_910091170
+while_end_910091170:
+fin.Math.printMatriceFloat:
+; Restauration des registres  
+	POP R7
+	POP R5
+	POP R4
+	POP R2
+	RTS
+; end main program
