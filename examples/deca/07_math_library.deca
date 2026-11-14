@@ -1,0 +1,28 @@
+// Example 07: Mathematical routines & Advanced Matrix Algebra
+// Demonstrates Math class methods: abs, sqrt, ulp, and determinant
+
+#include "Math.decah"
+
+{
+    Math math = new Math();
+    float x = 25.0;
+    float root;
+    float[][] M = new float[2][2];
+    float det;
+
+    root = math.sqrt(x);
+    println("sqrt(25.0) = ", root);
+    println("abs(-42.5) = ", math.abs(-42.5));
+    println("ulp(1.0) = ", math.ulp(1.0));
+
+    // Matrix determinant:
+    // [ [ 4.0, 2.0 ],
+    //   [ 1.0, 3.0 ] ] => det = 4*3 - 2*1 = 10.0
+    setElem(M, 0, 0, 4.0);
+    setElem(M, 0, 1, 2.0);
+    setElem(M, 1, 0, 1.0);
+    setElem(M, 1, 1, 3.0);
+
+    det = math.determinant(M);
+    println("Determinant of 2x2 matrix: ", det);
+}

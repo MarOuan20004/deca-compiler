@@ -1,0 +1,8 @@
+// Example 01: Hello World in Deca
+// Demonstrates basic output routines and string literals
+
+{
+    println("Hello, World!");
+    print("Welcome to the Deca compiler (gl10) - ");
+    println("Grenoble INP Ensimag.");
+}

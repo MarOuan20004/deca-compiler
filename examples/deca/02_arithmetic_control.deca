@@ -1,0 +1,29 @@
+// Example 02: Arithmetic, condition handling, and loops
+// Demonstrates primitive types (int, float, boolean), control structures and expressions
+
+{
+    int n = 10;
+    int sum = 0;
+    int i = 1;
+    float piApprox = 3.14159;
+    boolean isPositive = true;
+
+    while (i <= n) {
+        sum = sum + i;
+        i = i + 1;
+    }
+
+    println("Sum of first 10 integers: ", sum);
+
+    if (sum > 50) {
+        println("Sum is strictly greater than 50.");
+    } else {
+        println("Sum is less than or equal to 50.");
+    }
+
+    if (isPositive && (piApprox > 3.0)) {
+        println("Approximation of Pi: ", piApprox);
+        print("Hexadecimal floating-point representation: ");
+        printlnx(piApprox);
+    }
+}

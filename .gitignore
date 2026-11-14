@@ -1,11 +1,56 @@
-# Do not version generated files.
-/target
+# ==============================================================================
+# Git Ignore Configuration - Deca Compiler (gl10)
+# ==============================================================================
 
-# These are IDE-specific files. We version pom.xml, and rely on IDE
-# integration with maven (or with maven's generation of IDE files like
-# mvn eclipse:eclipse).
+# Build Output & Dependencies
+target/
+build/
+dist/
+out/
+bin/package/
+*.class
+
+# Log files
+*.log
+*.log.*
+
+# Test & Execution Artifacts
+tmp/
+*.ass
+*.res
+*.trace
+jacoco.exec
+
+# ANTLR temporary artifacts
+.antlr/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
 .classpath
 .project
-.metadata
-.settings
-.antlr/
+.metadata/
+.settings/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup & Editor Temporary Files
+*~
+*.swp
+*.swo
+*.bak

@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    name: Build & Validate Deca Compiler
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up OpenJDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Compile with Maven
+        run: mvn compile
+
+      - name: Run Test Suite
+        run: |
+          chmod +x src/test/script/*.sh src/test/script/launchers/*
+          mvn test < /dev/null
+
+      - name: Package Distribution JAR
+        run: mvn package -DskipTests
+
+      - name: Verify decac executable wrapper
+        run: |
+          chmod +x bin/decac scripts/*.sh
+          ./bin/decac -b
+          ./bin/decac examples/deca/01_hello_world.deca
+          ./bin/decac examples/deca/02_arithmetic_control.deca
+          ./bin/decac examples/deca/03_classes_and_objects.deca
+          ./bin/decac examples/deca/04_polymorphism_and_cast.deca
+
+      - name: Archive Compiler Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: decac-compiler-jar
+          path: target/Deca-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+          retention-days: 14

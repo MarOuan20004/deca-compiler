@@ -1,0 +1,39 @@
+// Example 03: Object-Oriented Deca - Classes, Fields, and Methods
+// Demonstrates class declaration, field initialization, encapsulation, and method calls
+
+class Point2D {
+    protected int x;
+    protected int y;
+
+    void init(int initialX, int initialY) {
+        this.x = initialX;
+        this.y = initialY;
+    }
+
+    int getX() {
+        return this.x;
+    }
+
+    int getY() {
+        return this.y;
+    }
+
+    void translate(int dx, int dy) {
+        this.x = this.x + dx;
+        this.y = this.y + dy;
+    }
+
+    void display() {
+        println("Point(", this.x, ", ", this.y, ")");
+    }
+}
+
+{
+    Point2D p = new Point2D();
+    p.init(3, 4);
+    p.display();
+
+    p.translate(2, -1);
+    println("After translation by (2, -1):");
+    p.display();
+}

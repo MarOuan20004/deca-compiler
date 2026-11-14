@@ -1,0 +1,62 @@
+// Example 04: Polymorphism, Inheritance, Virtual Method Tables, and Casts
+// Demonstrates subtyping, dynamic dispatch (late binding), instanceof and explicit casting
+
+class Shape {
+    int id;
+
+    void identify() {
+        println("Generic shape");
+    }
+
+    float area() {
+        return 0.0;
+    }
+}
+
+class Rectangle extends Shape {
+    int width;
+    int height;
+
+    void init(int w, int h) {
+        this.width = w;
+        this.height = h;
+    }
+
+    void identify() {
+        println("Rectangle of dimensions ", this.width, " x ", this.height);
+    }
+
+    float area() {
+        return this.width * this.height;
+    }
+}
+
+class Square extends Rectangle {
+    void initSquare(int side) {
+        this.init(side, side);
+    }
+
+    void identify() {
+        println("Square of side ", this.width);
+    }
+}
+
+{
+    Shape s1 = new Rectangle();
+    Shape s2 = new Square();
+    Rectangle r;
+
+    // Dynamic dispatch through virtual table
+    s1.identify();
+    s2.identify();
+
+    if (s2 instanceof Square) {
+        println("s2 is an instance of Square.");
+    }
+
+    if (s1 instanceof Rectangle) {
+        r = (Rectangle)(s1);
+        r.init(5, 8);
+        println("Calculated rectangle area: ", r.area());
+    }
+}

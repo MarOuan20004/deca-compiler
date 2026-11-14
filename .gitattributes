@@ -1,4 +1,37 @@
-*.ps binary
+# ==============================================================================
+# Git Attributes Configuration - Deca Compiler (gl10)
+# ==============================================================================
+
+# Set default behavior to automatically normalize line endings to LF
+* text=auto eol=lf
+
+# Source Code & Configurations
+*.java text diff=java eol=lf
+*.g4 text eol=lf
+*.tokens text eol=lf
+*.deca text eol=lf
+*.decah text eol=lf
+*.xml text eol=lf
+*.properties text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+
+# Shell Scripts
+*.sh text eol=lf
+bin/decac text eol=lf
+
+# Binary Files (prevent line ending conversion and corruption)
+*.jar binary
+*.class binary
 *.pdf binary
-*.doc binary
-*.docx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.tar.gz binary
+*.zip binary
+*.planner binary

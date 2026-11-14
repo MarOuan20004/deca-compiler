@@ -1,354 +1,418 @@
-// Projet GL - Ensimag
-// Bibliothèque pour la classe Math de Deca
+// Grenoble INP - Ensimag projet GL -*- mode: java -*-
+// Library for class Math of Deca, coded in Deca
+
+int[][] _unite(int n) {
+    int[][] M = new int[n][n];
+    int i = 0;
+    int j;
+    while (i < n) {
+        j = 0;
+        while (j < n) {
+            if (i == j) {
+                setElem(M, i, j, 1);
+            } else {
+                setElem(M, i, j, 0);
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return M;
+}
+
+int[][] _matriceNulle(int n, int m) {
+    int[][] M = new int[n][m];
+    int i = 0;
+    int j;
+    while (i < n) {
+        j = 0;
+        while (j < m) {
+            setElem(M, i, j, 0);
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return M;
+}
+
+int[][] _matriceConstante(int n, int m, int v) {
+    int[][] M = new int[n][m];
+    int i = 0;
+    int j;
+    while (i < n) {
+        j = 0;
+        while (j < m) {
+            setElem(M, i, j, v);
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return M;
+}
+
+int[][] _matriceUn(int n, int m) {
+    int[][] M = new int[n][m];
+    int i = 0;
+    int j;
+    while (i < n) {
+        j = 0;
+        while (j < m) {
+            setElem(M, i, j, 1);
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return M;
+}
+
+int[][] _transposee(int[][] A) {
+    int n = getNLines(A);
+    int m = getNCols(A);
+    int[][] T = new int[m][n];
+    int i = 0;
+    int j;
+    int val;
+    while (i < n) {
+        j = 0;
+        while (j < m) {
+            val = getElem(A, i, j);
+            setElem(T, j, i, val);
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return T;
+}
+
+int[][] _addition(int[][] A, int[][] B) {
+    int n = getNLines(A);
+    int m = getNCols(A);
+    int[][] C = new int[n][m];
+    int i = 0;
+    int j;
+    int valA;
+    int valB;
+    while (i < n) {
+        j = 0;
+        while (j < m) {
+            valA = getElem(A, i, j);
+            valB = getElem(B, i, j);
+            setElem(C, i, j, valA + valB);
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return C;
+}
+
+int[][] _scalaire(int[][] A, int v) {
+    int n = getNLines(A);
+    int m = getNCols(A);
+    int[][] C = new int[n][m];
+    int i = 0;
+    int j;
+    int val;
+    while (i < n) {
+        j = 0;
+        while (j < m) {
+            val = getElem(A, i, j);
+            setElem(C, i, j, val * v);
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return C;
+}
+
+int[][] _produit(int[][] A, int[][] B) {
+    int n = getNLines(A);
+    int m = getNCols(B);
+    int p = getNCols(A);
+    int[][] C = new int[n][m];
+    int i = 0;
+    int j;
+    int k;
+    int sum;
+    int valA;
+    int valB;
+    while (i < n) {
+        j = 0;
+        while (j < m) {
+            sum = 0;
+            k = 0;
+            while (k < p) {
+                valA = getElem(A, i, k);
+                valB = getElem(B, k, j);
+                sum = sum + valA * valB;
+                k = k + 1;
+            }
+            setElem(C, i, j, sum);
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return C;
+}
+
+int[][] _matriceDiagonale(int[] diag) {
+    int n = getNLines(diag);
+    int[][] M = new int[n][n];
+    int i = 0;
+    int j;
+    while (i < n) {
+        j = 0;
+        while (j < n) {
+            if (i == j) {
+                setElem(M, i, j, getElem(diag, i, 0));
+            } else {
+                setElem(M, i, j, 0);
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return M;
+}
+
+boolean _egale(int[][] A, int[][] B) {
+    int n = getNLines(A);
+    int m = getNCols(A);
+    int i = 0;
+    int j;
+    int valA;
+    int valB;
+    if (n != getNLines(B)) {
+        return false;
+    }
+    if (m != getNCols(B)) {
+        return false;
+    }
+    while (i < n) {
+        j = 0;
+        while (j < m) {
+            valA = getElem(A, i, j);
+            valB = getElem(B, i, j);
+            if (!(valA == valB)) {
+                return false;
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return true;
+}
+
+boolean _estSymetrique(int[][] A) {
+    int n = getNLines(A);
+    int m = getNCols(A);
+    int i = 0;
+    int j;
+    int valAij;
+    int valAji;
+    if (!(n == m)) {
+        return false;
+    }
+    while (i < n) {
+        j = 0;
+        while (j < n) {
+            valAij = getElem(A, i, j);
+            valAji = getElem(A, j, i);
+            if (!(valAij == valAji)) {
+                return false;
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return true;
+}
+
+boolean _estAntisymetrique(int[][] A) {
+    int n = getNLines(A);
+    int m = getNCols(A);
+    int i = 0;
+    int j;
+    int valAij;
+    int valAji;
+    if (!(n == m)) {
+        return false;
+    }
+    while (i < n) {
+        j = 0;
+        while (j < n) {
+            valAij = getElem(A, i, j);
+            valAji = getElem(A, j, i);
+            if (!(valAij == -valAji)) {
+                return false;
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return true;
+}
+
+int _trace(int[][] A) {
+    int n = getNLines(A);
+    int sum = 0;
+    int i = 0;
+    int val;
+    while (i < n) {
+        val = getElem(A, i, i);
+        sum = sum + val;
+        i = i + 1;
+    }
+    return sum;
+}
+
+boolean _estNilpotente(int[][] A, int k) {
+    int n = getNLines(A);
+    int m = getNCols(A);
+    int[][] power;
+    int i = 0;
+    int j;
+    int exp;
+    int val;
+    if (!(n == m)) {
+        return false;
+    }
+    power = _unite(n);
+    exp = 0;
+    while (exp < k) {
+        power = _produit(power, A);
+        exp = exp + 1;
+    }
+    i = 0;
+    while (i < n) {
+        j = 0;
+        while (j < n) {
+            val = getElem(power, i, j);
+            if (!(val == 0)) {
+                return false;
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return true;
+}
+
+int[][] _triangulaireSup(int[][] A) {
+    int n = getNLines(A);
+    int m = getNCols(A);
+    int[][] T;
+    int i = 0;
+    int j = 0;
+    if (n != m) {
+        println("Erreur : la matrice doit etre carree");
+        return new int[0][0];
+    }
+    T = new int[n][n];
+    while (i < n) {
+        j = 0;
+        while (j < n) {
+            if (i <= j) {
+                setElem(T, i, j, getElem(A, i, j));
+            } else {
+                setElem(T, i, j, 0);
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return T;
+}
+
+int[][] _triangulaireInf(int[][] A) {
+    int n = getNLines(A);
+    int m = getNCols(A);
+    int[][] T;
+    int i = 0;
+    int j = 0;
+    if (n != m) {
+        println("Erreur : la matrice doit etre carree");
+        return new int[0][0];
+    }
+    T = new int[n][n];
+    while (i < n) {
+        j = 0;
+        while (j < n) {
+            if (i >= j) {
+                setElem(T, i, j, getElem(A, i, j));
+            } else {
+                setElem(T, i, j, 0);
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return T;
+}
 
 class Math {
 
     int[][] unite(int n) {
-        int[][] M = new int[n][n];
-        int i = 0;
-        int j;
-        while (i < n) {
-            j = 0;
-            while (j < n) {
-                if (i == j) {
-                    setElem(M, i, j, 1);
-                } else {
-                    setElem(M, i, j, 0);
-                }
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return M;
+        return _unite(n);
     }
 
     int[][] matriceNulle(int n, int m) {
-        int[][] M = new int[n][m];
-        int i = 0;
-        int j;
-        while (i < n) {
-            j = 0;
-            while (j < m) {
-                setElem(M, i, j, 0);
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return M;
+        return _matriceNulle(n, m);
     }
 
     int[][] matriceConstante(int n, int m, int v) {
-        int[][] M = new int[n][m];
-        int i = 0;
-        int j;
-        while (i < n) {
-            j = 0;
-            while (j < m) {
-                setElem(M, i, j, v);
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return M;
+        return _matriceConstante(n, m, v);
     }
 
     int[][] matriceUn(int n, int m) {
-        int[][] M = new int[n][m];
-        int i = 0;
-        int j;
-        while (i < n) {
-            j = 0;
-            while (j < m) {
-                setElem(M, i, j, 1);
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return M;
+        return _matriceUn(n, m);
     }
 
     int[][] transposee(int[][] A) {
-        int n = getNLines(A);
-        int m = getNCols(A);
-        int[][] T = new int[m][n];
-        int i = 0;
-        int j;
-        int val;
-        while (i < n) {
-            j = 0;
-            while (j < m) {
-                val = getElem(A, i, j);
-                setElem(T, j, i, val);
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return T;
+        return _transposee(A);
     }
 
     int[][] addition(int[][] A, int[][] B) {
-        int n = getNLines(A);
-        int m = getNCols(A);
-        int[][] C = new int[n][m];
-        int i = 0;
-        int j;
-        int valA;
-        int valB;
-        while (i < n) {
-            j = 0;
-            while (j < m) {
-                valA = getElem(A, i, j);
-                valB = getElem(B, i, j);
-                setElem(C, i, j, valA + valB);
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return C;
+        return _addition(A, B);
     }
 
     int[][] scalaire(int[][] A, int v) {
-        int n = getNLines(A);
-        int m = getNCols(A);
-        int[][] C = new int[n][m];
-        int i = 0;
-        int j;
-        int val;
-        while (i < n) {
-            j = 0;
-            while (j < m) {
-                val = getElem(A, i, j);
-                setElem(C, i, j, val * v);
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return C;
+        return _scalaire(A, v);
     }
 
     int[][] produit(int[][] A, int[][] B) {
-        int n = getNLines(A);
-        int m = getNCols(B);
-        int p = getNCols(A);
-        int[][] C = new int[n][m];
-        int i = 0;
-        int j;
-        int k;
-        int sum;
-        int valA;
-        int valB;
-        while (i < n) {
-            j = 0;
-            while (j < m) {
-                sum = 0;
-                k = 0;
-                while (k < p) {
-                    valA = getElem(A, i, k);
-                    valB = getElem(B, k, j);
-                    sum = sum + valA * valB;
-                    k = k + 1;
-                }
-                setElem(C, i, j, sum);
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return C;
+        return _produit(A, B);
     }
 
     int[][] matriceDiagonale(int[] diag) {
-        int n = getNLines(diag);
-        int[][] M = new int[n][n];
-        int i = 0;
-        int j;
-        while (i < n) {
-            j = 0;
-            while (j < n) {
-                if (i == j) {
-                    setElem(M, i, j, getElem(diag, i, 0));
-                } else {
-                    setElem(M, i, j, 0);
-                }
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return M;
+        return _matriceDiagonale(diag);
     }
 
     boolean egale(int[][] A, int[][] B) {
-        int n = getNLines(A);
-        int m = getNCols(A);
-        int i = 0;
-        int j;
-        int valA;
-        int valB;
-        if (n != getNLines(B)) {
-            return false;
-        }
-        if (m != getNCols(B)) {
-            return false;
-        }
-        while (i < n) {
-            j = 0;
-            while (j < m) {
-                valA = getElem(A, i, j);
-                valB = getElem(B, i, j);
-                if (!(valA == valB)) {
-                    return false;
-                }
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return true;
+        return _egale(A, B);
     }
 
     boolean estSymetrique(int[][] A) {
-        int n = getNLines(A);
-        int m = getNCols(A);
-        int i = 0;
-        int j;
-        int valAij;
-        int valAji;
-        if (!(n == m)) {
-            return false;
-        }
-        while (i < n) {
-            j = 0;
-            while (j < n) {
-                valAij = getElem(A, i, j);
-                valAji = getElem(A, j, i);
-                if (!(valAij == valAji)) {
-                    return false;
-                }
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return true;
+        return _estSymetrique(A);
     }
 
     boolean estAntisymetrique(int[][] A) {
-        int n = getNLines(A);
-        int m = getNCols(A);
-        int i = 0;
-        int j;
-        int valAij;
-        int valAji;
-        if (!(n == m)) {
-            return false;
-        }
-        while (i < n) {
-            j = 0;
-            while (j < n) {
-                valAij = getElem(A, i, j);
-                valAji = getElem(A, j, i);
-                if (!(valAij == -valAji)) {
-                    return false;
-                }
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return true;
+        return _estAntisymetrique(A);
     }
 
     int trace(int[][] A) {
-        int n = getNLines(A);
-        int sum = 0;
-        int i = 0;
-        int val;
-        while (i < n) {
-            val = getElem(A, i, i);
-            sum = sum + val;
-            i = i + 1;
-        }
-        return sum;
+        return _trace(A);
     }
 
     boolean estNilpotente(int[][] A, int k) {
-        int n = getNLines(A);
-        int m = getNCols(A);
-        int[][] power;
-        int i = 0;
-        int j;
-        int exp;
-        int val;
-        if (!(n == m)) {
-            return false;
-        }
-        power = this.unite(n);
-        exp = 0;
-        while (exp < k) {
-            power = this.produit(power, A);
-            exp = exp + 1;
-        }
-        i = 0;
-        while (i < n) {
-            j = 0;
-            while (j < n) {
-                val = getElem(power, i, j);
-                if (!(val == 0)) {
-                    return false;
-                }
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return true;
+        return _estNilpotente(A, k);
     }
 
     int[][] triangulaireSup(int[][] A) {
-        int n = getNLines(A);
-        int m = getNCols(A);
-        int[][] T;
-        int i = 0;
-        int j = 0;
-        if (n != m) {
-            println("Erreur : la matrice doit etre carree");
-            return new int[0][0];
-        }
-        T = new int[n][n];
-        while (i < n) {
-            j = 0;
-            while (j < n) {
-                if (i <= j) {
-                    setElem(T, i, j, getElem(A, i, j));
-                } else {
-                    setElem(T, i, j, 0);
-                }
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return T;
+        return _triangulaireSup(A);
     }
 
     int[][] triangulaireInf(int[][] A) {
-        int n = getNLines(A);
-        int m = getNCols(A);
-        int[][] T;
-        int i = 0;
-        int j = 0;
-        if (n != m) {
-            println("Erreur : la matrice doit etre carree");
-            return new int[0][0];
-        }
-        T = new int[n][n];
-        while (i < n) {
-            j = 0;
-            while (j < n) {
-                if (i >= j) {
-                    setElem(T, i, j, getElem(A, i, j));
-                } else {
-                    setElem(T, i, j, 0);
-                }
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        return T;
+        return _triangulaireInf(A);
     }
 
     int[][] copie(int[][] A) {
@@ -388,6 +452,87 @@ class Math {
         }
     }
 
+    float abs(float f) {
+        if (f < 0.0) {
+            return -f;
+        }
+        return f;
+    }
+
+    float sqrt(float f) {
+        float x = f;
+        float y = 1.0;
+        float e = 0.0001;
+        if (f < 0.0) {
+            println("Erreur : sqrt d un nombre negatif");
+            return 0.0;
+        }
+        if (f == 0.0) {
+            return 0.0;
+        }
+        while (this.abs(x - y) > e) {
+            x = (x + y) / 2.0;
+            y = f / x;
+        }
+        return x;
+    }
+
+    float ulp(float f) {
+        float x = this.abs(f);
+        float res = 1.0;
+        if (f == 0.0) {
+            // Very small value for 0.0
+            return 1.4e-45; 
+        }
+        
+        if (x >= 1.0) {
+            while (res * 2.0 <= x) {
+                res = res * 2.0;
+            }
+        } else {
+            while (res > x) {
+                res = res / 2.0;
+            }
+        }
+        // res is now the largest power of 2 <= |f|
+        // ulp is res / 2^23
+        return res / 8388608.0; 
+    }
+
+    float[][] uniteFloat(int n) {
+        float[][] M = new float[n][n];
+        int i = 0;
+        int j = 0;
+        while (i < n) {
+            j = 0;
+            while (j < n) {
+                if (i == j) {
+                    setElem(M, i, j, 1.0);
+                } else {
+                    setElem(M, i, j, 0.0);
+                }
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+        return M;
+    }
+
+    float[][] matriceNulleFloat(int n, int m) {
+        float[][] M = new float[n][m];
+        int i = 0;
+        int j = 0;
+        while (i < n) {
+            j = 0;
+            while (j < m) {
+                setElem(M, i, j, 0.0);
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+        return M;
+    }
+
     float[][] matriceConstanteFloat(int n, int m, float v) {
         float[][] M = new float[n][m];
         int i = 0;
@@ -396,6 +541,21 @@ class Math {
             j = 0;
             while (j < m) {
                 setElem(M, i, j, v);
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+        return M;
+    }
+
+    float[][] matriceUnFloat(int n, int m) {
+        float[][] M = new float[n][m];
+        int i = 0;
+        int j = 0;
+        while (i < n) {
+            j = 0;
+            while (j < m) {
+                setElem(M, i, j, 1.0);
                 j = j + 1;
             }
             i = i + 1;
@@ -526,7 +686,6 @@ class Math {
         int j = 0;
         float valA = 0.0;
         float valB = 0.0;
-        float diff = 0.0;
         float e = 0.00001;
         if (n != getNLines(B)) {
             return false;
@@ -539,11 +698,7 @@ class Math {
             while (j < m) {
                 valA = getElem(A, i, j);
                 valB = getElem(B, i, j);
-                diff = valA - valB;
-                if (diff < 0) {
-                    diff = -diff;
-                }
-                if (diff > e) {
+                if (this.abs(valA - valB) > e) {
                     return false;
                 }
                 j = j + 1;
@@ -560,7 +715,6 @@ class Math {
         int j = 0;
         float valAij = 0.0;
         float valAji = 0.0;
-        float diff = 0.0;
         float e = 0.00001;
         if (!(n == m)) {
             return false;
@@ -570,11 +724,7 @@ class Math {
             while (j < n) {
                 valAij = getElem(A, i, j);
                 valAji = getElem(A, j, i);
-                diff = valAij - valAji;
-                if (diff < 0) {
-                    diff = -diff;
-                }
-                if (diff > e) {
+                if (this.abs(valAij - valAji) > e) {
                     return false;
                 }
                 j = j + 1;
@@ -591,7 +741,6 @@ class Math {
         int j = 0;
         float valAij = 0.0;
         float valAji = 0.0;
-        float diff = 0.0;
         float e = 0.00001;
         if (!(n == m)) {
             return false;
@@ -601,11 +750,7 @@ class Math {
             while (j < n) {
                 valAij = getElem(A, i, j);
                 valAji = getElem(A, j, i);
-                diff = valAij + valAji;
-                if (diff < 0) {
-                    diff = -diff;
-                }
-                if (diff > e) {
+                if (this.abs(valAij + valAji) > e) {
                     return false;
                 }
                 j = j + 1;
@@ -642,7 +787,6 @@ class Math {
         int i = 0;
         int j = 0;
         float val = 0.0;
-        float diff = 0.0;
         float e = 0.00001;
         if (!(n == m)) {
             return false;
@@ -657,11 +801,7 @@ class Math {
             j = 0;
             while (j < n) {
                 val = getElem(power, i, j);
-                diff = val;
-                if (diff < 0) {
-                    diff = -diff;
-                }
-                if (diff > e) {
+                if (this.abs(val) > e) {
                     return false;
                 }
                 j = j + 1;
@@ -762,7 +902,7 @@ class Math {
         M = this.copieFloat(M_orig);
 
         while (k < n) {
-            // Recherche du pivot
+            // 1) Recherche du pivot
             if (getElem(M, k, k) == 0.0) {
                 pivot = -1;
                 i = k + 1;
@@ -779,7 +919,7 @@ class Math {
                     return 0.0;
                 }
                 
-                // Échange des lignes M[k] et M[pivot]
+                // Echanger lignes M[k] et M[pivot]
                 j = 0;
                 while (j < n) {
                     temp = getElem(M, k, j);
@@ -790,7 +930,7 @@ class Math {
                 sign = -sign;
             }
 
-            // Élimination
+            // 2) Elimination
             i = k + 1;
             while (i < n) {
                 facteur = getElem(M, i, k) / getElem(M, k, k);
@@ -805,7 +945,7 @@ class Math {
             k = k + 1;
         }
 
-        // Produit de la diagonale
+        // 3) Produit diagonal
         i = 0;
         while (i < n) {
             det = det * getElem(M, i, i);
@@ -828,13 +968,13 @@ class Math {
         int i2 = 0;
         int j2 = 0;
 
-        // Vérification que la matrice est carrée
+        // 1) Verify that the matrix is square
         if (n != m) {
             println("Erreur : la matrice doit etre carree");
             return new float[0][0];
         }
 
-        // Initialisation de la matrice augmentée [A | I]
+        // 2) Initialize augmented matrix [A | I]
         M = new float[n][2 * n];
         i = 0;
         while (i < n) {
@@ -851,7 +991,7 @@ class Math {
             i = i + 1;
         }
 
-        // Élimination de Gauss-Jordan
+        // 3) Perform Gauss-Jordan elimination
         k = 0;
         while (k < n) {
             pivot = getElem(M, k, k);
@@ -860,14 +1000,14 @@ class Math {
                 return new float[0][0];
             }
 
-            // Division de la ligne du pivot par sa valeur
+            // Divide the pivot row by the pivot value
             j = 0;
             while (j < 2 * n) {
                 setElem(M, k, j, getElem(M, k, j) / pivot);
                 j = j + 1;
             }
 
-            // Soustraction des multiples de la ligne du pivot des autres lignes
+            // Subtract multiples of the pivot row from other rows
             i2 = 0;
             while (i2 < n) {
                 if (i2 != k) {
@@ -883,7 +1023,7 @@ class Math {
             k = k + 1;
         }
 
-        // Récupération de la partie droite de la matrice augmentée
+        // 4) Separate and return the right half of the augmented matrix
         Inv = new float[n][n];
         i = 0;
         while (i < n) {
@@ -918,4 +1058,4 @@ class Math {
     }
 }
 
-// Fin de la bibliothèque Math de Deca
+// End of Deca Math library
