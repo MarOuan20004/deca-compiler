@@ -25,6 +25,12 @@ jobs:
       - name: Compile with Maven
         run: mvn compile
 
+      - name: Setup IMA Emulator
+        run: |
+          chmod +x bin/ima* src/test/script/launchers/ima*
+          sudo cp bin/ima* /usr/local/bin/
+          ima -h 2>&1 || true
+
       - name: Run Test Suite
         run: |
           chmod +x src/test/script/*.sh src/test/script/launchers/*
@@ -38,9 +44,14 @@ jobs:
           chmod +x bin/decac scripts/*.sh
           ./bin/decac -b
           ./bin/decac examples/deca/01_hello_world.deca
+          ima examples/deca/01_hello_world.ass
           ./bin/decac examples/deca/02_arithmetic_control.deca
+          ima examples/deca/02_arithmetic_control.ass
           ./bin/decac examples/deca/03_classes_and_objects.deca
+          ima examples/deca/03_classes_and_objects.ass
           ./bin/decac examples/deca/04_polymorphism_and_cast.deca
+          ima examples/deca/04_polymorphism_and_cast.ass
+          rm -f examples/deca/*.ass
 
       - name: Archive Compiler Artifact
         uses: actions/upload-artifact@v4

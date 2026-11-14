@@ -22,8 +22,11 @@
 # Shell Scripts
 *.sh text eol=lf
 bin/decac text eol=lf
+bin/ima text eol=lf
+src/test/script/launchers/ima text eol=lf
 
 # Binary Files (prevent line ending conversion and corruption)
+*ima-*-Linux binary
 *.jar binary
 *.class binary
 *.pdf binary
